@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { simpleAction } from '../redux/actions/todos/todos';
 
-class Todos extends Component {
+export class Todos extends Component {
   render() {
     return (
             <div>
