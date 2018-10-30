@@ -11,6 +11,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p>Authors Haven react base template</p>
           <Todos />
+          <p
+          className='test'> TESTING SASS
+          </p>
         </header>
       </div>
     );
