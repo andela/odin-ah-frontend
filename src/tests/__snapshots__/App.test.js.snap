@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Todos without crashing 1`] = `
+<div>
+  <h1>
+    Hello I have a state in my redux store
+  </h1>
+</div>
+`;

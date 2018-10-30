@@ -13,7 +13,8 @@
     "es6": true,
     "mocha": true,
     "browser": true,
-    "commonjs": true
+    "commonjs": true,
+    "jest": true
   },
   "parserOptions": {
     "ecmaVersion": 7,
@@ -26,6 +27,15 @@
   "rules": {
     "one-var-declaration-per-line": 0,
     "comma-dangle": 0,
-    "class-methods-use-this": 0
-  }
+    "import/no-named-as-default": 0,
+    "import/no-unresolved": 0
+  },
+  "overrides": [
+    {
+      "files": "*.test.js",
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }
