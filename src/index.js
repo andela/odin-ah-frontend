@@ -7,8 +7,8 @@ import store from './redux/store/store';
 import * as serviceWorker from './serviceWorker';
 
 const app = (
-   <Provider store={store}>
-   <App />
+  <Provider store={store}>
+    <App />
   </Provider>
 );
 

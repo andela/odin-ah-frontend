@@ -1,20 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Todos from './components/Todos.jsx';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './components/Routes';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
-        <p className='test'>
-          Authors Haven react base template
-        </p>
-        <Todos/>
-      </header>
-    </div>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
   );
 }
-
 export default App;
