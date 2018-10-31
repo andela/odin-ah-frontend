@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LoginForm from '../components/login/LoginForm';
+import LoginForm from '../../components/login/LoginForm';
 
 it('renders Todos without crashing', () => {
   const wrapper = shallow(<LoginForm />);

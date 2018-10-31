@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { simpleAction, success } from '../redux/actions/todos/todos';
+import { simpleAction, success } from '../../redux/actions/todos/todos';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
