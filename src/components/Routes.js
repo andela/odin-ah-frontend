@@ -1,15 +1,18 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Login from './login/LoginModal';
-import SignUp from './signup';
+import { Route, Switch } from 'react-router-dom';
 import Home from './Home/HomeContainer';
+import Toast from './notification/toast';
+import Modal from './modal';
 
 export default function Root() {
   return (
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/register' component={SignUp} />
-      <Route exact path='/' component={Login} />
-    </Switch>
+    <div>
+      <Switch>
+        <Route exact path="/" component={Home} />
+      </Switch>
+
+      <Toast/>
+      <Modal/>
+    </div>
   );
 }
