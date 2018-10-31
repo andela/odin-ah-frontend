@@ -1,4 +1,5 @@
 import {
+  AUTHENTICATING,
   LOGIN_USER,
   LOGIN_USER_ERROR,
 } from '../constants/index';
@@ -7,7 +8,7 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   error: {},
-  redirect: false
+  loading: false
 };
 
 // let newState;
@@ -24,6 +25,11 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         error: action.error
+      };
+    case AUTHENTICATING:
+      return {
+        ...state,
+        loading: action.loading
       };
     default: return state;
   }
