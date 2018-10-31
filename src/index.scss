@@ -1,7 +1,19 @@
-@import "bulma/sass/utilities/initial-variables.sass";
+@import '~bulma/sass/utilities/initial-variables.sass';
 
 // your customization as described in the Bulma docs
-$primary: #0e7b04;
+$primary: #0E7B04;
 $dark: #2a2626;
+$radius: 0;
+$modal-background-background-color: rgba(10,10,10, 0.75);
 
-@import "bulma/bulma.sass";
+$btn: #0E7B04;
+$fb: #3B5998;
+$twitter: #00ACED;
+$modal-content-width: 500px;
+$modal-card-body-padding: 30px 50px 50px;
+
+@import '~bulma/bulma.sass';
+
+.hide {
+  display: none;
+}

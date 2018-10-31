@@ -3,9 +3,18 @@ import Axios from 'axios';
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 
 export class ApiRequest {
+  /**
+   *
+   * @param {'facebook'|'twitter'|'google'} social
+   * @return {string}
+   */
+  static socialAuthUrl(social) {
+    return `${BASE_API_URL}/auth/${social}`;
+  }
+
   constructor() {
     this.axios = Axios.create({
-      baseURL: BASE_API_URL
+      baseURL: BASE_API_URL,
     });
 
     // Add a response interceptor
@@ -15,6 +24,7 @@ export class ApiRequest {
         const { status } = error;
         if (status === 401) {
           // todo clear authentication token from local storage
+          // redirect to login
         }
         return Promise.reject(error);
       }
@@ -36,6 +46,10 @@ export class ApiRequest {
 
   fetchArticles() {
     return this.axios.get('/articles');
+  }
+
+  loginUser(data) {
+    return this.axios.post('/auth/login', data);
   }
 }
 
