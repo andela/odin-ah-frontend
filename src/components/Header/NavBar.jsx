@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import SearchView from './SearchView';
 import NavBarBrand from './NavBarBrand';
 import NavBarMenu from './NavBarMenu';
+import LoginModal from '../login/LoginModal';
 
-const NavBar = ({ isAuthenticated, navBurgerIsActive, handleBurgerClick }) => (
+const NavBar = ({
+  isAuthenticated, navBurgerIsActive, handleBurgerClick, handleLoginClick, showLoginModal, handleLoginCloseClick
+}) => (
   <nav className="navbar" role="navigation" aria-label="main navigation">
     <NavBarBrand {...{ navBurgerIsActive, handleBurgerClick }} />
     <NavBarMenu mobileMode={navBurgerIsActive}>
@@ -37,9 +40,10 @@ const NavBar = ({ isAuthenticated, navBurgerIsActive, handleBurgerClick }) => (
             <SearchView />
           </div>
           <div className="navbar-item">
-            <Link className="button is-light" to="/login">
+            <button className="button is-light" onClick={handleLoginClick} >
               Log in
-            </Link>
+            </button>
+            <LoginModal show={showLoginModal} close={handleLoginCloseClick}/>
           </div>
           <div className="navbar-item">
             {/* <div className="buttons"> */}
@@ -56,6 +60,7 @@ const NavBar = ({ isAuthenticated, navBurgerIsActive, handleBurgerClick }) => (
 NavBar.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   navBurgerIsActive: PropTypes.bool
+
 };
 
 NavBar.defaultProps = {
