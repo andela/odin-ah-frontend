@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Article actions closePublishModal should dispatch the CLOSE_PUBLISH_MODAL action type 1`] = `
+Array [
+  Object {
+    "type": "CLOSE_PUBLISH_MODAL",
+  },
+]
+`;
+
+exports[`Article actions createArticleRequest should dispatch the correct action 1`] = `
+Array [
+  Object {
+    "type": "SENDING_REQUEST",
+  },
+  Object {
+    "response": "Article has been published successfully!",
+    "type": "CREATE_ARTICLE_SUCCESS",
+  },
+]
+`;
+
+exports[`Article actions createArticleRequest should dispatch the correct action error 1`] = `
+Array [
+  Object {
+    "type": "SENDING_REQUEST",
+  },
+  Object {
+    "response": Object {
+      "message": "Internal server error",
+      "status": "error",
+    },
+    "type": "CREATE_ARTICLE_ERROR",
+  },
+]
+`;
+
+exports[`Article actions hideCreateError should dispatch the HIDE_PUBLISH_ERROR action type 1`] = `
+Array [
+  Object {
+    "type": "HIDE_PUBLISH_ERROR",
+  },
+]
+`;
+
+exports[`Article actions hideCreateResponse should dispatch the HIDE_PUBLISH_RESPONSE action type 1`] = `
+Array [
+  Object {
+    "type": "HIDE_PUBLISH_RESPONSE",
+  },
+]
+`;
+
+exports[`Article actions openPublishModal should dispatch the OPEN_PUBLISH_MODAL action type 1`] = `
+Array [
+  Object {
+    "type": "OPEN_PUBLISH_MODAL",
+  },
+]
+`;
+
+exports[`Article actions showCreateError should dispatch the SHOW_PUBLISH_ERROR action type 1`] = `
+Array [
+  Object {
+    "errors": Object {
+      "title": Array [
+        "Title must be at least 5 characters",
+      ],
+    },
+    "type": "SHOW_PUBLISH_ERROR",
+  },
+]
+`;

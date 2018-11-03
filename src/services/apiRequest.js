@@ -31,6 +31,10 @@ export class ApiRequest {
     );
   }
 
+  getInstance() {
+    return this.axios;
+  }
+
   setToken(token) {
     this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
@@ -50,6 +54,14 @@ export class ApiRequest {
 
   loginUser(data) {
     return this.axios.post('/auth/login', data);
+  }
+
+  createArticle(data) {
+    return this.axios.post('/articles', data);
+  }
+
+  getArticle(slug) {
+    return this.axios.get(`/articles/${slug}`);
   }
 }
 
