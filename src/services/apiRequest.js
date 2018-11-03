@@ -51,6 +51,10 @@ export class ApiRequest {
   loginUser(data) {
     return this.axios.post('/auth/login', data);
   }
+
+  createArticle(data) {
+    return this.axios.post('/articles', data);
+  }
 }
 
 const apiRequest = new ApiRequest();
