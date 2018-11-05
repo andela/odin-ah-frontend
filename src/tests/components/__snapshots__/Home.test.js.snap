@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders HomeView without crashing 1`] = `
+<div
+  className="App"
+>
+  <Connect(HeaderContainer)
+    isAuthenticated={false}
+  />
+  <div>
+    <section
+      className="section"
+    >
+      <div
+        className="container"
+      >
+        <div
+          className="columns is-centered"
+        >
+          <div
+            className="column has-text-centered title section-title"
+          >
+            Top Articles
+          </div>
+        </div>
+        <ArticleGridView />
+      </div>
+    </section>
+    <footer
+      className="footer"
+    >
+      <div
+        className="content has-text-centered"
+      >
+        <p>
+          © Authors Haven 2018
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
+`;
