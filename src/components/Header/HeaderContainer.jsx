@@ -15,7 +15,8 @@ class HeaderContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      navBurgerIsActive: false
+      navBurgerIsActive: false,
+      showLoginModal: false,
     };
   }
 
@@ -23,12 +24,23 @@ class HeaderContainer extends React.Component {
     this.setState(state => ({ navBurgerIsActive: !state.navBurgerIsActive }));
   };
 
+  handleLoginClick = () => {
+    this.setState(state => ({ showLoginModal: !state.showLoginModal }));
+  };
+
+  handleLoginCloseClick = () => {
+    this.setState(state => ({ showLoginModal: !state.showLoginModal }));
+  };
+
   render() {
     const { isAuthenticated } = this.props;
     const headerViewProps = {
       isAuthenticated,
       handleBurgerClick: this.handleBurgerClick,
-      navBurgerIsActive: this.state.navBurgerIsActive
+      navBurgerIsActive: this.state.navBurgerIsActive,
+      handleLoginClick: this.handleLoginClick,
+      showLoginModal: this.state.showLoginModal,
+      handleLoginCloseClick: this.handleLoginCloseClick
     };
     return <HeaderView {...headerViewProps} />;
   }
@@ -39,7 +51,7 @@ HeaderContainer.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.isAuthenticated
+    isAuthenticated: state.login.isAuthenticated
   };
 }
 
