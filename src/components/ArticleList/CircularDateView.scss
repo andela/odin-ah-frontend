@@ -1,0 +1,24 @@
+.circular-date-container {
+  background: #3a416f;
+  width: 80px;
+  height: 80px;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-field {
+  text-align: center;
+  font-weight: bold;
+}
+
+.date-field__day {
+  font-size: 1.5em;
+}
+
+.date-field__month {
+  text-transform: uppercase;
+}

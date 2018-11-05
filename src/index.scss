@@ -1,22 +1,7 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@import "bulma/sass/utilities/initial-variables.sass";
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-// Test sass
+// your customization as described in the Bulma docs
+$primary: #0e7b04;
+$dark: #2a2626;
 
-.test {
-  color: red;
-  background-color: #ffffff;
-  border-radius: 5px;
-  text-align: center;
-}
+@import "bulma/bulma.sass";

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import testTodos from './reducer/testTodos';
+import home from './reducer/home';
 
 const rootReducer = combineReducers({
-  testTodos,
+  home
 });
 
 export default rootReducer;
