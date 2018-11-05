@@ -1,7 +1,13 @@
-@import "bulma/sass/utilities/initial-variables.sass";
+@import '~bulma/sass/utilities/initial-variables.sass';
 
 // your customization as described in the Bulma docs
 $primary: #0e7b04;
 $dark: #2a2626;
+$radius: 0;
+$modal-background-background-color: rgba(10,10,10, 0.75);
 
-@import "bulma/bulma.sass";
+@import '~bulma/bulma.sass';
+
+.hide {
+  display: none;
+}

@@ -2,9 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import HeaderView from './HeaderView';
+import { modal } from '../../redux/actions/modal';
+import { ModalContent } from '../signup/modalComponent';
+import { registerUser } from '../../redux/actions/auth/register';
 
 const propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  openModal: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -19,6 +24,13 @@ class HeaderContainer extends React.Component {
       showLoginModal: false,
     };
   }
+
+  openRegistrationModalComponent = () => {
+    const content = {};
+    content.Component = ModalContent;
+    content.props = { registerUser: this.props.registerUser, test: 'No you see me' };
+    this.props.openModal(content);
+  };
 
   handleBurgerClick = () => {
     this.setState(state => ({ navBurgerIsActive: !state.navBurgerIsActive }));
@@ -38,6 +50,7 @@ class HeaderContainer extends React.Component {
       isAuthenticated,
       handleBurgerClick: this.handleBurgerClick,
       navBurgerIsActive: this.state.navBurgerIsActive,
+      openRegisterModal: this.openRegistrationModalComponent,
       handleLoginClick: this.handleLoginClick,
       showLoginModal: this.state.showLoginModal,
       handleLoginCloseClick: this.handleLoginCloseClick
@@ -51,8 +64,14 @@ HeaderContainer.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.login.isAuthenticated
+    isAuthenticated: state.login.isAuthenticated,
+    result: state.registration.result,
   };
 }
+const mapDispatchToProps = dispatch => ({
+  openModal: data => dispatch(modal(true, data)),
+  registerUser: user => dispatch(registerUser(user)),
+});
 
-export default connect(mapStateToProps)(HeaderContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

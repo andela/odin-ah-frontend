@@ -4,12 +4,19 @@ import NavBar from './NavBar';
 import './Header.scss';
 
 const HeaderView = ({
-  isAuthenticated, navBurgerIsActive, handleBurgerClick, handleLoginClick, showLoginModal, handleLoginCloseClick
+  isAuthenticated,
+  navBurgerIsActive,
+  handleBurgerClick,
+  openRegisterModal,
+  handleLoginClick,
+  showLoginModal,
+  handleLoginCloseClick
 }) => {
   const navBarProps = {
     isAuthenticated,
     navBurgerIsActive,
     handleBurgerClick,
+    openRegisterModal,
     handleLoginClick,
     showLoginModal,
     handleLoginCloseClick
@@ -21,6 +28,7 @@ HeaderView.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   navBurgerIsActive: PropTypes.bool,
   handleBurgerClick: PropTypes.func,
+  openRegisterModal: PropTypes.func,
   showLoginModal: PropTypes.bool.isRequired,
   handleLoginCloseClick: PropTypes.func.isRequired
 };

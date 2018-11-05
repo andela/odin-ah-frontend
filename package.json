@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.4.2",
+    "@fortawesome/fontawesome-free": "^5.5.0",
     "axios": "^0.18.0",
     "bulma": "^0.7.2",
     "enzyme": "^3.7.0",
@@ -25,7 +25,8 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "sinon": "^7.1.0",
-    "validator": "^10.8.0"
+    "validator": "^10.8.0",
+    "validate.js": "^0.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
