@@ -5,7 +5,7 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTRATION_FAILED = 'REGISTRATION_FAILED';
 export const REGISTRATION_SUCCESSFUL = 'REGISTRATION_SUCCESSFUL';
 
-function dispatchNotification(data, type, dispatch) {
+export function dispatchNotification(data, type, dispatch) {
   if (type === 'alert') {
     dispatch(alerts(true, data));
   } else {
@@ -13,7 +13,7 @@ function dispatchNotification(data, type, dispatch) {
   }
 }
 
-function dispatchError(message, type, dispatch) {
+export function dispatchError(message, type, dispatch) {
   const data = {
     type: 'error',
     text: message,
@@ -21,7 +21,7 @@ function dispatchError(message, type, dispatch) {
   dispatchNotification(data, type, dispatch);
 }
 
-function dispatchSuccess(message, type, dispatch) {
+export function dispatchSuccess(message, type, dispatch) {
   const data = {
     type: 'success',
     text: message,
@@ -29,7 +29,7 @@ function dispatchSuccess(message, type, dispatch) {
   dispatchNotification(data, type, dispatch);
 }
 
-function getErrorMessage(error) {
+export function getErrorMessage(error) {
   let errMsg;
   let type = 'toast';
   if (error.response) {

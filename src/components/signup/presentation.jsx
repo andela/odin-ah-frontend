@@ -196,7 +196,7 @@ export class Presentation extends Component {
               <div className="control">
                 <button
                   type={'submit'}
-                  className={`button is-success is-medium is-fullwidth signup-btn ${(this.props.loading) ? 'is-loading' : ''}`}>
+                  className={`button is-primary is-medium is-fullwidth signup-btn ${(this.props.loading) ? 'is-loading' : ''}`}>
                   Sign Up
                 </button>
               </div>

@@ -11,7 +11,7 @@ const setup = () => {
     close: jest.fn(() => Promise.resolve())
   };
 
-  const wrapper = mount(<LoginModal {...props} />);
+  const wrapper = mount(<LoginModal loading={false} {...props} />);
 
   return {
     props,

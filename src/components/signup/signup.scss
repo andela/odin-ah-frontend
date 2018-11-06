@@ -1,11 +1,7 @@
-//@import "~bulma/sass/utilities/initial-variables";
 
 $btn: #0E7B04;
 $fb: #3B5998;
 $twitter: #00ACED;
-$modal-content-width: 500px;
-$modal-card-body-padding: 50px 50px;
-@import "~bulma/bulma";
 
 .google {
   background: url("google.svg") no-repeat center;
@@ -25,7 +21,7 @@ $modal-card-body-padding: 50px 50px;
 }
 
 .button.is-facebook:hover {
-  background-color: $white;
+  background-color: white;
   border-color: $twitter;
   //color: #000;
   color: $fb;
@@ -38,7 +34,7 @@ $modal-card-body-padding: 50px 50px;
 }
 
 .button.is-twitter:hover {
-  background-color: $white;
+  background-color: white;
   border-color: $twitter;
   //color: #000;
   color: $twitter;
@@ -47,7 +43,7 @@ $modal-card-body-padding: 50px 50px;
 .signup-btn {
   background-color: $btn;
   border-color: transparent;
-  color: $white;
+  color: white;
 }
 
 .button.signup-btn:hover {
@@ -55,7 +51,7 @@ $modal-card-body-padding: 50px 50px;
 }
 
 .signup-logo-image {
-  width: 200px;
+  width: 150px;
   height: auto;
   margin: 0 auto 24px;
   display: block;

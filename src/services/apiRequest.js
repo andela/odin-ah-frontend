@@ -47,6 +47,10 @@ export class ApiRequest {
   fetchArticles() {
     return this.axios.get('/articles');
   }
+
+  loginUser(data) {
+    return this.axios.post('/auth/login', data);
+  }
 }
 
 const apiRequest = new ApiRequest();
