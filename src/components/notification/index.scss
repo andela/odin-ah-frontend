@@ -1,0 +1,88 @@
+.alert {
+
+}
+.toast {
+  visibility: hidden;
+  width: 250px;
+  max-width: 300px;
+  right: 0;
+  margin-right: 16px;
+  top: 100px;
+  font-size: 16px;
+  display: flex;
+  // flex-direction: column;
+  position: fixed;
+  box-shadow: 1px 1px 5px #ccc;
+  z-index: 2000;
+}
+
+.toast.dismiss {
+  -webkit-animation: fadeout 0.5s;
+  animation: fadeout 0.5s;
+}
+
+.toast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s;
+  animation: fadein 0.5s;
+}
+
+.alert.dismiss {
+  display: none;
+}
+
+.alert.show {
+  display: block;
+}
+
+.toast .title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.toast .body {
+  font-size: 24px;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    right: -300px;
+    opacity: 0;
+  }
+  to {
+    right: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    right: -300px;
+    opacity: 0;
+  }
+  to {
+    right: 0;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    right: 0;
+    opacity: 1;
+  }
+  to {
+    right: -300px;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    right: 0;
+    opacity: 1;
+  }
+  to {
+    right: -300px;
+    opacity: 0;
+  }
+}

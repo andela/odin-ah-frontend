@@ -4,9 +4,10 @@ import Routes from './components/Routes';
 
 function App() {
   return (
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   );
 }
+
 export default App;
