@@ -8,7 +8,7 @@ const user = {
   password: faker.internet.password()
 };
 const timeout = 12000;
-describe.only('End-to-End for Signup Page', () => {
+describe('End-to-End for Sign up Page', () => {
   let browser;
   let page;
   beforeEach(async () => {

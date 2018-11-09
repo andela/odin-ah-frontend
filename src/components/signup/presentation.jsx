@@ -106,11 +106,11 @@ export class Presentation extends Component {
               value={email} fieldError={(emailError) ? emailError[0] : null}
               validateField={this.validateInput} onUpdate={this.updateState}/>
             <Input
-              type={'password'} iconType={'key'} field={'password'} value={password}
+              type={'password'} iconType={'lock'} field={'password'} value={password}
               fieldError={(passwordError) ? passwordError[0] : null}
               validateField={this.validateInput} onUpdate={this.updateState}/>
             <Input
-              type={'password'} iconType={'key'} placeholder={'Confirm Password'}
+              type={'password'} iconType={'lock'} placeholder={'Confirm Password'}
               field={'confirmPassword'} value={confirmPassword}
               fieldError={(confirmPasswordError) ? confirmPasswordError[0] : null}
               validateField={this.validateInput} onUpdate={this.updateState}/>

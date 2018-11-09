@@ -10,7 +10,7 @@ export default function SocialButton(props) {
   if (props.type === 'signup') {
     label = `Sign up with ${sentenceCase}`;
   } else {
-    label = `Sign in with ${sentenceCase}`;
+    label = `Log in with ${sentenceCase}`;
   }
   const icon = (social === 'google') ? `${social}` : `fa-${social}`;
   return (
