@@ -59,6 +59,16 @@ export const socialLoginFailed = {
   message: 'Your social account does not have an email associated. Please sign up with email'
 };
 
+export const networkError = {
+  response: {
+    status: 500,
+    data: {
+      status: 'error',
+      message: 'Network error'
+    }
+  }
+};
+
 async function executeAction(length) {
   const store = mockStore({});
   await store.dispatch(userLoginRequest(userData));
@@ -120,19 +130,13 @@ describe('log in action test', () => {
   });
   test('should execute login action, simulate network failed error', async () => {
     const apiReqStub = sinon.stub(apiRequest, 'loginUser')
-      .rejects({
-        request: {
-          message: 'Network Error'
-        }
-      });
+      .rejects(networkError);
     await executeAction(1);
     apiReqStub.restore();
   });
   test('should execute login action, simulate network failed error', async () => {
     const apiReqStub = sinon.stub(apiRequest, 'loginUser')
-      .rejects({
-        message: 'An error occurred'
-      });
+      .rejects(networkError);
     await executeAction(1);
     apiReqStub.restore();
   });

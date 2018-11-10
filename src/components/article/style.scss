@@ -1,0 +1,214 @@
+@mixin input-style {
+  width: 100%;
+  margin: auto;
+  cursor: text;
+  outline: none;
+  [contentEditable="true"]:focus {
+    outline: none;
+  }
+}
+@mixin button-style {
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 1em 1.8em;
+  background-color: transparent;
+  border-radius: 5px;
+  &:focus {
+    outline: none;
+  }
+}
+
+.publish {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  &__button {
+    @include button-style;
+    color: #007EA7;
+    border: 1px solid #007EA7;
+    align-self: flex-end;
+    &:enabled:hover {
+      background-color: #007EA7;
+      color: white;
+    }
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.form {
+  margin-top: 40px;
+  .article-form {
+    max-width: 700px;
+    margin: auto;
+    .input-group {
+      margin-bottom: 20px;
+      .title-input {
+        @include input-style;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 15px;
+        color: #4a4a4a;
+        &.empty {
+          color: #ABA9A9;
+        }
+        [contentEditable="true"] {
+          font-size: 35px;
+          font-weight: 800;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+      .body-input {
+        @include input-style;
+        font-size: 21px;
+        &.empty {
+          color: #ccc;
+        }
+      }
+    }
+  }
+}
+
+.m-publish {
+  margin: -15% auto 0 auto;
+  z-index: 10000;
+  .modal-content {
+    max-width: 500px;
+  }
+}
+.modal-publish {
+  background-color: #fff;
+  &__title {
+    color: #000;
+    font-size: 24px;
+    padding: 20px 0 20px 8%;
+    border-bottom: 1px solid #ccc;
+  }
+  &__content {
+    padding: 40px 0 20px 8%;
+    .select-tag {
+      margin: 0 10% 8% 0;
+    }
+    .checkbox {
+      margin-bottom: 20px;
+      label {
+        position: relative;
+        display: inline-block;
+        &:hover .checkbox__icon{
+          background:#007EA7;
+        }
+        div.checkbox__icon {
+          position: absolute;
+          top: 0%;
+          width: 23px;
+          height: 23px;
+          display: inline-block;
+          border: 2px solid#007EA7;
+          text-align: center;
+          border-radius: 3px;
+          margin-right: 10px;
+          cursor: pointer;
+          line-height: 20px;
+          transition: all .4s;
+          i {
+            color: white;
+            font-size: 16px;
+            opacity: 0;
+            transition: all .4s;
+          }
+        }
+        .setting {
+          margin-left: 33px;
+          display: inline-block;
+          &__title {
+            font-size: 18px;
+          }
+          &__description {
+            font-size: 10px;
+          }
+        }
+      }
+      input[type='checkbox'] {
+        display: none;
+      }
+      input:checked+label {
+        i {
+          opacity: 1;
+        }
+        div.checkbox__icon {
+          background:#007EA7;
+        }
+      }
+    }
+    .action {
+      display: flex;
+      flex-direction: row-reverse;
+      margin: 5% 10% 0 0;
+      &__cancel {
+        @include button-style;
+        color: #00171F;
+        border: none;
+        margin-right: 20px;
+        &:hover {
+          background-color: #00171F;
+          opacity: 0.5;
+          color: white;
+        }
+      }
+      &__finish {
+        @include button-style;
+        color: #007EA7;
+        border: 1px solid #007EA7;
+        &:hover {
+          background-color: #007EA7;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.show-butter {
+  position: relative;
+  .butter__container{
+    height:40px;
+  }
+}
+
+.butter__container{  
+  position:absolute;
+  top:0px;
+  width:100%;
+  height:0;  
+  box-sizing:border-box;
+  color:white;  
+  text-align:center;
+  overflow:hidden;
+  box-sizing:border-box;
+  transition:height .2s;
+  z-index: 10;
+  &--type {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    &.error {
+      background-color: #cc5454;
+    }
+    &.success {
+      background-color: #539987;
+    }
+  }
+  &--message {
+    margin-left: 15px;
+  }
+}
+
+

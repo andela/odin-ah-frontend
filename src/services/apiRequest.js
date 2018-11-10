@@ -21,6 +21,10 @@ export class ApiRequest {
     this.setToken(token);
   }
 
+  getInstance() {
+    return this.axios;
+  }
+
   setToken(token) {
     if (token) {
       this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -56,10 +60,6 @@ export class ApiRequest {
     return this.axios.post('/auth/confirmation', data);
   }
 
-  fetchArticles() {
-    return this.axios.get('/articles');
-  }
-
   loginUser(data) {
     return this.axios.post('/auth/login', data);
   }
@@ -81,6 +81,18 @@ export class ApiRequest {
         return Promise.reject(error);
       }
     );
+  }
+
+  createArticle(data) {
+    return this.axios.post('/articles', data);
+  }
+
+  getArticle(slug) {
+    return this.axios.get(`/articles/${slug}`);
+  }
+
+  updateArticle(slug, payload) {
+    return this.axios.put(`/articles/${slug}`, payload);
   }
 }
 
