@@ -1,10 +1,61 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import LoginForm from '../../components/login/LoginForm';
+import { mount } from 'enzyme';
+import { LoginModal } from '../../components/login/LoginModal';
 
-it('renders Todos without crashing', () => {
-  const wrapper = shallow(<LoginForm />);
-  const loginHeader = <h1 >Login page</h1>;
-  expect(wrapper.contains(loginHeader))
-    .toEqual(true);
+jest.mock('react-router-dom');
+
+const setup = () => {
+  const props = {
+    userLoginRequest: jest.fn(() => Promise.resolve()),
+    show: false,
+    close: jest.fn(() => Promise.resolve())
+  };
+
+  const wrapper = mount(<LoginModal loading={false} {...props} />);
+
+  return {
+    props,
+    wrapper
+  };
+};
+
+describe('Login modal component', () => {
+  const { props, wrapper } = setup();
+  describe('Validate your input when form is submitted', () => {
+    it('should throw an error when no data is provided', () => {
+      const event = {
+        preventDefault: jest.fn()
+      };
+      wrapper.instance().onSubmit(event);
+      expect(wrapper.state().errors).toEqual({
+        password: 'This field is required',
+        email: 'This field is required'
+      });
+    });
+
+    it('should throw error when email or password is invalid', () => {
+      const event = {
+        preventDefault: jest.fn(),
+      };
+      wrapper.setState({ email: 'tes', password: 'pass' });
+      wrapper.instance().onSubmit(event);
+      expect(wrapper.state().errors).toEqual({
+        password: 'Your password must not be lass than 8 characters',
+        email: 'Your email is invalid'
+      });
+    });
+    it('should setState when form is submitted', () => {
+      wrapper.instance().update({ email: 'test@mail.com' });
+      expect(wrapper.state().email).toEqual('test@mail.com');
+    });
+
+    it('should call userLoginRequest action when form is submitted', () => {
+      const event = {
+        preventDefault: jest.fn(),
+      };
+      wrapper.setState({ email: 'test@mail.com', password: 'password123' });
+      wrapper.instance().onSubmit(event);
+      expect(props.userLoginRequest.mock.calls.length).toEqual(1);
+    });
+  });
 });

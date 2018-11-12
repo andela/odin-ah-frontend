@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { logout } from '../redux/actions/auth/login';
 
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 
@@ -16,23 +17,16 @@ export class ApiRequest {
     this.axios = Axios.create({
       baseURL: BASE_API_URL,
     });
-
-    // Add a response interceptor
-    this.axios.interceptors.response.use(
-      response => response,
-      (error) => {
-        const { status } = error;
-        if (status === 401) {
-          // todo clear authentication token from local storage
-          // redirect to login
-        }
-        return Promise.reject(error);
-      }
-    );
+    const token = localStorage.getItem('jwtToken');
+    this.setToken(token);
   }
 
   setToken(token) {
-    this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    if (token) {
+      this.axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    } else {
+      delete this.axios.defaults.headers.common.Authorization;
+    }
   }
 
   /**
@@ -60,6 +54,33 @@ export class ApiRequest {
    */
   resendVerificationToken(data) {
     return this.axios.post('/auth/confirmation', data);
+  }
+
+  fetchArticles() {
+    return this.axios.get('/articles');
+  }
+
+  loginUser(data) {
+    return this.axios.post('/auth/login', data);
+  }
+
+  authenticateUser() {
+    return this.axios.get('/users');
+  }
+
+  registerInterceptors(store = null) {
+    this.axios.interceptors.response.use(
+      response => response,
+      (error) => {
+        const { status } = error.response;
+        if (status === 401) {
+          if (store) {
+            store.dispatch(logout);
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 }
 

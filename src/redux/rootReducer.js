@@ -3,9 +3,11 @@ import registration from './reducer/auth/register';
 import verify from './reducer/auth/verify';
 import notification from './reducer/notification';
 import modal from './reducer/modal';
+import login from './reducer/login';
+
 
 const rootReducer = combineReducers({
-  registration, notification, modal, verify
+  registration, notification, modal, verify, login
 });
 
 export default rootReducer;
