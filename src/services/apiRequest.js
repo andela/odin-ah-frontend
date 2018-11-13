@@ -68,6 +68,20 @@ export class ApiRequest {
     return this.axios.get('/users');
   }
 
+  startResetPassword(data) {
+    return this.axios.post('/users/reset-password/begin', { email: data.email });
+  }
+
+  /**
+   *
+   * @param {string} password
+   * @return {Promise<object>} return a Promise of the request
+   * @memberof ApiRequest
+   */
+  completeResetPassword(data) {
+    return this.axios.post(`/users/reset-password/complete/${data.token}`);
+  }
+
   registerInterceptors(store = null) {
     this.axios.interceptors.response.use(
       response => response,
