@@ -3,7 +3,10 @@ import thunk from 'redux-thunk';
 import faker from 'faker';
 import sinon from 'sinon';
 import {
-  userLoginRequest, logout, loginUser
+  userLoginRequest,
+  logout,
+  loginUser,
+  getAuthUserProfile
 } from '../../redux/actions/auth/login';
 import apiRequest from '../../services/apiRequest';
 import * as types from '../../redux/constants/index';
@@ -52,6 +55,9 @@ export const loginFailed = {
     message: 'Invalid user credentials'
   }
 };
+export const socialLoginFailed = {
+  message: 'Your social account does not have an email associated. Please sign up with email'
+};
 
 async function executeAction(length) {
   const store = mockStore({});
@@ -67,6 +73,12 @@ async function dispatchAction(length) {
   const actions = store.getActions();
   expect(actions.length)
     .toEqual(length);
+}
+async function executeProfileAction(length) {
+  const store = mockStore({});
+  await store.dispatch(getAuthUserProfile());
+  const actions = store.getActions();
+  expect(actions.length).toEqual(length);
 }
 describe('log in action test', () => {
   it('should execute log in action', async () => {
@@ -86,6 +98,24 @@ describe('log in action test', () => {
     const apiReqStub = sinon.stub(apiRequest, 'loginUser')
       .rejects(loginFailed);
     await executeAction(1);
+    apiReqStub.restore();
+  });
+  it('should execute log in action for social', async () => {
+    const apiReqStub = sinon
+      .stub(apiRequest, 'authenticateUser')
+      .resolves({
+        data: {
+          profile
+        }
+      });
+    await executeProfileAction(2);
+    apiReqStub.restore();
+  });
+  it('should not execute log in action for social', async () => {
+    const apiReqStub = sinon
+      .stub(apiRequest, 'authenticateUser')
+      .rejects(socialLoginFailed);
+    await executeProfileAction(0);
     apiReqStub.restore();
   });
   test('should execute login action, simulate network failed error', async () => {

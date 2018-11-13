@@ -10,5 +10,6 @@ it('renders Todos without crashing', () => {
   expect(wrapper.contains(homeHeader))
     .toEqual(true);
   wrapper.find('#signupBtn').simulate('click');
+  wrapper.find('#loginBtn').simulate('click');
   expect(mockOpenModalFunc).toBeCalled();
 });

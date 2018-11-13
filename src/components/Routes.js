@@ -5,6 +5,7 @@ import Modal from './modal';
 import VerifyEmail from './signup/verifyEmail';
 import ReVerifyEmail from './signup/reverifyEmail';
 import Home from './home/Home';
+import SocialLogin from './login/SocialLogin';
 
 export default function Root() {
   return (
@@ -12,6 +13,7 @@ export default function Root() {
       <Switch>
         <Route exact path="/" component={Home}/>
         <Route exact path="/auth/confirmation/:token" component={VerifyEmail}/>
+        <Route exact path="/auth/social" component={SocialLogin} />
         <Route exact path="/email-verification/resend" component={ReVerifyEmail}/>
       </Switch>
       <Toast/>
