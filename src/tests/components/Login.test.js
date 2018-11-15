@@ -22,7 +22,7 @@ const setup = () => {
 describe('Login modal component', () => {
   const { props, wrapper } = setup();
   describe('Validate your input when form is submitted', () => {
-    it('should throw an error when no data is provided', () => {
+    test('should throw an error when no data is provided', () => {
       const event = {
         preventDefault: jest.fn()
       };
@@ -33,7 +33,7 @@ describe('Login modal component', () => {
       });
     });
 
-    it('should throw error when email or password is invalid', () => {
+    test('should throw error when email or password is invalid', () => {
       const event = {
         preventDefault: jest.fn(),
       };
@@ -44,12 +44,12 @@ describe('Login modal component', () => {
         email: 'Your email is invalid'
       });
     });
-    it('should setState when form is submitted', () => {
+    test('should setState when form is submitted', () => {
       wrapper.instance().update({ email: 'test@mail.com' });
       expect(wrapper.state().email).toEqual('test@mail.com');
     });
 
-    it('should call userLoginRequest action when form is submitted', () => {
+    test('should call userLoginRequest action when form is submitted', () => {
       const event = {
         preventDefault: jest.fn(),
       };

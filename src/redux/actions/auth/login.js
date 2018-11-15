@@ -1,7 +1,7 @@
 import {
   AUTHENTICATING, LOGIN_USER, LOGIN_USER_ERROR, LOGOUT_USER
 } from '../../constants/index';
-import { dispatchError, getErrorMessage } from './register';
+import { dispatchError, getErrorMessage, dispatchSuccess } from './register';
 import apiRequest from '../../../services/apiRequest';
 
 
@@ -31,6 +31,10 @@ export const getAuthUserProfile = () => (dispatch) => {
   apiRequest.authenticateUser().then((result) => {
     const { profile } = result.data;
     dispatch(loginUser(profile));
+    dispatchSuccess(result.data.message, 'success', dispatch);
+  }).catch((error) => {
+    const { message } = error;
+    dispatchError(message, 'error', dispatch);
   });
 };
 
