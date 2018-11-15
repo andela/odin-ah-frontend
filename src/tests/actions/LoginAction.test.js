@@ -11,10 +11,8 @@ import {
 import apiRequest from '../../services/apiRequest';
 import * as types from '../../redux/constants/index';
 
-
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
-
 
 const userData = {
   email: faker.internet.email(),
@@ -34,7 +32,6 @@ const profile = {
     articleComment: true,
     newArticleFromUserFollowing: true,
     newFollowerOnSeries: true
-
   }
 };
 export const loginResult = {
@@ -73,16 +70,14 @@ async function executeAction(length) {
   const store = mockStore({});
   await store.dispatch(userLoginRequest(userData));
   const actions = store.getActions();
-  expect(actions.length)
-    .toEqual(length);
+  expect(actions.length).toEqual(length);
 }
 
 async function dispatchAction(length) {
   const store = mockStore({});
   await store.dispatch(loginUser(profile));
   const actions = store.getActions();
-  expect(actions.length)
-    .toEqual(length);
+  expect(actions.length).toEqual(length);
 }
 async function executeProfileAction(length) {
   const store = mockStore({});
@@ -92,51 +87,42 @@ async function executeProfileAction(length) {
 }
 describe('log in action test', () => {
   it('should execute log in action', async () => {
-    const apiReqStub = sinon.stub(apiRequest.axios, 'post')
-      .resolves(loginResult);
+    const apiReqStub = sinon.stub(apiRequest.axios, 'post').resolves(loginResult);
     await executeAction(2);
     apiReqStub.restore();
   });
   it('should execute log in action', async () => {
-    const apiReqStub = sinon.stub(apiRequest.axios, 'post')
-      .resolves(profile);
+    const apiReqStub = sinon.stub(apiRequest.axios, 'post').resolves(profile);
     await dispatchAction(1);
     apiReqStub.restore();
   });
 
   it('should not execute log in action', async () => {
-    const apiReqStub = sinon.stub(apiRequest, 'loginUser')
-      .rejects(loginFailed);
+    const apiReqStub = sinon.stub(apiRequest, 'loginUser').rejects(loginFailed);
     await executeAction(1);
     apiReqStub.restore();
   });
   it('should execute log in action for social', async () => {
-    const apiReqStub = sinon
-      .stub(apiRequest, 'authenticateUser')
-      .resolves({
-        data: {
-          profile
-        }
-      });
-    await executeProfileAction(2);
+    const apiReqStub = sinon.stub(apiRequest, 'authenticateUser').resolves({
+      data: {
+        profile
+      }
+    });
+    await executeProfileAction(1);
     apiReqStub.restore();
   });
   it('should not execute log in action for social', async () => {
-    const apiReqStub = sinon
-      .stub(apiRequest, 'authenticateUser')
-      .rejects(socialLoginFailed);
+    const apiReqStub = sinon.stub(apiRequest, 'authenticateUser').rejects(socialLoginFailed);
     await executeProfileAction(0);
     apiReqStub.restore();
   });
   test('should execute login action, simulate network failed error', async () => {
-    const apiReqStub = sinon.stub(apiRequest, 'loginUser')
-      .rejects(networkError);
+    const apiReqStub = sinon.stub(apiRequest, 'loginUser').rejects(networkError);
     await executeAction(1);
     apiReqStub.restore();
   });
   test('should execute login action, simulate network failed error', async () => {
-    const apiReqStub = sinon.stub(apiRequest, 'loginUser')
-      .rejects(networkError);
+    const apiReqStub = sinon.stub(apiRequest, 'loginUser').rejects(networkError);
     await executeAction(1);
     apiReqStub.restore();
   });
@@ -148,7 +134,7 @@ describe('log out action test', () => {
 
     const expectedAction = [
       {
-        type: types.LOGOUT_USER,
+        type: types.LOGOUT_USER
       }
     ];
     store.dispatch(logout());

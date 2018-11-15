@@ -1,0 +1,30 @@
+.popular-tags__item {
+  background: #efefef;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+  cursor: pointer;
+  color: #00171f;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.popular-tags__item:hover {
+  background: #00a8e8;
+  color: white;
+}
+
+.tag__text {
+  font-size: 1.1em;
+}
+
+@media (max-width: 800px) {
+  .popular-tags__item {
+    padding: 10px;
+    max-width: 80%;
+    margin-right: 7px;
+  }
+}

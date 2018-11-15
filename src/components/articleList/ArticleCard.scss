@@ -1,0 +1,90 @@
+.article-card {
+  display: flex;
+  flex-direction: row;
+  height: 250px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.article-card__image {
+  flex-basis: 48%;
+  //   background: grey url("https://picsum.photos/400");
+}
+
+.article-card__content {
+  flex-basis: 52%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.article-content__wrapper {
+  margin: 14px 25px 18px 15px;
+}
+
+.article-card__title {
+  font-size: 1.4em;
+  color: #00a8e8;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.article-card__title:hover {
+  color: #007ea7;
+}
+
+.article-card__desc {
+  color: #00171f;
+  font-size: 0.9em;
+  margin: 15px 0 35px 0;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article-card__author {
+  font-size: 1em;
+  color: #00171f;
+  position: absolute;
+  bottom: 3em;
+}
+
+.article-card__footer {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8em;
+  color: #666666;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 1.5em;
+  width: 80%;
+}
+
+.article-card__footer--left {
+  margin-right: 0px;
+}
+
+.article-card__footer--right {
+  margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  .article-card {
+    flex-direction: column;
+  }
+
+  .article-card__desc {
+    display: none;
+  }
+
+  .article-card__author {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 800px) {
+}

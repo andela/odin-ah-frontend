@@ -1,0 +1,43 @@
+.app-footer {
+  background: #00171f;
+  width: 100%;
+  padding: 70px;
+  margin-top: 150px;
+}
+
+.footer__content-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.footer__branding {
+  width: 4em;
+  height: 4em;
+  background: url("../../logo-icon-only.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 30px;
+}
+
+.footer__branding-text {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50%;
+}
+
+.footer__branding-title {
+  color: white;
+  font-size: 1.5em;
+}
+
+.footer__branding-message {
+  color: white;
+  font-size: 1.2em;
+}
+
+.footer__item {
+  display: inline-block;
+  margin-right: 5px;
+}
