@@ -5,10 +5,11 @@ import notification from './reducer/notification';
 import modal from './reducer/modal';
 import articles from './reducer/articles';
 import login from './reducer/login';
+import passwordResetData from './reducer/passwordReset';
 
 
 const rootReducer = combineReducers({
-  registration, notification, modal, verify, login, articles
+  registration, notification, modal, verify, login, articles, passwordResetData
 });
 
 export default rootReducer;
