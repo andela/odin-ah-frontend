@@ -1,0 +1,88 @@
+.nav-bar__logo {
+  background: url("../../logo-with-text.png") no-repeat;
+  background-size: 200px;
+  background-position: center;
+  width: 200px;
+  height: auto;
+}
+
+.nav-bar {
+  background: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  z-index: 100;
+}
+
+.nav-bar__container {
+  width: 95%;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.1em;
+}
+
+.nav-bar__logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-bar__menu--right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btn {
+  display: block;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 6px 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transform: scale(1, 1);
+  transition: transform 0.5s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.sign-in-btn {
+  opacity: 0.8;
+}
+
+.btn--link {
+  border: none;
+}
+
+.text--primary {
+  color: #007ea7;
+}
+
+.btn--primary {
+  background: #007ea7;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .nav-bar__logo {
+    background: url("../../logo-icon-only.png") no-repeat;
+    background-size: auto;
+    background-position: center;
+    width: 200px;
+    height: auto;
+  }
+
+  .btn {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .nav-bar__container {
+    font-size: 1.5em;
+  }
+}

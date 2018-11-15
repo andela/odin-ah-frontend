@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Home from '../../components/home/Home';
+
+import { HeaderContainer } from '../../../components/header/HeaderContainer';
 
 it('renders without crashing', () => {
-  const wrapper = shallow(<Home />);
+  const wrapper = shallow(<HeaderContainer />);
   expect(wrapper.exists()).toBe(true);
 });

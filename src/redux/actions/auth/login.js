@@ -1,9 +1,8 @@
 import {
   AUTHENTICATING, LOGIN_USER, LOGIN_USER_ERROR, LOGOUT_USER
 } from '../../constants/index';
-import { dispatchError, getErrorMessage, dispatchSuccess } from './register';
+import { dispatchError, getErrorMessage } from './register';
 import apiRequest from '../../../services/apiRequest';
-
 
 export const loginUser = user => ({
   type: LOGIN_USER,
@@ -24,23 +23,26 @@ export const logout = () => {
 
 export const authenticating = loading => ({
   type: AUTHENTICATING,
-  loading,
+  loading
 });
 
 export const getAuthUserProfile = () => (dispatch) => {
-  apiRequest.authenticateUser().then((result) => {
-    const { profile } = result.data;
-    dispatch(loginUser(profile));
-    dispatchSuccess(result.data.message, 'success', dispatch);
-  }).catch((error) => {
-    const { message } = error;
-    dispatchError(message, 'error', dispatch);
-  });
+  apiRequest
+    .authenticateUser()
+    .then((result) => {
+      const { profile } = result.data;
+      dispatch(loginUser(profile));
+    })
+    .catch((error) => {
+      const { message } = error;
+      dispatchError(message, 'error', dispatch);
+    });
 };
 
 export const userLoginRequest = userData => (dispatch) => {
   dispatch(authenticating(true));
-  apiRequest.loginUser(userData)
+  apiRequest
+    .loginUser(userData)
     .then((response) => {
       const { user } = response.data;
       localStorage.setItem('jwtToken', user.token);

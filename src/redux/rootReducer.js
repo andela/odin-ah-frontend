@@ -6,10 +6,19 @@ import modal from './reducer/modal';
 import articles from './reducer/articles';
 import login from './reducer/login';
 import passwordResetData from './reducer/passwordReset';
-
+import landingPageArticles from './reducer/landingPage/articles';
+import landingPageTags from './reducer/landingPage/tags';
 
 const rootReducer = combineReducers({
-  registration, notification, modal, verify, login, articles, passwordResetData
+  registration,
+  notification,
+  modal,
+  verify,
+  login,
+  articles,
+  passwordResetData,
+  landingPageArticles,
+  landingPageTags
 });
 
 export default rootReducer;

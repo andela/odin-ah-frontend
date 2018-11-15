@@ -12,7 +12,8 @@ describe('TitleInput Component', () => {
         onChange={propFunction}
         onFocusIn={propFunction}
         onFocusOut={propFunction}
-       />
+        onPaste={propFunction}
+      />
     );
     expect(wrapper.find('h1')).toHaveLength(1);
   });

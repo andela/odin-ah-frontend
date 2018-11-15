@@ -15,7 +15,7 @@ export class ApiRequest {
 
   constructor() {
     this.axios = Axios.create({
-      baseURL: BASE_API_URL,
+      baseURL: BASE_API_URL
     });
     const token = localStorage.getItem('jwtToken');
     this.setToken(token);
@@ -60,6 +60,10 @@ export class ApiRequest {
     return this.axios.post('/auth/confirmation', data);
   }
 
+  fetchArticles(pageToLoad = 1, size = 20) {
+    return this.axios.get(`/articles?page=${pageToLoad}&size=${size}`);
+  }
+
   loginUser(data) {
     return this.axios.post('/auth/login', data);
   }
@@ -72,22 +76,21 @@ export class ApiRequest {
     return this.axios.post('/users/reset-password/begin', { email: data.email });
   }
 
-  /**
-   *
-   * @param {string} password
-   * @return {Promise<object>} return a Promise of the request
-   * @memberof ApiRequest
-   */
   completeResetPassword(data) {
     return this.axios.post(`/users/reset-password/complete/${data.token}`, {
       password: data.password
     });
   }
 
+  fetchPopularTags() {
+    return this.axios.get('/tags/popular');
+  }
+
   registerInterceptors(store = null) {
     this.axios.interceptors.response.use(
       response => response,
       (error) => {
+        if (!error.response) return Promise.reject(error);
         const { status } = error.response;
         if (status === 401) {
           if (store) {
