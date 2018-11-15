@@ -215,8 +215,9 @@ export class CreateArticle extends Component {
   async finish() {
     const { publishArticle, hideResponse, history } = this.props;
     const {
-      title, body, description, tags, imageUrl, isPrivate, downloadable
+      body, description, tags, imageUrl, isPrivate, downloadable
     } = this.state;
+    const { title } = this.state.rawTextValue;
     const articleData = {
       title, body, description, tags, imageUrl, isPrivate, downloadable
     };

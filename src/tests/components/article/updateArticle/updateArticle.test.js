@@ -142,6 +142,7 @@ describe('UpdateArticle Component', () => {
       title: 'Test title',
       body: '<p>Test body content<p>',
       description: 'Test body content',
+      edited: true
     });
     wrapper.find('.publish__button').simulate('click');
     expect(publishSpy).toHaveBeenCalled();
@@ -179,6 +180,7 @@ describe('UpdateArticle Component', () => {
       title: 'Test title',
       body: '<p>Test body content<p>',
       description: 'Test body content',
+      edited: true
     });
     const titleEvent = {
       target: {
@@ -221,6 +223,7 @@ describe('UpdateArticle Component', () => {
       title: 'Test title',
       body: '<p>Test body content<p>',
       description: 'Test body content',
+      edited: true
     });
     wrapper.instance().titleEditorChangeHandler('Test title');
     wrapper.instance().bodyEditorChangeHandler('Test body content');
@@ -253,6 +256,7 @@ describe('UpdateArticle Component', () => {
       title: 'Title',
       body: '<p>Start typing ...</p>',
       description: 'Test body content',
+      edited: true
     });
     wrapper.instance().titleFocusInHandler();
     wrapper.instance().bodyFocusInHandler();
@@ -285,6 +289,7 @@ describe('UpdateArticle Component', () => {
       title: '',
       body: '',
       description: '',
+      edited: true
     });
     wrapper.instance().titleFocusOutHandler();
     wrapper.instance().bodyFocusOutHandler();
@@ -323,7 +328,8 @@ describe('UpdateArticle Component', () => {
         label: 'Test',
         value: 'Test',
         __isNew__: true
-      }]
+      }],
+      edited: true
     });
     wrapper.find('.publish__button').simulate('click');
     wrapper.find('.action__finish').simulate('click');
@@ -365,7 +371,8 @@ describe('UpdateArticle Component', () => {
         label: 'Test',
         value: 'Test',
         __isNew__: true
-      }]
+      }],
+      edited: true
     });
     wrapper.find('.publish__button').simulate('click');
     wrapper.find('.action__cancel').simulate('click');
@@ -419,7 +426,8 @@ describe('UpdateArticle Component', () => {
         label: 'Test',
         value: 'Test',
         __isNew__: true
-      }]
+      }],
+      edited: true
     });
     wrapper.find('.publish__button').simulate('click');
     wrapper.instance().tagChangeHandler(newTags);
@@ -467,7 +475,8 @@ describe('UpdateArticle Component', () => {
       },
       title: 'Test title',
       body: '<p>Test body content<p>',
-      description: 'Test body content'
+      description: 'Test body content',
+      edited: true
     });
     wrapper.find('.publish__button').simulate('click');
     wrapper.instance().checkBoxHandler(isPrivate);

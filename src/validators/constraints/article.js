@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export const createArticleConstraint = {
+const createArticleConstraint = {
   title: {
     presence: true,
     length: {
@@ -23,3 +23,7 @@ export const createArticleConstraint = {
     }
   }
 };
+
+const updateArticleConstraint = { ...createArticleConstraint };
+updateArticleConstraint.body.presence = false;
+export { createArticleConstraint, updateArticleConstraint };
