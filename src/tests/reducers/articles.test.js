@@ -13,6 +13,7 @@ import {
   GET_ARTICLE_SUCCESS,
   GET_ARTICLE_ERROR,
 } from '../../redux/constants/articles';
+import { GET_COMMENTS } from '../../redux/actions/articles/comments';
 
 describe('articleReducer', () => {
   it('should return the initial state when action type is not handled', () => {
@@ -173,12 +174,13 @@ describe('articleReducer', () => {
     };
     const action = { type: GET_ARTICLE_SUCCESS, response: { article } };
     const state = articleReducer(currentState, action);
-    expect(state).toEqual({
-      open: false,
-      errors: {},
-      loading: false,
-      articleToEdit: article
-    });
+    expect(state)
+      .toEqual({
+        open: false,
+        errors: {},
+        loading: false,
+        article
+      });
   });
   it('should handle GET_ARTICLE_ERROR action correctly', () => {
     const currentState = {
@@ -189,12 +191,26 @@ describe('articleReducer', () => {
       status: 500,
       message: 'An error occured, try again later.'
     };
-    const action = { type: GET_ARTICLE_ERROR, response: errors };
+    const action = {
+      type: GET_ARTICLE_ERROR,
+      response: errors
+    };
     const state = articleReducer(currentState, action);
-    expect(state).toEqual({
-      open: false,
-      loading: false,
-      errors
-    });
+    expect(state)
+      .toEqual({
+        open: false,
+        loading: false,
+        errors
+      });
+  });
+  it('should handle GET_COMMENTS action correctly', () => {
+    const payload = { text: 'text' };
+    const action = {
+      type: GET_COMMENTS,
+      ...payload
+    };
+    const state = articleReducer({ comment: {} }, action);
+    expect(state.comment)
+      .toEqual(payload);
   });
 });

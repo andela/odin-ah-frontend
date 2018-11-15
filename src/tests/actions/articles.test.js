@@ -1,9 +1,11 @@
 import moxios from 'moxios';
+import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import apiRequest from '../../services/apiRequest';
 import * as actions from '../../redux/actions/articles/articles';
 import * as types from '../../redux/constants/articles';
+import { deleteError } from './comment.test';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -154,7 +156,7 @@ describe('Article actions', () => {
         const request = moxios.requests.mostRecent();
         request.respondWith(getArticleSuccessResponse);
       });
-      return store.dispatch(actions.getArticleForUpdate(slug)).then(() => {
+      return store.dispatch(actions.getArticle(slug)).then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
     });
@@ -164,9 +166,31 @@ describe('Article actions', () => {
         const request = moxios.requests.mostRecent();
         request.respondWith(errorResponse);
       });
-      return store.dispatch(actions.getArticleForUpdate(slug)).then(() => {
+      return store.dispatch(actions.getArticle(slug)).then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
+    });
+  });
+
+  async function executeAction(length) {
+    await store.dispatch(actions.deleteArticle('url'));
+    const action = store.getActions();
+    expect(action.length)
+      .toEqual(length);
+  }
+  describe('Comment action test', () => {
+    test('should execute getComment action, simulate successful request', async () => {
+      const apiReqStub = sinon.stub(apiRequest.axios, 'delete')
+        .resolves();
+      await executeAction(2);
+      apiReqStub.restore();
+    });
+
+    test('should execute register action, simulate registration failed request', async () => {
+      const apiReqStub = sinon.stub(apiRequest.axios, 'delete')
+        .rejects(deleteError);
+      await executeAction(2);
+      apiReqStub.restore();
     });
   });
 });

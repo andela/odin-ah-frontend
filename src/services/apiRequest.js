@@ -68,12 +68,16 @@ export class ApiRequest {
     return this.axios.post('/auth/login', data);
   }
 
+  deleteArticle(slug) {
+    return this.axios.delete(`/articles/${slug}`);
+  }
+
   authenticateUser() {
     return this.axios.get('/users');
   }
 
-  startResetPassword(data) {
-    return this.axios.post('/users/reset-password/begin', { email: data.email });
+  startResetPassword(email) {
+    return this.axios.post('/users/reset-password/begin', { email });
   }
 
   completeResetPassword(data) {
@@ -84,6 +88,24 @@ export class ApiRequest {
 
   fetchPopularTags() {
     return this.axios.get('/tags/popular');
+  }
+
+  getComments(slug, id) {
+    let url = `/articles/${slug}/comments`;
+    if (id) url = `${url}/${id}`;
+    return this.axios.get(url);
+  }
+
+  createArticle(data) {
+    return this.axios.post('/articles', data);
+  }
+
+  getArticle(slug) {
+    return this.axios.get(`/articles/${slug}`);
+  }
+
+  updateArticle(slug, payload) {
+    return this.axios.put(`/articles/${slug}`, payload);
   }
 
   getProfileData() {
@@ -102,33 +124,20 @@ export class ApiRequest {
     return fetch(process.env.REACT_APP_CLOUDINARY_URL, fetchData);
   }
 
-  registerInterceptors(store = null) {
+  registerInterceptors(store) {
     this.axios.interceptors.response.use(
       response => response,
       (error) => {
-        if (!error.response) return Promise.reject(error);
-        const { status } = error.response;
-        if (status === 401) {
-          if (store) {
-            store.dispatch(logout);
+        const { response } = error;
+        if (response) {
+          const { status } = response;
+          if (status === 401 && store) {
+            store.dispatch(logout());
           }
-          localStorage.removeItem('jwtToken');
         }
         return Promise.reject(error);
       }
     );
-  }
-
-  createArticle(data) {
-    return this.axios.post('/articles', data);
-  }
-
-  getArticle(slug) {
-    return this.axios.get(`/articles/${slug}`);
-  }
-
-  updateArticle(slug, payload) {
-    return this.axios.put(`/articles/${slug}`, payload);
   }
 }
 

@@ -4,7 +4,7 @@ import { UpdateArticle } from '../../../../components/article/updateArticle/upda
 import PublishContainer from '../../../../components/article/Editor/PublishContainer';
 import TitleInput from '../../../../components/article/Editor/TitleInput';
 import BodyInput from '../../../../components/article/Editor/BodyInput';
-import PageNotFound from '../../../../components/404/PageNotFound';
+import PageNotFound from '../../../../components/error/PageNotFound';
 import uploadArticleImage from '../../../../services/cloudinary';
 
 jest.mock('../../../../services/cloudinary');

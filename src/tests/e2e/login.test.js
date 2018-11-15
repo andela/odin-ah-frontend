@@ -12,7 +12,7 @@ describe('End-to-End for Log in Page', () => {
   let page;
   beforeEach(async () => {
     browser = await puppeteer.launch({
-      headless: true
+      headless: true,
       // slowMo: 50
     });
     page = await browser.newPage();
@@ -34,9 +34,7 @@ describe('End-to-End for Log in Page', () => {
         password: 'password',
         email: 'dummy-user@local.host'
       };
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-in-btn-js');
-      await page.click('.sign-in-btn-js');
+      await page.goto(`${baseHost}/?login`);
 
       await page.waitForSelector('#loginForm');
       await page.click('input[name=email]');
@@ -56,9 +54,7 @@ describe('End-to-End for Log in Page', () => {
         password: 'invalid password',
         email: 'dummy-user@local.host'
       };
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-in-btn-js');
-      await page.click('.sign-in-btn-js');
+      await page.goto(`${baseHost}/?login`);
 
       await page.waitForSelector('#loginForm');
       await page.click('input[name=email]');
@@ -82,9 +78,7 @@ describe('End-to-End for Log in Page', () => {
         ...user,
         email: 'test@mail>>>>>>>>>'
       };
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-in-btn-js');
-      await page.click('.sign-in-btn-js');
+      await page.goto(`${baseHost}/?login`);
 
       await page.waitForSelector('#loginForm');
       await page.click('input[name=email]');
@@ -103,9 +97,7 @@ describe('End-to-End for Log in Page', () => {
   test(
     'should display error when invalid password is provided',
     async () => {
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-in-btn-js');
-      await page.click('.sign-in-btn-js');
+      await page.goto(`${baseHost}/?login`);
 
       await page.waitForSelector('#loginForm');
       await page.click('input[name=email]');

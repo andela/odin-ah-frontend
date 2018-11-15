@@ -18,7 +18,7 @@ test('renders Notification component without crashing', () => {
 
 test('renders Notification component without crashing', () => {
   const dismissSpy = jest.fn();
-  const wrapper = shallow(<Notification show={true} dismiss={dismissSpy} mode={'alert'}/>);
+  const wrapper = shallow(<Notification autoDismiss={false} show={true} dismiss={dismissSpy} mode={'alert'}/>);
   wrapper.instance()
     .forceUpdate();
   wrapper.find('button')
@@ -31,7 +31,7 @@ test('renders Notification component without crashing', () => {
 
 test('renders Notification component without crashing', () => {
   const dismissSpy = jest.fn();
-  const wrapper = shallow(<Notification show={true} dismiss={dismissSpy} mode={'alert'}/>);
+  const wrapper = shallow(<Notification autoDismiss={true} show={true} dismiss={dismissSpy} mode={'alert'}/>);
   wrapper.instance()
     .forceUpdate();
 

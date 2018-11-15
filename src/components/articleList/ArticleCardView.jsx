@@ -26,7 +26,7 @@ const ArticleCardView = (props) => {
       <div className="article-card__content">
         <div className="article-content__wrapper">
           <p className="article-card__title">
-            <Link to={`/articles/${slug}`} style={{ color: 'inherit' }}>
+            <Link to={`/article/${slug}`} style={{ color: 'inherit' }}>
               {title}
             </Link>
           </p>

@@ -13,7 +13,7 @@ describe('End-to-End for Sign up Page', () => {
   let page;
   beforeEach(async () => {
     browser = await puppeteer.launch({
-      headless: true
+      headless: true,
       // slowMo: 50
     });
     page = await browser.newPage();
@@ -35,9 +35,7 @@ describe('End-to-End for Sign up Page', () => {
         ...user,
         username: 'dummyUser'
       };
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-up-btn-js');
-      await page.click('.sign-up-btn-js');
+      await page.goto(`${baseHost}/?register`);
 
       await page.waitForSelector('#signupForm');
       await page.click('input[name=username]');
@@ -64,9 +62,7 @@ describe('End-to-End for Sign up Page', () => {
         ...user,
         username: 'dummyUser****'
       };
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-up-btn-js');
-      await page.click('.sign-up-btn-js');
+      await page.goto(`${baseHost}/?register`);
 
       await page.waitForSelector('#signupForm');
       await page.click('input[name=username]');
@@ -89,9 +85,7 @@ describe('End-to-End for Sign up Page', () => {
   test(
     'should display error when invalid username is provided',
     async () => {
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-up-btn-js');
-      await page.click('.sign-up-btn-js');
+      await page.goto(`${baseHost}/?register`);
       // wait for the signup form to be loaded
       await page.waitForSelector('#signupForm');
       await page.click('input[name=username]');
@@ -120,9 +114,7 @@ describe('End-to-End for Sign up Page', () => {
   test(
     'should display error when invalid email is provided',
     async () => {
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-up-btn-js');
-      await page.click('.sign-up-btn-js');
+      await page.goto(`${baseHost}/?register`);
 
       await page.waitForSelector('#signupForm');
       await page.click('input[name=email]');
@@ -140,9 +132,7 @@ describe('End-to-End for Sign up Page', () => {
   test(
     'should display error when invalid password is provided',
     async () => {
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-up-btn-js');
-      await page.click('.sign-up-btn-js');
+      await page.goto(`${baseHost}/?register`);
 
       await page.waitForSelector('#signupForm');
       await page.click('input[name=password]');
@@ -159,9 +149,7 @@ describe('End-to-End for Sign up Page', () => {
   test(
     'should display error when confirm password does not match the password provided',
     async () => {
-      await page.goto(baseHost);
-      await page.waitForSelector('.sign-up-btn-js');
-      await page.click('.sign-up-btn-js');
+      await page.goto(`${baseHost}/?register`);
 
       await page.waitForSelector('#signupForm');
       await page.click('input[name=password]');

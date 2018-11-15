@@ -7,7 +7,7 @@ const NavBarDefault = ({
 }) => (
   <nav className="nav-bar">
     <div className="nav-bar__container">
-      <div className="nav-bar__logo" />
+      <div className="nav-bar__logo"/>
       <div className="nav-bar__menu--right">
         {!userIsAuthenticated && (
           <React.Fragment>
@@ -30,10 +30,10 @@ const NavBarDefault = ({
             >
               Dashboard
             </Link>
-          <div className="btn btn--primary sign-up-btn-js" onClick={handleLogout}>
-            Log Out
-          </div>
-         </React.Fragment>
+            <div className="btn btn--primary sign-up-btn-js" onClick={handleLogout}>
+              Log Out
+            </div>
+          </React.Fragment>
         )}
       </div>
     </div>

@@ -2,14 +2,14 @@ import puppeteer from 'puppeteer';
 
 const baseHost = process.env.REACT_APP_HOST;
 
-const timeout = 120000;
+const timeout = 12000;
 describe('End-to-End for resetPassword  Page', () => {
   let browser;
   let page;
   beforeEach(async () => {
     browser = await puppeteer.launch({
       headless: true,
-      slowMo: 50
+      // slowMo: 50
     });
     page = await browser.newPage();
     page.emulate({
@@ -30,9 +30,6 @@ describe('End-to-End for resetPassword  Page', () => {
         email: 'dummy-user@local.host'
       };
       await page.goto(`${baseHost}/reset-password`);
-      await page.waitForSelector('#resetPasswordBtn');
-      await page.click('#resetPasswordBtn');
-
       await page.waitForSelector('#sendEmailForm');
       await page.click('input[type=email]');
       await page.type('input[type=email]', realUser.email);

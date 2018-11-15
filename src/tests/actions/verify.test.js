@@ -52,7 +52,7 @@ describe('Verification action test', () => {
     async () => {
       apiReqStub = sinon.stub(apiRequest.axios, 'get')
         .resolves(resendLinkResult);
-      await executeVerifyTokenAction(3);
+      await executeVerifyTokenAction(4);
       apiReqStub.restore();
     });
   test('should execute verifyToken action, simulate verification failed request', async () => {

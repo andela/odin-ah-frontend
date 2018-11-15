@@ -12,8 +12,10 @@ import {
   HIDE_PUBLISH_ERROR,
   HIDE_PUBLISH_RESPONSE,
   GET_ARTICLE_SUCCESS,
-  GET_ARTICLE_ERROR
+  GET_ARTICLE_ERROR,
+  DELETE_ARTICLE
 } from '../../constants/articles';
+import { redirect } from '../redirect';
 
 export const openPublishModal = () => ({
   type: OPEN_PUBLISH_MODAL
@@ -35,65 +37,90 @@ export const createArticleRequest = articleData => (dispatch) => {
   dispatch({
     type: SENDING_REQUEST
   });
-  return apiRequest.createArticle(articleData).then((res) => {
-    const { status: statusCode } = res;
-    const responseMessage = statusCode === 201 ? 'Article has been published successfully!' : res.data.message;
-    dispatch({
-      type: CREATE_ARTICLE_SUCCESS,
-      response: responseMessage
+  return apiRequest.createArticle(articleData)
+    .then((res) => {
+      const { status: statusCode } = res;
+      const responseMessage = statusCode === 201 ? 'Article has been published successfully!' : res.data.message;
+      dispatch({
+        type: CREATE_ARTICLE_SUCCESS,
+        response: responseMessage
+      });
+      return statusCode;
+    })
+    .catch((err) => {
+      const { response } = err;
+      const { status: statusCode } = response;
+      dispatch({
+        type: CREATE_ARTICLE_ERROR,
+        response: err.response.data
+      });
+      return statusCode;
     });
-    return statusCode;
-  }).catch((err) => {
-    const { response } = err;
-    const { status: statusCode } = response;
-    dispatch({
-      type: CREATE_ARTICLE_ERROR,
-      response: err.response.data
-    });
-    return statusCode;
-  });
 };
 
 
-export const getArticleForUpdate = slug => (dispatch) => {
+export const getArticle = slug => (dispatch) => {
   // change to sending_request
   dispatch({
     type: SENDING_REQUEST
   });
-  return apiRequest.getArticle(slug).then((res) => {
-    dispatch({
-      type: GET_ARTICLE_SUCCESS,
-      response: res.data
+  return apiRequest.getArticle(slug)
+    .then((res) => {
+      dispatch({
+        type: GET_ARTICLE_SUCCESS,
+        response: res.data
+      });
+    })
+    .catch((err) => {
+      const { response } = err;
+      dispatch({
+        type: GET_ARTICLE_ERROR,
+        response: response.data,
+        statusCode: response.status
+      });
     });
-  }).catch((err) => {
-    const { response } = err;
-    dispatch({
-      type: GET_ARTICLE_ERROR,
-      response: response.data,
-      statusCode: response.status
-    });
-  });
 };
 
 export const updateArticleRequest = (slug, articleData) => (dispatch) => {
   dispatch({
     type: SENDING_REQUEST
   });
-  return apiRequest.updateArticle(slug, articleData).then((res) => {
-    const { status: statusCode } = res;
-    const responseMessage = statusCode === 200 ? 'Article has been updated successfully!' : res.data.message;
-    dispatch({
-      type: UPDATE_ARTICLE_SUCCESS,
-      response: responseMessage
+  return apiRequest.updateArticle(slug, articleData)
+    .then((res) => {
+      const { status: statusCode } = res;
+      const responseMessage = statusCode === 200 ? 'Article has been updated successfully!' : res.data.message;
+      dispatch({
+        type: UPDATE_ARTICLE_SUCCESS,
+        response: responseMessage
+      });
+      return statusCode;
+    })
+    .catch((err) => {
+      const { response } = err;
+      const { status: statusCode } = response;
+      dispatch({
+        type: UPDATE_ARTICLE_ERROR,
+        response: err.response.data
+      });
+      return statusCode;
     });
-    return statusCode;
-  }).catch((err) => {
-    const { response } = err;
-    const { status: statusCode } = response;
-    dispatch({
-      type: UPDATE_ARTICLE_ERROR,
-      response: err.response.data
-    });
-    return statusCode;
-  });
+};
+
+export const deleteRequest = (loading, result, error) => ({
+  type: DELETE_ARTICLE,
+  deleteArticle: {
+    error,
+    loading,
+    result
+  }
+});
+
+export const deleteArticle = slug => async (dispatch) => {
+  try {
+    dispatch(deleteRequest(true));
+    await apiRequest.deleteArticle(slug);
+    dispatch(redirect('/'));
+  } catch (error) {
+    dispatch(deleteRequest(false, null, error));
+  }
 };

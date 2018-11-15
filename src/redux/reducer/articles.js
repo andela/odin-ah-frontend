@@ -12,10 +12,12 @@ import {
   UPDATE_ARTICLE_ERROR,
   UPDATE_ARTICLE_SUCCESS
 } from '../constants/articles';
+import { GET_COMMENTS } from '../actions/articles/comments';
+import commentsReducer from './article/comments';
 
 const defaultState = {
   open: false,
-  errors: {}
+  errors: {},
 };
 const articleReducer = (state = defaultState, action) => {
   const {
@@ -60,11 +62,15 @@ const articleReducer = (state = defaultState, action) => {
       };
     case GET_ARTICLE_SUCCESS:
       return {
-        ...state, loading: false, open: false, articleToEdit: response.article
+        ...state, loading: false, open: false, article: response.article
       };
     case GET_ARTICLE_ERROR:
       return {
         ...state, loading: false, open: false, errors: response, statusCode
+      };
+    case GET_COMMENTS:
+      return {
+        ...state, comment: commentsReducer(state.comment, action)
       };
     default:
       return state;

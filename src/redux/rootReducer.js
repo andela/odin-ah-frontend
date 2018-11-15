@@ -6,6 +6,7 @@ import profile from './reducer/profile';
 import modal from './reducer/modal';
 import articles from './reducer/articles';
 import login from './reducer/login';
+import redirect from './reducer/redirect';
 import passwordResetData from './reducer/passwordReset';
 import landingPageArticles from './reducer/landingPage/articles';
 import landingPageTags from './reducer/landingPage/tags';
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   landingPageArticles,
   landingPageTags,
   profile,
+  redirect
 });
 
 export default rootReducer;

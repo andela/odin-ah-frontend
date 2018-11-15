@@ -37,42 +37,40 @@ export const inputError = errors => ({
     errors
   }
 });
-export const sendResetRequest = data => (dispatch) => {
-  const errors = userValidator.validateField(data);
+export const resetRequestHandler = email => async (dispatch) => {
+  const errors = userValidator.validateField({ email });
   dispatch(inputError(errors));
   if (!errors) {
-    dispatch({
-      type: PASSWORD_RESET_REQUEST,
-      payload: {
-        data,
-        loading: true
-      }
-    });
-    apiRequest
-      .startResetPassword(data)
-      .then((response) => {
-        dispatchSuccess(response.data.message, 'alert', dispatch);
-        dispatch({
-          type: PASSWORD_RESET_REQUEST_SUCCESS,
-          payload: {
-            message: response.data.message,
-            loading: false,
-
-          }
-        });
-      })
-      .catch((error) => {
-        const message = messages[error.response.status];
-        dispatchError(message, 'alert', dispatch);
-        dispatch({
-          type: PASSWORD_RESET_REQUEST_FAILURE,
-          payload: {
-            message,
-            status: 'done',
-            loading: false
-          }
-        });
+    try {
+      dispatch({
+        type: PASSWORD_RESET_REQUEST,
+        payload: {
+          data: email,
+          loading: true
+        }
       });
+      const response = await apiRequest.startResetPassword(email);
+      dispatchSuccess(response.data.message, 'alert', dispatch);
+      dispatch({
+        type: PASSWORD_RESET_REQUEST_SUCCESS,
+        payload: {
+          message: response.data.message,
+          loading: false,
+
+        }
+      });
+    } catch (error) {
+      const message = messages[error.response.status];
+      dispatchError(message, 'alert', dispatch);
+      dispatch({
+        type: PASSWORD_RESET_REQUEST_FAILURE,
+        payload: {
+          message,
+          status: 'done',
+          loading: false
+        }
+      });
+    }
   }
 };
 
@@ -111,4 +109,9 @@ export const completeResetRequest = data => (dispatch) => {
         });
       });
   }
+};
+
+export const saveInputHandler = (field, value) => (dispatch) => {
+  dispatch(inputError(null));
+  dispatch(saveInput(field, value));
 };

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import './ResetPassword.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { saveInput, inputError, completeResetRequest } from '../../redux/actions/resetPassword';
 import Alert from '../notification/alert';
+import { completeResetRequest, saveInputHandler } from '../../redux/actions/resetPassword';
 import NavBarContainer from '../header/NavBarContainer';
 
 export class ResetPasswordForm extends Component {
@@ -12,14 +11,12 @@ export class ResetPasswordForm extends Component {
     const {
       password, confirmPassword, confirming, message, errors
     } = this.props.passwordResetData;
-
     const { history } = this.props;
     if (message === 'Success Message') {
       setTimeout(() => {
         history.push('/?login');
       }, 500);
     }
-    const { saveInputHandler, resetRequestHandler } = this.props;
     const { token } = this.props.match.params;
     let passwordError;
     let confirmPasswordError;
@@ -29,14 +26,18 @@ export class ResetPasswordForm extends Component {
     }
     return (
       <div>
-        <NavBarContainer />
+        <NavBarContainer/>
         <div className="reset-field">
-          <Alert />
+          <Alert/>
           <h1>Reset Password Form</h1>
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              resetRequestHandler(password, confirmPassword, token);
+              this.props.completeResetRequest({
+                password,
+                confirmPassword,
+                token
+              });
             }}
           >
             <div className="field">
@@ -47,14 +48,14 @@ export class ResetPasswordForm extends Component {
                   type="password"
                   placeholder="Enter password"
                   value={password}
-                  onChange={e => saveInputHandler('password', e.target.value)}
+                  onChange={e => this.props.saveInputHandler('password', e.target.value)}
                 />
                 <span className="icon is-small is-left">
-                  <i className="fas fa-key" />
+                  <i className="fas fa-key"/>
                 </span>
                 {passwordError && (
                   <span className="icon is-small is-right has-text-danger">
-                    <i className="fas fa-exclamation-triangle" />
+                    <i className="fas fa-exclamation-triangle"/>
                   </span>
                 )}
               </div>
@@ -68,14 +69,14 @@ export class ResetPasswordForm extends Component {
                   type="password"
                   placeholder="Enter password"
                   value={confirmPassword}
-                  onChange={e => saveInputHandler('confirmPassword', e.target.value)}
+                  onChange={e => this.props.saveInputHandler('confirmPassword', e.target.value)}
                 />
                 <span className="icon is-small is-left">
-                  <i className="fas fa-key" />
+                  <i className="fas fa-key"/>
                 </span>
                 {confirmPasswordError && (
                   <span className="icon is-small is-right has-text-danger">
-                    <i className="fas fa-exclamation-triangle" />
+                    <i className="fas fa-exclamation-triangle"/>
                   </span>
                 )}
               </div>
@@ -83,11 +84,11 @@ export class ResetPasswordForm extends Component {
             </div>
 
             <button id="resetPasswordBtn"
-              className={`button is-primary is-medium is-fullwidth ${
-                confirming ? 'is-loading' : ''
-              }`}
-              type="submit"
-              value="Reset password"
+                    className={`button is-primary is-medium is-fullwidth ${
+                      confirming ? 'is-loading' : ''
+                    }`}
+                    type="submit"
+                    value="Reset password"
             >
               Reset Password
             </button>
@@ -99,8 +100,10 @@ export class ResetPasswordForm extends Component {
 }
 
 ResetPasswordForm.propTypes = {
-  saveInputHandler: PropTypes.func,
+  match: PropTypes.object,
   passwordResetData: PropTypes.object,
+  saveInputHandler: PropTypes.func,
+  completeResetRequest: PropTypes.func,
   resetRequestHandler: PropTypes.func,
   history: PropTypes.object,
 };
@@ -109,17 +112,9 @@ const mapStateToProps = state => ({
   passwordResetData: state.passwordResetData || {}
 });
 
-const mapDispatchToProps = dispatch => ({
-  saveInputHandler: (field, value) => {
-    dispatch(inputError(null));
-    dispatch(saveInput(field, value));
-  },
-  resetRequestHandler: (password, confirmPassword, token) => {
-    dispatch(completeResetRequest({ password, confirmPassword, token }));
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps, {
+    saveInputHandler,
+    completeResetRequest
+  }
 )(ResetPasswordForm);
