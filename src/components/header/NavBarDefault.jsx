@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const NavBarDefault = ({
-  handleLogin, handleSignup, userIsAuthenticated, handleLogout
+  handleLogin, handleSignup, userIsAuthenticated, handleLogout,
 }) => (
   <nav className="nav-bar">
     <div className="nav-bar__container">
@@ -25,6 +25,7 @@ const NavBarDefault = ({
           <div className="btn btn--primary sign-up-btn-js" onClick={handleLogout}>
             Log Out
           </div>
+         
         )}
       </div>
     </div>
@@ -35,6 +36,7 @@ NavBarDefault.propTypes = {
   handleLogin: PropTypes.func,
   handleSignup: PropTypes.func,
   handleLogout: PropTypes.func,
+  handleDashboardPage: PropTypes.func,
   userIsAuthenticated: PropTypes.bool
 };
 
