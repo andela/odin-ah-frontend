@@ -29,3 +29,15 @@ body {
 .hide {
   display: none;
 }
+
+body{
+    font-family: 'Roboto', sans-serif;
+    color: $app-text;
+    background: #FFFFFF;
+    margin: 0;
+    height: 100vh;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import HeaderContainer from '../header/HeaderContainer';
 import ArticleListView from '../articleList/ArticleListView';
 import BigTagList from '../articleList/BigTagList';

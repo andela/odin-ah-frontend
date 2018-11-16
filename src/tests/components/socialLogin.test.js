@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { SocialLogin } from '../../components/login/SocialLogin';
 import PageLoader from '../../components/PageLoader';
 
-describe.only('SocialLogin', () => {
+describe('SocialLogin', () => {
   test('should render pageloader when user info has not been retrieved', () => {
     const location = {
       search: '?token=eghgezrtdyfugfudsetrdyutfiyguihvctydr5678r7t8uhbvkcjytxyrest5y46r7t8oyhiuvcyutdre756r87t98ygifghjhjghfgdsrtdfytdysdyrtf0'

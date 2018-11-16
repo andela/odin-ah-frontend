@@ -86,6 +86,22 @@ export class ApiRequest {
     return this.axios.get('/tags/popular');
   }
 
+  getProfileData() {
+    return this.axios.get('/users');
+  }
+
+  setProfileData(data) {
+    return this.axios.put('/users', data);
+  }
+
+  uploadImage(data) {
+    const fetchData = {
+      method: 'POST',
+      body: data
+    };
+    return fetch(process.env.REACT_APP_CLOUDINARY_URL, fetchData);
+  }
+
   registerInterceptors(store = null) {
     this.axios.interceptors.response.use(
       response => response,
@@ -96,6 +112,7 @@ export class ApiRequest {
           if (store) {
             store.dispatch(logout);
           }
+          localStorage.removeItem('jwtToken');
         }
         return Promise.reject(error);
       }
