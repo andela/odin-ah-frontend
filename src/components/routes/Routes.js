@@ -24,6 +24,16 @@ const Routes = ({ location }) => (
     <Switch>
       <Route exact={true} path='/' component={LandingPageContainer}/>
       <Route exact={true} path='/home' component={Home}/>
+      <AuthRoute
+        location={location}
+        path="/article/new"
+        component={CreateArticle}
+      />
+      <AuthRoute
+        location={location}
+        path="/article/edit/:slug"
+        component={UpdateArticle}
+      />
       <Route path='/article/:slug' component={ReadArticle}/>
       <GuestRoute
         location={location}
@@ -59,16 +69,6 @@ const Routes = ({ location }) => (
         location={location}
         path="/dashboard"
         component={DashboardContainer}
-      />
-      <AuthRoute
-        location={location}
-        path="/article/new"
-        component={CreateArticle}
-      />
-      <AuthRoute
-        location={location}
-        path="/article/edit/:slug"
-        component={UpdateArticle}
       />
     </Switch>
     <Modal/>
