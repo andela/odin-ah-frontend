@@ -18,7 +18,9 @@ import '../style.scss';
 import TitleInput from '../Editor/TitleInput';
 import BodyInput from '../Editor/BodyInput';
 import PublishContainer from '../Editor/PublishContainer';
+import NavBarContainer from '../../header/NavBarContainer';
 import PageNotFound from '../../404/PageNotFound';
+import { logout } from '../../../redux/actions/auth/login';
 
 const initialTitleValue = 'Title';
 const initialBodyValue = '<p>Start typing ...</p>';
@@ -293,7 +295,8 @@ export class UpdateArticle extends Component {
       title, body, description, tags, isPrivate, downloadable
     } = this.state;
     const {
-      responseMessage, errors, showDialog, closePublishModal: closeModal, statusCode
+      responseMessage, errors, showDialog,
+      closePublishModal: closeModal, statusCode, isAuthenticated
     } = this.props;
     const emptyTitle = this.checkStrEquality(title, initialTitleValue);
     const emptyBody = this.checkStrEquality(body, initialBodyValue);
@@ -307,6 +310,8 @@ export class UpdateArticle extends Component {
     } else {
       displayContent = (
         <div>
+          <NavBarContainer userIsAuthenticated={isAuthenticated}
+          handleLogout={this.props.handleLogout}/>
           <section className={classnames('section', 'update-section', { 'show-butter': errorMessage || responseMessage })}>
             <div className='butter__container'>
               <div className={classnames('butter__container--type', { success: responseMessage }, { error: errorMessage }) }>
@@ -378,6 +383,8 @@ UpdateArticle.propTypes = {
   errors: PropTypes.object.isRequired,
   responseMessage: PropTypes.string,
   statusCode: PropTypes.number,
+  isAuthenticated: PropTypes.bool,
+  handleLogout: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -386,7 +393,8 @@ const mapStateToProps = state => ({
   errors: state.articles.errors,
   responseMessage: state.articles.response,
   showDialog: state.articles.open,
-  statusCode: state.articles.statusCode
+  statusCode: state.articles.statusCode,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {
@@ -396,7 +404,8 @@ const mapDispatchToProps = {
   closePublishModal,
   showError: showCreateError,
   hideError: hideCreateError,
-  hideResponse: hideCreateResponse
+  hideResponse: hideCreateResponse,
+  handleLogout: logout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateArticle);

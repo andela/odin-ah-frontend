@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const NavBarDefault = ({
   handleLogin, handleSignup, userIsAuthenticated, handleLogout,
@@ -22,10 +23,17 @@ const NavBarDefault = ({
           </React.Fragment>
         )}
         {userIsAuthenticated && (
+          <React.Fragment>
+            <Link
+              className="btn btn--link text--primary sign-in-btn sign-in-btn-js"
+              to="/dashboard"
+            >
+              Dashboard
+            </Link>
           <div className="btn btn--primary sign-up-btn-js" onClick={handleLogout}>
             Log Out
           </div>
-         
+         </React.Fragment>
         )}
       </div>
     </div>

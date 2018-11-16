@@ -15,12 +15,12 @@ const HeaderView = props => (
           their thoughts
         </div>
         <div className="hero__cta">
-          {!props.userIsAuthenticated ? (
-            <div className="btn publish-cta" onClick={props.handleSignup}>
+          {!props.userIsAuthenticated ? (!props.loadingArticles
+          && <div className="btn publish-cta" onClick={props.handleSignup}>
               Get Started
             </div>
-          ) : (
-            <Link className="btn publish-cta" to="/article/new">
+          ) : (!props.loadingArticles
+             && <Link className="btn publish-cta" to="/article/new">
               Start Writing
             </Link>
           )}
