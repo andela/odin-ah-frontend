@@ -17,6 +17,8 @@ import '../style.scss';
 import TitleInput from '../Editor/TitleInput';
 import BodyInput from '../Editor/BodyInput';
 import PublishContainer from '../Editor/PublishContainer';
+import NavBarContainer from '../../header/NavBarContainer';
+import { logout } from '../../../redux/actions/auth/login';
 
 const initialTitleValue = 'Title';
 const initialBodyValue = '<p>Start typing ...</p>';
@@ -248,7 +250,7 @@ export class CreateArticle extends Component {
       title, body, description, tags, isPrivate, downloadable
     } = this.state;
     const {
-      responseMessage, errors, showDialog, closePublishModal: closeModal
+      responseMessage, errors, showDialog, closePublishModal: closeModal, isAuthenticated
     } = this.props;
     const emptyTitle = this.checkStrEquality(title, initialTitleValue);
     const emptyBody = this.checkStrEquality(body, initialBodyValue);
@@ -258,6 +260,8 @@ export class CreateArticle extends Component {
     };
     return (
       <div>
+        <NavBarContainer userIsAuthenticated={isAuthenticated}
+          handleLogout={this.props.handleLogout} />
         <section className={classnames('section', 'create-section', { 'show-butter': errorMessage || responseMessage })}>
           <div className='butter__container'>
             <div className={classnames('butter__container--type', { success: responseMessage }, { error: errorMessage }) }>
@@ -323,6 +327,8 @@ CreateArticle.propTypes = {
   hideError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   responseMessage: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+  handleLogout: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -330,7 +336,8 @@ const mapStateToProps = state => ({
   loading: state.articles.loading,
   errors: state.articles.errors,
   responseMessage: state.articles.response,
-  showDialog: state.articles.open
+  showDialog: state.articles.open,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {
@@ -339,7 +346,8 @@ const mapDispatchToProps = {
   closePublishModal,
   showError: showCreateError,
   hideError: hideCreateError,
-  hideResponse: hideCreateResponse
+  hideResponse: hideCreateResponse,
+  handleLogout: logout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateArticle);

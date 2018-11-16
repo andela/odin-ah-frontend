@@ -24,6 +24,9 @@ export const mockStoreData = {
       newFollowerOnSeries: true,
     },
   },
+  login: {
+    isAuthenticated: true
+  }
 };
 
 export const Data = {};

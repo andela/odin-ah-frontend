@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { saveInput, sendResetRequest, inputError } from '../../redux/actions/resetPassword';
 import Alert from '../../components/notification/alert';
+import NavBarContainer from '../header/NavBarContainer';
 
 export class ResetPasswordPage extends Component {
   render() {
@@ -15,10 +16,12 @@ export class ResetPasswordPage extends Component {
       emailError = errors.email;
     }
     return (
+      <div>
+        <NavBarContainer />
       <div className="reset-field">
         <Alert />
         <div id="reset-info">
-          Enter your email below and we'll send you a link to reset your password.
+          Enter your email below and we will send you a link to reset your password.
         </div>
         <form
           id="sendEmailForm"
@@ -59,13 +62,15 @@ export class ResetPasswordPage extends Component {
           </button>
         </form>
       </div>
+      </div>
     );
   }
 }
 
 ResetPasswordPage.propTypes = {
   saveInputHandler: PropTypes.func,
-  resetRequestHandlereset: PropTypes.func
+  resetRequestHandler: PropTypes.func,
+  passwordResetData: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './ResetPassword.scss';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { saveInput, inputError, completeResetRequest } from '../../redux/actions/resetPassword';
 import Alert from '../notification/alert';
+import NavBarContainer from '../header/NavBarContainer';
 
 export class ResetPasswordForm extends Component {
   render() {
@@ -13,7 +13,12 @@ export class ResetPasswordForm extends Component {
       password, confirmPassword, confirming, message, errors
     } = this.props.passwordResetData;
 
-    if (message === 'Success Message') return <Redirect to={'/?login'} />;
+    const { history } = this.props;
+    if (message === 'Success Message') {
+      setTimeout(() => {
+        history.push('/?login');
+      }, 500);
+    }
     const { saveInputHandler, resetRequestHandler } = this.props;
     const { token } = this.props.match.params;
     let passwordError;
@@ -24,6 +29,7 @@ export class ResetPasswordForm extends Component {
     }
     return (
       <div>
+        <NavBarContainer />
         <div className="reset-field">
           <Alert />
           <h1>Reset Password Form</h1>
@@ -94,7 +100,9 @@ export class ResetPasswordForm extends Component {
 
 ResetPasswordForm.propTypes = {
   saveInputHandler: PropTypes.func,
-  resetRequestHandlereset: PropTypes.func
+  passwordResetData: PropTypes.object,
+  resetRequestHandler: PropTypes.func,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
