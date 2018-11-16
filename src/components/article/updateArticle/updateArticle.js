@@ -12,7 +12,7 @@ import {
   hideCreateError,
   hideCreateResponse
 } from '../../../redux/actions/articles/articles';
-import { createArticleConstraint } from '../../../validators/constraints/article';
+import { updateArticleConstraint } from '../../../validators/constraints/article';
 import uploadArticleImage from '../../../services/cloudinary';
 import '../style.scss';
 import TitleInput from '../Editor/TitleInput';
@@ -37,6 +37,7 @@ export class UpdateArticle extends Component {
       tags: [],
       isPrivate: false,
       downloadable: true,
+      edited: false
     };
     this.publishHandler = this.publishHandler.bind(this);
     this.titleChangeHandler = this.titleChangeHandler.bind(this);
@@ -100,6 +101,7 @@ export class UpdateArticle extends Component {
       title
     };
     this.setState({
+      edited: true,
       rawTextValue
     });
   }
@@ -116,6 +118,7 @@ export class UpdateArticle extends Component {
       body: rawBody
     };
     this.setState({
+      edited: true,
       rawTextValue,
       description
     });
@@ -241,7 +244,7 @@ export class UpdateArticle extends Component {
 
   publishHandler() {
     const { rawTextValue } = this.state;
-    const errors = validate(rawTextValue, createArticleConstraint);
+    const errors = validate(rawTextValue, updateArticleConstraint);
     if (errors) {
       this.props.showError(errors);
     } else {
@@ -255,8 +258,9 @@ export class UpdateArticle extends Component {
     } = this.props;
     const { slug } = match.params;
     const {
-      title, body, description, tags, isPrivate, downloadable
+      body, description, tags, isPrivate, downloadable
     } = this.state;
+    const { title } = this.state.rawTextValue;
     const articleData = {
       title, body, description, tags, isPrivate, downloadable
     };
@@ -318,7 +322,7 @@ export class UpdateArticle extends Component {
               finish={this.finish}
             />
             <div className='container publish'>
-              <button className='publish__button' onClick={this.publishHandler} disabled={!this.state.rawTextValue.body}>Update and Publish</button>
+              <button className='publish__button' onClick={this.publishHandler} disabled={!this.state.edited}>Update and Publish</button>
             </div>
             <div className='container form'>
               <div className='columns'>
