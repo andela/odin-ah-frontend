@@ -18,7 +18,7 @@ export class VerifyEmail extends Component {
       <div>
          {verifying && <PageLoader text={'Verifying Email'}/>}
          {!verifying && error && <Redirect to={'/email-verification/resend'}/>}
-          {!verifying && result && <Redirect to={'/'}/>}
+          {!verifying && result && <Redirect to={'/?login'}/>}
       </div>
     );
   }

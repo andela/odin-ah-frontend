@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { InputStatusIcon, InputStatusLabel } from './ErrorLabel';
-import toSentenceCase from '../../utils';
+import { toSentenceCase } from '../../utils';
 
 export default class Input extends Component {
   static getInputData(e) {

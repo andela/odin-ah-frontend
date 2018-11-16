@@ -18,19 +18,19 @@ export class DashboardContainer extends PureComponent {
     this.props.profileData();
   }
 
-  handleProfileButton = (e) => {
+  handleProfileButton = () => {
     this.setState({
       isProfileActive: true,
       isStatisticsActive: false,
     });
   };
 
-  handleStatisticsButton =(e) => {
+  handleStatisticsButton = () => {
     this.setState({
       isProfileActive: false,
       isStatisticsActive: true,
     });
-  }
+  };
 
   render() {
     const eventHandler = {

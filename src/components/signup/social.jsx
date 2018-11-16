@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ApiRequest } from '../../services/apiRequest';
-import toSentenceCase from '../../utils';
+import { toSentenceCase } from '../../utils';
 
 export default function SocialButton(props) {
   let label;

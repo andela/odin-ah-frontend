@@ -2,11 +2,13 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 import {
+  completeResetRequest,
+  resetRequestHandler,
   saveInput,
-  sendResetRequest,
-  completeResetRequest
+  saveInputHandler
 } from '../../redux/actions/resetPassword';
 import apiRequest from '../../services/apiRequest';
+import { INPUT_ERROR, SAVE_INPUT } from '../../redux/constants/resetPassword';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -37,7 +39,10 @@ test('Reset password request', async () => {
     },
     {
       type: 'PASSWORD_RESET_REQUEST',
-      payload: { data: 'email', loading: true }
+      payload: {
+        data: 'email@email.com',
+        loading: true
+      }
     },
     {
       type: 'SHOW_NOTIFICATION',
@@ -52,7 +57,7 @@ test('Reset password request', async () => {
   ];
 
   const store = mockStore({});
-  await store.dispatch(sendResetRequest('email'));
+  await store.dispatch(resetRequestHandler('email@email.com'));
   const actions = store.getActions();
   expect(actions).toEqual(expectedActions);
   stubAxiosPost.restore();
@@ -86,6 +91,37 @@ test('Reset password request fail test', async () => {
   ];
   const store = mockStore({});
   await store.dispatch(completeResetRequest({ password: 'password', confirmPassword: 'password' }));
+  const actions = store.getActions();
+  expect(actions).toEqual(expectedActions);
+
+  stubAxiosPost.restore();
+});
+
+test('Reset password request fail test', async () => {
+  const stubAxiosPost = sinon.stub(apiRequest.axios, 'post').resolves({
+    data: {
+      message: 'done'
+    }
+  });
+  const field = 'password';
+  const value = 'password';
+  const expectedActions = [
+    {
+      type: INPUT_ERROR,
+      payload: {
+        errors: null,
+      }
+    },
+    {
+      type: SAVE_INPUT,
+      payload: {
+        field,
+        value
+      }
+    }
+  ];
+  const store = mockStore({});
+  await store.dispatch(saveInputHandler(field, value));
   const actions = store.getActions();
   expect(actions).toEqual(expectedActions);
 

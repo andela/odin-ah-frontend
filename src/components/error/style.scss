@@ -1,0 +1,24 @@
+.error-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  outline: none;
+  position: relative;
+}
+.big-message {
+  display: block;
+  margin: 75px auto;
+  text-align: center;
+  max-width: 600px;
+}
+.quiet, .quiet a {
+  color: #6b808c;
+}
+.big-message h1 {
+  font-size: 26px;
+  margin-bottom: 24px;
+  line-height: 28px;
+}
+.big-message p {
+  font-size: 18px;
+  line-height: 22px;
+}

@@ -16,13 +16,15 @@ import ResetPasswordForm from '../passwordReset/ResetPasswordForm';
 import LandingPageContainer from '../landingPage/LandingPageContainer';
 import AuthRoute from './AuthRoute';
 import GuestRoute from './GuestRoute';
+import ReadArticle from '../article/readArticle';
 
 
 const Routes = ({ location }) => (
   <div>
     <Switch>
-      <Route exact={true} path='/' component={ LandingPageContainer } />
-      <Route exact={true} path='/home' component={ Home } />
+      <Route exact={true} path='/' component={LandingPageContainer}/>
+      <Route exact={true} path='/home' component={Home}/>
+      <Route path='/article/:slug' component={ReadArticle}/>
       <GuestRoute
         location={location}
         path="/auth/confirmation/:token"
@@ -35,19 +37,19 @@ const Routes = ({ location }) => (
         exact
         component={SocialLogin}
       />
-       <GuestRoute
-      location={location}
-      path="/reset-password"
-      exact
-      component={ResetPasswordPage}
-    />
       <GuestRoute
-      location={location}
-      path="/reset-password/complete/:token"
-      exact
-      component={ResetPasswordForm }
-    />
-       <GuestRoute
+        location={location}
+        path="/reset-password"
+        exact
+        component={ResetPasswordPage}
+      />
+      <GuestRoute
+        location={location}
+        path="/reset-password/complete/:token"
+        exact
+        component={ResetPasswordForm}
+      />
+      <GuestRoute
         location={location}
         path="/email-verification/resend"
         exact
@@ -56,21 +58,21 @@ const Routes = ({ location }) => (
       <AuthRoute
         location={location}
         path="/dashboard"
-        component={ DashboardContainer }
+        component={DashboardContainer}
       />
-       <AuthRoute
+      <AuthRoute
         location={location}
         path="/article/new"
-        component={ CreateArticle }
+        component={CreateArticle}
       />
-       <AuthRoute
+      <AuthRoute
         location={location}
         path="/article/edit/:slug"
-        component={ UpdateArticle }
+        component={UpdateArticle}
       />
-      </Switch>
-      <Modal/>
-      <Toast/>
+    </Switch>
+    <Modal/>
+    <Toast/>
   </div>
 );
 

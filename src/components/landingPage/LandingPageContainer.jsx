@@ -5,15 +5,17 @@ import { connect } from 'react-redux';
 import { openModal } from '../../redux/actions/modal';
 import { registerUser } from '../../redux/actions/auth/register';
 import { ModalContent } from '../signup/modalComponent';
-import { userLoginRequest, logout } from '../../redux/actions/auth/login';
+import { logout, userLoginRequest } from '../../redux/actions/auth/login';
 import LoginModal from '../login/LoginModal';
 
 import LandingPageView from './LandingPageView';
 import './LandingPage.scss';
-import { fetchArticles, fetchArticlePage } from '../../redux/actions/landingPage/articles';
+import { fetchArticlePage, fetchArticles } from '../../redux/actions/landingPage/articles';
 import { fetchPtags } from '../../redux/actions/landingPage/tags';
 
 const propTypes = {
+  match: PropTypes.object,
+  location: PropTypes.object,
   userIsAuthenticated: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
@@ -42,6 +44,15 @@ export class LandingPageContainer extends React.Component {
   componentDidMount() {
     this.props.fetchArticles();
     this.props.fetchPtags();
+    const urlParams = new URLSearchParams(this.props.location.search);
+    const login = urlParams.get('login');
+    const register = urlParams.get('register');
+    if (login !== null) {
+      this.handleLoginModal();
+    }
+    if (register !== null) {
+      this.openRegistrationModalComponent();
+    }
   }
 
   handleLoginModal = () => {

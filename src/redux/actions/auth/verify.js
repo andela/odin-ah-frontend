@@ -26,6 +26,7 @@ export const verifyToken = token => async (dispatch) => {
     const result = await apiRequest.verityConfirmationToken(token);
     dispatch(verifyingToken(false));
     dispatch(verificationComplete(result, null));
+    dispatchSuccess('Verification has been sent to your email', 'alert', dispatch);
   } catch (error) {
     dispatch(verifyingToken(false));
 
@@ -33,7 +34,6 @@ export const verifyToken = token => async (dispatch) => {
       const { data } = error.response;
       dispatch(verificationComplete(null, data));
     }
-
     const { message } = getErrorMessage(error);
     dispatchError(message, 'toast', dispatch);
   }

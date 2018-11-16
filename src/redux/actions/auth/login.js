@@ -35,7 +35,7 @@ export const getAuthUserProfile = () => (dispatch) => {
     })
     .catch((error) => {
       const { message } = error;
-      dispatchError(message, 'error', dispatch);
+      dispatchError(message, 'toast', dispatch);
     });
 };
 
@@ -52,7 +52,20 @@ export const userLoginRequest = userData => (dispatch) => {
     })
     .catch((error) => {
       dispatch(authenticating(false));
-      const { message, type } = getErrorMessage(error);
+      let message;
+      let type;
+      if (error.response && error.response.status === 403) {
+        message = 'Your email is not yet verified. Please check your email for further instructions.'
+          + '<br/> <a href="./email-verification/resend">Click here to resend verification link</a>';
+        type = 'alert';
+      } else {
+        (
+          {
+            message,
+            type
+          } = getErrorMessage(error));
+      }
+
       dispatchError(message, type, dispatch);
       dispatch(loginUserFailure(error.response.data));
     });

@@ -20,7 +20,10 @@ const propSet1 = {
   fetchArticles: jest.fn(),
   fetchPtags: jest.fn(),
   fetchArticlePage: jest.fn(),
-  loadingArticles: false
+  loadingArticles: false,
+  location: {
+    search: '?register'
+  }
 };
 
 const storeState = {
@@ -31,6 +34,9 @@ const storeState = {
 
 const propSet2 = {
   ...propSet1,
+  location: {
+    search: '?login'
+  },
   userIsAuthenticated: true
 };
 

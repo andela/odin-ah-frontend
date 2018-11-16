@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './ResetPassword.scss';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveInput, sendResetRequest, inputError } from '../../redux/actions/resetPassword';
 import Alert from '../../components/notification/alert';
+import { resetRequestHandler, saveInputHandler } from '../../redux/actions/resetPassword';
 import NavBarContainer from '../header/NavBarContainer';
 
-export class ResetPasswordPage extends Component {
-  render() {
-    const { email, resetLoading, errors } = this.props.passwordResetData;
-    const { saveInputHandler, resetRequestHandler } = this.props;
-    let emailError;
-    if (errors) {
-      emailError = errors.email;
-    }
-    return (
-      <div>
-        <NavBarContainer />
+export function ResetPasswordPage(props) {
+  const { email, resetLoading, errors } = props.passwordResetData;
+  let emailError;
+  if (errors) {
+    emailError = errors.email;
+  }
+  return (
+    <div>
+      <NavBarContainer />
       <div className="reset-field">
         <Alert />
         <div id="reset-info">
@@ -62,32 +60,21 @@ export class ResetPasswordPage extends Component {
           </button>
         </form>
       </div>
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 ResetPasswordPage.propTypes = {
-  saveInputHandler: PropTypes.func,
-  resetRequestHandler: PropTypes.func,
   passwordResetData: PropTypes.object,
+  saveInputHandler: PropTypes.func,
+  resetRequestHandler: PropTypes.func
 };
 
 const mapStateToProps = state => ({
   passwordResetData: state.passwordResetData || {}
 });
 
-const mapDispatchToProps = dispatch => ({
-  saveInputHandler: (field, value) => {
-    dispatch(inputError(null));
-    dispatch(saveInput(field, value));
-  },
-  resetRequestHandler: (email) => {
-    dispatch(sendResetRequest({ email }));
-  }
-});
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { resetRequestHandler, saveInputHandler }
 )(ResetPasswordPage);

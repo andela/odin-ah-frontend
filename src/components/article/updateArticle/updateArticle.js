@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import validate from 'validate.js';
 import {
-  getArticleForUpdate,
+  getArticle,
   updateArticleRequest,
   openPublishModal,
   closePublishModal,
@@ -18,8 +18,8 @@ import '../style.scss';
 import TitleInput from '../Editor/TitleInput';
 import BodyInput from '../Editor/BodyInput';
 import PublishContainer from '../Editor/PublishContainer';
+import PageNotFound from '../../error/PageNotFound';
 import NavBarContainer from '../../header/NavBarContainer';
-import PageNotFound from '../../404/PageNotFound';
 import { logout } from '../../../redux/actions/auth/login';
 
 const initialTitleValue = 'Title';
@@ -59,9 +59,9 @@ export class UpdateArticle extends Component {
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
-    const { match, getArticle } = this.props;
+    const { match } = this.props;
     const { slug } = match.params;
-    getArticle(slug);
+    this.props.getArticle(slug);
   }
 
   // eslint-disable-next-line camelcase
@@ -142,7 +142,7 @@ export class UpdateArticle extends Component {
 
   checkStrEquality = (content, placeholderValue) => (
     content.trim() === placeholderValue
-  )
+  );
 
   /**
    *
@@ -306,7 +306,7 @@ export class UpdateArticle extends Component {
     };
     let displayContent;
     if (statusCode === 404) {
-      displayContent = <PageNotFound />;
+      displayContent = <PageNotFound title='Article not found'/>;
     } else {
       displayContent = (
         <div>
@@ -388,7 +388,7 @@ UpdateArticle.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  articleToEdit: state.articles.articleToEdit,
+  articleToEdit: state.articles.article,
   loading: state.articles.loading,
   errors: state.articles.errors,
   responseMessage: state.articles.response,
@@ -398,10 +398,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getArticle: getArticleForUpdate,
-  publishArticle: updateArticleRequest,
+  getArticle,
   openPublishModal,
   closePublishModal,
+  publishArticle: updateArticleRequest,
   showError: showCreateError,
   hideError: hideCreateError,
   hideResponse: hideCreateResponse,
