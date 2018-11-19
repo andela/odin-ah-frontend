@@ -3,10 +3,10 @@ import thunk from 'redux-thunk';
 import faker from 'faker';
 import sinon from 'sinon';
 import {
-  userLoginRequest,
-  logout,
+  getAuthUserProfile,
   loginUser,
-  getAuthUserProfile
+  logout,
+  userLoginRequest
 } from '../../redux/actions/auth/login';
 import apiRequest from '../../services/apiRequest';
 import * as types from '../../redux/constants/index';
@@ -62,6 +62,15 @@ export const networkError = {
   response: {
     status: 500,
     data: {
+      status: 'error',
+      message: 'Network error'
+    }
+  }
+};
+export const networkError1 = {
+  response: {
+    status: 403,
+    response: {
       status: 'error',
       message: 'Network error'
     }
@@ -123,6 +132,12 @@ describe('log in action test', () => {
   test('should execute login action, simulate network failed error', async () => {
     const apiReqStub = sinon.stub(apiRequest.axios, 'post')
       .rejects(networkError);
+    await executeUserLoginRequestAction(1);
+    apiReqStub.restore();
+  });
+  test('should execute login action, simulate network failed error', async () => {
+    const apiReqStub = sinon.stub(apiRequest.axios, 'post')
+      .rejects(networkError1);
     await executeUserLoginRequestAction(1);
     apiReqStub.restore();
   });

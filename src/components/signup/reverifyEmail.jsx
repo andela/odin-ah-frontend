@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { resendVerificationLink } from '../../redux/actions/auth/verify';
 import ReVerificationForm from './reVerificationForm';
-import { Alert } from '../notification/alert';
+import Alert from '../notification/alert';
 
 export function ReVerifyEmail(props) {
   return (

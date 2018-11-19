@@ -21,8 +21,16 @@ export function alerts(show, data = {}) {
 }
 
 
-export const dismissAlert = () => dispatch => dispatch(alerts(false, defaultNotificationData));
+export const dismissAlert = (timeout = 0) => (dispatch) => {
+  setTimeout(() => {
+    dispatch(alerts(false, defaultNotificationData));
+  }, timeout);
+};
 export const showAlert = data => dispatch => dispatch(alerts(true, data));
 
-export const dismissToast = () => dispatch => dispatch(toast(false, defaultNotificationData));
+export const dismissToast = (timeout = 0) => (dispatch) => {
+  setTimeout(() => {
+    dispatch(toast(false, defaultNotificationData));
+  }, timeout);
+};
 export const showToast = data => dispatch => dispatch(toast(true, data));

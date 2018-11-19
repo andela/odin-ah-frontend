@@ -63,6 +63,20 @@ test('Reset password request', async () => {
   stubAxiosPost.restore();
 });
 
+test('Reset password request', async () => {
+  const stubAxiosPost = sinon.stub(apiRequest.axios, 'post').rejects({
+    response: {
+      status: 404
+    }
+  });
+
+  const store = mockStore({});
+  await store.dispatch(resetRequestHandler('email@email.com'));
+  const actions = store.getActions();
+  expect(actions.length).toEqual(4);
+  stubAxiosPost.restore();
+});
+
 test('Reset password request fail test', async () => {
   const stubAxiosPost = sinon.stub(apiRequest.axios, 'post').resolves({
     data: {
@@ -94,6 +108,19 @@ test('Reset password request fail test', async () => {
   const actions = store.getActions();
   expect(actions).toEqual(expectedActions);
 
+  stubAxiosPost.restore();
+});
+
+test('Reset password request fail test', async () => {
+  const stubAxiosPost = sinon.stub(apiRequest.axios, 'post').rejects({
+    response: {
+      status: 404
+    }
+  });
+  const store = mockStore({});
+  await store.dispatch(completeResetRequest({ password: 'password', confirmPassword: 'password' }));
+  const actions = store.getActions();
+  expect(actions.length).toEqual(2);
   stubAxiosPost.restore();
 });
 

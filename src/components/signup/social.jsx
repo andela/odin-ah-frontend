@@ -19,7 +19,7 @@ export default function SocialButton(props) {
         <a href={ApiRequest.socialAuthUrl(social)}
            className={`button is-medium is-fullwidth is-${social}`}>
                   <span className="icon is-left">
-                    <i className={`fab fa ${icon}`}/>
+                    <i className={`fab ${icon}`}/>
                   </span>
           <span>{label}</span>
         </a>

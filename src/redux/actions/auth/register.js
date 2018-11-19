@@ -69,7 +69,6 @@ export const registerUser = user => async (dispatch) => {
     const { status: statusCode, data } = result;
     dispatchSuccess(data.message, 'alert', dispatch);
     dispatch(registeringUser(false));
-    // dispatch(modal(false));
     dispatch(registrationSuccessful({
       statusCode,
       data

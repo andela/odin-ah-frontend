@@ -40,15 +40,20 @@ test('renders ResetPasswordForm component without crashing', () => {
 });
 
 test('renders ResetPasswordForm component without crashing', () => {
+  jest.useFakeTimers();
   passwordResetData.message = 'Success Message';
+  const push = jest.fn();
   const wrapper = shallow(
     <ResetPasswordForm
+      history={{ push }}
       passwordResetData={passwordResetData}
       completeResetRequest={() => jest.fn()}
       saveInputHandler={() => jest.fn()}
       match={match}
     />
   );
+  jest.runAllTimers();
+  expect(push).toBeCalled();
   expect(wrapper).toMatchSnapshot();
 });
 

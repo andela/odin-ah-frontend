@@ -25,7 +25,8 @@ export default function SideTool(props) {
         <span className='side-tool__item__label side-tool__item__label_dislike'>
           {reactionCountToString(dislikeCount)}
         </span>
-        <img alt='dislike button' className='side-tool__item__icon side-tool__item__icon_dislike' src={dislike}/>
+        <img alt='dislike button' className='side-tool__item__icon side-tool__item__icon_dislike'
+             src={dislike}/>
       </div>
       <div title='Comment' className='side-tool__item'>
         <span className='side-tool__item__label'>
@@ -35,19 +36,28 @@ export default function SideTool(props) {
       </div>
       <div title='Bookmark' className='side-tool__item'>
         <span/>
-        <img alt='bookmark button' className='side-tool__item__icon side-tool__item__icon_bookmark' src={bookmark}/>
+        <img alt='bookmark button' className='side-tool__item__icon side-tool__item__icon_bookmark'
+             src={bookmark}/>
       </div>
       <div title='Share' className='side-tool__item'>
         <span/>
         <img alt='share button' className='side-tool__item__icon' src={share}/>
       </div>
       {
-        dropDownItems.length > 0
+        dropDownItems.length === 1
+        && <div title='Share' className='side-tool__item'>
+          <span/>
+          <i title='Report Article' className="fa fa-flag side-tool__item__icon"
+             aria-hidden="true"/>
+        </div>
+      }
+      {
+        dropDownItems.length > 1
         && <div className={'side-tool__item'}>
           <span/>
           <SideToolDropDownMenu
             onDropDownItemClicked={onDropDownItemClicked}
-            dropDownItems={dropDownItems} />
+            dropDownItems={dropDownItems}/>
         </div>
       }
     </div>

@@ -1,5 +1,8 @@
 import {
-  AUTHENTICATING, LOGIN_USER, LOGIN_USER_ERROR, LOGOUT_USER
+  AUTHENTICATING,
+  LOGIN_USER,
+  LOGIN_USER_ERROR,
+  LOGOUT_USER
 } from '../../constants/index';
 import { dispatchError, getErrorMessage } from './register';
 import apiRequest from '../../../services/apiRequest';
@@ -14,11 +17,11 @@ export const loginUserFailure = error => ({
   error
 });
 
-export const logout = () => {
+export const logout = () => (dispatch) => {
   localStorage.removeItem('jwtToken');
-  return {
+  dispatch({
     type: LOGOUT_USER
-  };
+  });
 };
 
 export const authenticating = loading => ({

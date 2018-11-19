@@ -3,9 +3,7 @@ import { shallow } from 'enzyme';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 
-import ConnectedLandingPageContainer, {
-  LandingPageContainer
-} from '../../../components/landingPage/LandingPageContainer';
+import ConnectedLandingPageContainer, { LandingPageContainer } from '../../../components/landingPage/LandingPageContainer';
 
 const middlewares = [thunk]; // add your middlewares like `redux-thunk`
 const mockStore = configureStore(middlewares);
@@ -20,6 +18,8 @@ const propSet1 = {
   fetchArticles: jest.fn(),
   fetchPtags: jest.fn(),
   fetchArticlePage: jest.fn(),
+  openRegistrationModal: jest.fn(),
+  openLoginModal: jest.fn(),
   loadingArticles: false,
   location: {
     search: '?register'
@@ -43,18 +43,6 @@ const propSet2 = {
 it('should render landing page when user is not authenticated', () => {
   const wrapper = shallow(<LandingPageContainer {...propSet1} />);
   expect(wrapper.exists()).toBe(true);
-});
-
-it('should open login modal when user is not authenticated', () => {
-  const wrapper = shallow(<LandingPageContainer {...propSet1} />);
-  wrapper.instance().handleLoginModal();
-  expect(wrapper.state().showLoginModal).toBe(true);
-});
-
-it('should open registration modal when user is not authenticated', () => {
-  const wrapper = shallow(<LandingPageContainer {...propSet1} />);
-  wrapper.instance().openRegistrationModalComponent();
-  expect(wrapper.prop('openModal')).toHaveBeenCalled;
 });
 
 it('should fetch article page when user is not authenticated', () => {

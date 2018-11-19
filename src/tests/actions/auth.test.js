@@ -66,6 +66,7 @@ describe('Sign up action test', () => {
     await executeAction(3);
     apiReqStub.restore();
   });
+
   test('should execute register action, simulate network failed error', async () => {
     const apiReqStub = sinon.stub(apiRequest, 'createUser')
       .rejects({

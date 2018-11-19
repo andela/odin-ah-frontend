@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { dismissModal } from '../../redux/actions/modal';
+import ModalCard from './ModalCard';
 
 export class Modal extends Component {
   dismissBtn = () => {
@@ -14,13 +15,14 @@ export class Modal extends Component {
     const { show } = this.props;
     if (!Content) return null;
     return (
+      <React.Fragment>
         <div className={`modal ${(show) ? 'is-active' : ''}`}>
           <div className="modal-background"/>
-          <div className="modal-content content">
+          <ModalCard dismiss={this.dismissBtn}>
             <Content {...props}/>
-          </div>
-          <button onClick={this.dismissBtn} className="modal-close is-large" aria-label="close"/>
+          </ModalCard>
         </div>
+      </React.Fragment>
     );
   }
 }

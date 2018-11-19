@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Presentation from './presentation';
+import Presentation from '../../signup/presentation';
 
-import './signup.scss';
+import '../../signup/signup.scss';
 
 /**
  * @return {null}
  */
 export function ModalContent(props) {
   return (
-    <section className="modal-card-body">
-      <div className="content">
-        <Presentation onSubmit={props.registerUser}/>
-      </div>
-    </section>
+    <div className="content">
+      <Presentation onSubmit={props.registerUser}/>
+    </div>
   );
 }
 

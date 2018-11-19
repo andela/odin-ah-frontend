@@ -64,7 +64,7 @@ export const basePropTypes = {
 export const defaultNotificationData = {
   text: '',
   type: 'success',
-  timeout: 5000
+  timeout: 8000
 };
 
 Notification.propTypes = {

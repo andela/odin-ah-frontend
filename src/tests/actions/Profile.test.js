@@ -4,7 +4,6 @@ import sinon from 'sinon';
 import faker from 'faker';
 import { profileData, uploadProfileData, uploadImageToCloud } from '../../redux/actions/profile';
 import apiRequest from '../../services/apiRequest';
-// import * as types from '../../redux/constants/index';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
