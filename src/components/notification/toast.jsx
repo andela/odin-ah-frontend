@@ -30,8 +30,4 @@ const mapStateToProps = state => ({
   mode: state.notification.toast.mode,
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   dismissToast: () => dispatch(toast(false, defaultNotificationData)),
-// });
-
 export default connect(mapStateToProps, { dismissToast })(Toast);

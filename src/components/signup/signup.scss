@@ -49,21 +49,64 @@ $twitter: #00ACED;
   background-color: #007da7e7;
 }
 
-.signup-logo-image {
-  width: 150px;
-  height: auto;
-  margin: 0 auto 24px;
-  display: block;
-}
-
 hr {
   background-color: #d8d8d8;
   height: 2px;
 }
 
-.modal-close {
-  padding: 30px;
-  right: 50px;
-  top: 50px;
+.text-button {
+  background-color: #0085f9;
+  color: rgba(255, 255, 255, 0.64);
+  border-color: #0085f9;
 }
 
+input[type] {
+  display: block;
+  padding: .5rem 1rem;
+  border: 1px solid #c4d8f8;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  line-height: 1;
+  height: 3rem;
+  color: #00171f;
+  -webkit-appearance: none;
+  -webkit-transition: .2s border-color, .2s box-shadow;
+  transition: .2s border-color, .2s box-shadow;
+}
+
+.hr-text {
+  text-align: center;
+  margin: 1.2rem 0;
+  font-size: .8125rem;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.hr-text:before {
+  content: '';
+  border-top: 1px solid #dadfe9;
+  height: 0;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.hr-text strong {
+  font-weight: normal;
+  color: #7699c2;
+  display: inline-block;
+  background: #fff;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+p.auth-option {
+  text-align: center;
+}

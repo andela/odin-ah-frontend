@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { Notification } from '../../components/notification/index';
 import Toasts, { Toast } from '../../components/notification/toast';
 import Alerts, { Alert } from '../../components/notification/alert';
@@ -18,7 +18,8 @@ test('renders Notification component without crashing', () => {
 
 test('renders Notification component without crashing', () => {
   const dismissSpy = jest.fn();
-  const wrapper = shallow(<Notification autoDismiss={false} show={true} dismiss={dismissSpy} mode={'alert'}/>);
+  const wrapper = shallow(<Notification autoDismiss={false} show={true} dismiss={dismissSpy}
+                                        mode={'alert'}/>);
   wrapper.instance()
     .forceUpdate();
   wrapper.find('button')
@@ -31,26 +32,35 @@ test('renders Notification component without crashing', () => {
 
 test('renders Notification component without crashing', () => {
   const dismissSpy = jest.fn();
-  const wrapper = shallow(<Notification autoDismiss={true} show={true} dismiss={dismissSpy} mode={'alert'}/>);
+  const wrapper = shallow(<Notification autoDismiss={true} show={true} dismiss={dismissSpy}
+                                        mode={'alert'}/>);
   wrapper.instance()
     .forceUpdate();
 
-  wrapper.instance().setTimeout(true);
+  wrapper.instance()
+    .setTimeout(true);
 
-  expect(dismissSpy).not.toBeCalled();
-
-  jest.runAllTimers();
-
-  expect(dismissSpy).toBeCalled();
-  expect(dismissSpy).toHaveBeenCalledTimes(1);
-
-
-  wrapper.instance().setTimeout(true);
+  expect(dismissSpy)
+    .not
+    .toBeCalled();
 
   jest.runAllTimers();
 
-  expect(dismissSpy).toBeCalled();
-  expect(dismissSpy).toHaveBeenCalledTimes(2);
+  expect(dismissSpy)
+    .toBeCalled();
+  expect(dismissSpy)
+    .toHaveBeenCalledTimes(1);
+
+
+  wrapper.instance()
+    .setTimeout(true);
+
+  jest.runAllTimers();
+
+  expect(dismissSpy)
+    .toBeCalled();
+  expect(dismissSpy)
+    .toHaveBeenCalledTimes(2);
 });
 
 test('renders Notification component without crashing', () => {
@@ -70,5 +80,6 @@ test('renders Notification component without crashing', () => {
 
 test('renders Alert component with redux store without crashing', () => {
   const mockRegisterUserfunc = jest.fn();
-  shallow(<Alerts store={store} mode={'alert'} dismissAlert={mockRegisterUserfunc}/>);
+  const wrapper = mount(<Alerts store={store} mode={'alert'} dismissAlert={mockRegisterUserfunc}/>);
+  wrapper.unmount();
 });

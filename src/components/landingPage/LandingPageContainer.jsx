@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { openModal } from '../../redux/actions/modal';
+import { openLoginModal, openModal, openRegistrationModal } from '../../redux/actions/modal';
 import { registerUser } from '../../redux/actions/auth/register';
-import { ModalContent } from '../signup/modalComponent';
 import { logout, userLoginRequest } from '../../redux/actions/auth/login';
-import LoginModal from '../login/LoginModal';
 
 import LandingPageView from './LandingPageView';
 import './LandingPage.scss';
@@ -29,7 +27,9 @@ const propTypes = {
   fetchArticlePage: PropTypes.func.isRequired,
   loadingArticles: PropTypes.bool,
   handleLogout: PropTypes.func,
-  currentPage: PropTypes.number
+  currentPage: PropTypes.number,
+  openRegistrationModal: PropTypes.func,
+  openLoginModal: PropTypes.func,
 };
 
 const defaultProps = {
@@ -37,13 +37,6 @@ const defaultProps = {
 };
 
 export class LandingPageContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showLoginModal: false
-    };
-  }
-
   componentDidMount() {
     this.props.fetchArticles();
     this.props.fetchPtags();
@@ -51,23 +44,12 @@ export class LandingPageContainer extends React.Component {
     const login = urlParams.get('login');
     const register = urlParams.get('register');
     if (login !== null) {
-      this.handleLoginModal();
+      this.props.openLoginModal();
     }
     if (register !== null) {
-      this.openRegistrationModalComponent();
+      this.props.openRegistrationModal();
     }
   }
-
-  handleLoginModal = () => {
-    this.setState(state => ({ showLoginModal: !state.showLoginModal }));
-  };
-
-  openRegistrationModalComponent = () => {
-    const content = {};
-    content.Component = ModalContent;
-    content.props = { registerUser: this.props.registerUser };
-    this.props.openModal(content);
-  };
 
   handleFetchArticlePage = (page) => {
     this.props.fetchArticlePage(page);
@@ -80,8 +62,8 @@ export class LandingPageContainer extends React.Component {
         {this.props.loadingArticles && <PageLoader text="Loading..." />}
         {!this.props.loadingArticles && (
           <LandingPageView
-            handleLogin={this.handleLoginModal}
-            handleSignup={this.openRegistrationModalComponent}
+            handleLogin={this.props.openLoginModal}
+            handleSignup={this.props.openRegistrationModal}
             handleLogout={this.props.handleLogout}
             articles={this.props.articles}
             ptags={this.props.tags}
@@ -90,11 +72,6 @@ export class LandingPageContainer extends React.Component {
             userIsAuthenticated={userIsAuthenticated}
           />
         )}
-        <LoginModal
-          show={this.state.showLoginModal}
-          close={this.handleLoginModal}
-          userLoginRequest={this.props.userLoginRequest}
-        />
       </React.Fragment>
     );
   }
@@ -114,6 +91,8 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
+    openRegistrationModal,
+    openLoginModal,
     openModal,
     registerUser,
     userLoginRequest,

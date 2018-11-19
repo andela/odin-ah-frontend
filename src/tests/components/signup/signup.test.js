@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
 import faker from 'faker';
 import thunk from 'redux-thunk';
@@ -89,7 +89,6 @@ test('should trigger field validator', async () => {
     confirmPassword: user.password,
   });
   const onChangeEvent = generateEvent('confirmPassword', user.username);
-  // wrapper.instance().forceUpdate();
   wrapper.instance()
     .validateInput(onChangeEvent);
 
@@ -146,7 +145,6 @@ test('should trigger stateUpdate function', async () => {
   };
   instance.forceUpdate();
   instance.updateState(update);
-  // wrapper.instance().update();
   errors.email = null;
   expect(wrapper.state('email'))
     .toEqual(update.email);
@@ -164,7 +162,8 @@ test('should renders SignUp component without crashing', async () => {
   const store = mockStore({
     registration: { loading: true, },
   });
-  shallow(<PresentationComponent onSubmit={mockOnSubmitFunc} store={store}/>);
+  const wrapper = mount(<PresentationComponent onSubmit={mockOnSubmitFunc} store={store}/>);
+  wrapper.setState({ result: { data: {} } });
 });
 
 test('should renders SignUp component without crashing', async () => {

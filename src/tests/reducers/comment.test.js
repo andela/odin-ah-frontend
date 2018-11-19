@@ -1,9 +1,9 @@
-import { REDIRECT } from '../../redux/actions/redirect';
-import redirectReducer from '../../redux/reducer/redirect';
+import comments from '../../redux/reducer/article/comments';
+import { GET_COMMENTS } from '../../redux/actions/articles/comments';
 
 test('default reducer', () => {
   let state = {};
-  state = redirectReducer(state, {});
+  state = comments(state, {});
   expect(state)
     .toEqual({});
 });
@@ -13,7 +13,7 @@ test('verify reducer', () => {
   const payload = {
     to: 'dummy toast',
   };
-  state = redirectReducer(state, { type: REDIRECT, ...payload });
-  expect(state.redirectTo)
+  state = comments(state, { type: GET_COMMENTS, ...payload });
+  expect(state)
     .toEqual(payload);
 });

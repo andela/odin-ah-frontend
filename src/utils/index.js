@@ -24,3 +24,13 @@ export const reactionCountToString = (count) => {
   }
   return `${count}`;
 };
+
+export const cleanArticle = (article) => {
+  if (article) {
+    const result = { ...article };
+    result.parsedDate = dateToString(result.createdAt);
+    result.readingTime = Math.ceil(result.readingTime / (60 * 1000));
+    return result;
+  }
+  return null;
+};

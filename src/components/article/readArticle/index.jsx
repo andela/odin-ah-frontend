@@ -7,45 +7,15 @@ import { deleteArticle, getArticle } from '../../../redux/actions/articles/artic
 import ArticleContent from './articleContent';
 import Comment from './comment';
 import { getComments } from '../../../redux/actions/articles/comments';
-import { dateToString } from '../../../utils';
+import { cleanArticle } from '../../../utils';
 import { redirect } from '../../../redux/actions/redirect';
 import PageNotFound from '../../error/PageNotFound';
-import LoginModal from '../../login/LoginModal';
 import NavBarContainer from '../../header/NavBarContainer';
-import { openModal } from '../../../redux/actions/modal';
+import { openLoginModal, openModal, openRegistrationModal } from '../../../redux/actions/modal';
 import { registerUser } from '../../../redux/actions/auth/register';
 import { logout, userLoginRequest } from '../../../redux/actions/auth/login';
-import { ModalContent } from '../../signup/modalComponent';
-
-const cleanArticle = (article) => {
-  if (article) {
-    const result = { ...article };
-    result.parsedDate = dateToString(result.createdAt);
-    result.readingTime = Math.ceil(result.readingTime / (60 * 1000));
-    return result;
-  }
-  return null;
-};
 
 export class ReadArticle extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showLoginModal: false
-    };
-  }
-
-  handleLoginModal = () => {
-    this.setState(state => ({ showLoginModal: !state.showLoginModal }));
-  };
-
-  openRegistrationModalComponent = () => {
-    const content = {};
-    content.Component = ModalContent;
-    content.props = { registerUser: this.props.registerUser };
-    this.props.openModal(content);
-  };
-
   componentDidMount() {
     const { slug } = this.props.match.params;
     this.props.getArticle(slug);
@@ -82,7 +52,7 @@ export class ReadArticle extends Component {
 
   render() {
     const {
-      article, comment, redirectTo, errorCode, isAuthenticated
+      article, comment, redirectTo, errorCode,
     } = this.props;
     if (redirectTo) {
       return (<Redirect {...redirectTo} />);
@@ -93,8 +63,8 @@ export class ReadArticle extends Component {
     return (
       <React.Fragment>
         <NavBarContainer
-          handleLogin={this.handleLoginModal}
-          handleSignup={this.openRegistrationModalComponent}
+          handleLogin={this.props.openLoginModal}
+          handleSignup={this.props.openRegistrationModal}
           handleLogout={this.props.handleLogout}
           userIsAuthenticated={this.props.isAuthenticated}
         />
@@ -111,14 +81,6 @@ export class ReadArticle extends Component {
               article={article}/>
             <Comment comments={(comment) ? comment.comments : []}/>
           </div>
-        }
-        {
-          (!isAuthenticated)
-          && <LoginModal
-            show={this.state.showLoginModal}
-            close={this.handleLoginModal}
-            userLoginRequest={this.props.userLoginRequest}
-          />
         }
       </React.Fragment>
     );
@@ -140,7 +102,9 @@ ReadArticle.propTypes = {
   openModal: PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
   userLoginRequest: PropTypes.func,
-  handleLogout: PropTypes.func
+  handleLogout: PropTypes.func,
+  openRegistrationModal: PropTypes.func,
+  openLoginModal: PropTypes.func,
 };
 
 ReadArticle.defaultProps = {
@@ -168,4 +132,6 @@ export default connect(mapStateToProps, {
   registerUser,
   userLoginRequest,
   handleLogout: logout,
+  openLoginModal,
+  openRegistrationModal
 })(ReadArticle);

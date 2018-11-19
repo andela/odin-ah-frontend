@@ -9,8 +9,8 @@ $modal-background-background-color: rgba(10, 10, 10, 0.75);
 
 $modal-content-width: 500px;
 $modal-card-body-padding: 30px 50px 50px;
-$input-focus-border-color: #007ea7;
-$input-focus-box-shadow-color: rgba(0, 126, 167, 0.25);
+$input-focus-border-color: none;
+$input-focus-box-shadow-color: rgba(0, 126, 167, 0.39);
 
 @import "~bulma/bulma.sass";
 
@@ -26,18 +26,18 @@ body {
   font-family: "Roboto", sans-serif;
   color: $app-text;
 }
+
 .hide {
   display: none;
 }
 
-body{
-    font-family: 'Roboto', sans-serif;
-    color: $app-text;
-    background: #FFFFFF;
-    margin: 0;
-    height: 100vh;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+body {
+  font-family: 'Roboto', sans-serif;
+  color: $app-text;
+  background: #FFFFFF;
+  margin: 0;
+  height: 100vh;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
-

@@ -4,30 +4,30 @@ import HeaderContainer from '../header/HeaderContainer';
 import ArticleListView from '../articleList/ArticleListView';
 import BigTagList from '../articleList/BigTagList';
 import FooterView from '../footer/FooterView';
-import { Alert } from '../notification/alert';
+import Alert from '../notification/alert';
 
 const LandingPageView = props => (
   <div className="landing-page">
     <HeaderContainer {...props} />
     <div className="landing-page__main">
-      <Alert />
+      <Alert/>
       <section className="landing-page__content">
         <div className="featured-articles__wrapper">
           <h2 className="featured-articles__title">Featured Articles</h2>
-          <ArticleListView articles={props.articles} />
+          <ArticleListView articles={props.articles}/>
           <div className="featured-articles__control">
             <div
               className="featured-articles__more-btn js-next-btn"
               onClick={() => props.handleFetchArticlePage(1)}
             >
               NEXT&nbsp;
-              <i className="fas fa-arrow-right" />
+              <i className="fas fa-arrow-right"/>
             </div>
             <div
               className="featured-articles__more-btn js-prev-btn"
               onClick={() => props.handleFetchArticlePage(-1)}
             >
-              <i className="fas fa-arrow-left" />
+              <i className="fas fa-arrow-left"/>
               &nbsp;PREVIOUS
             </div>
           </div>
@@ -36,11 +36,11 @@ const LandingPageView = props => (
       <aside className="landing-page__sidebar">
         <div className="popular-tags__wrapper">
           <h5 className="popular-tags__title">Popular Topics</h5>
-          <BigTagList tags={props.ptags} />
+          <BigTagList tags={props.ptags}/>
         </div>
       </aside>
     </div>
-    <FooterView />
+    <FooterView/>
   </div>
 );
 

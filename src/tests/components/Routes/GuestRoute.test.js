@@ -15,7 +15,7 @@ const props = {
 };
 const store = mockStore({ ...{ login: { isAuthenticated: false } } });
 
-test('renders GeustRoute component without crashing', () => {
+test('renders GuestRoute component without crashing', () => {
   const wrapper = mount(<GeustRoute location={props.location}
     path="/article/new"
     component={ ResetPasswordForm }

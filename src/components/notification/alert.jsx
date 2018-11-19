@@ -13,13 +13,13 @@ export class Alert extends Component {
   render() {
     const { data, show, mode } = this.props;
     return (
-    <Notification dismiss={this.props.dismissAlert} data={data} show={show} mode={mode}/>);
+      <Notification dismiss={this.props.dismissAlert} data={data} show={show} mode={mode}/>);
   }
 }
 
 Alert.propTypes = {
   ...basePropTypes,
-  dismissAlert: PropTypes.func
+  dismissAlert: PropTypes.func.isRequired
 };
 
 Alert.defaultProps = {

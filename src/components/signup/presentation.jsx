@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import userValidator from '../../validators/UserValidator';
-import Alert from '../notification/alert';
 
 import './signup.scss';
 
@@ -20,6 +18,19 @@ export class Presentation extends Component {
       confirmPassword: '',
       errors: null
     };
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(newProps) {
+    if (newProps.result) {
+      this.setState({
+        email: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+        errors: null
+      });
+    }
   }
 
   validateInput = (e) => {
@@ -89,12 +100,6 @@ export class Presentation extends Component {
 
     return (
       <div>
-        <div>
-          <Link to={'/'}>
-            <img className={'signup-logo-image'} alt={'Logo'} src="/assets/images/logo.png"/>
-          </Link>
-        </div>
-        <Alert/>
         <form onSubmit={this.onSubmit} id="signupForm" name="signupForm">
           <div>
             <Input
@@ -123,9 +128,8 @@ export class Presentation extends Component {
                 </button>
               </div>
             </div>
-            <br/>
-            <hr/>
-            <p>or sign up with one of these services</p>
+            <div className="hr-text"><strong>or</strong></div>
+            <p className='auth-option'>sign up with one of these services</p>
             <SocialButton type={'signup'} social={'twitter'}/>
             <SocialButton type={'signup'} social={'facebook'}/>
             <SocialButton type={'signup'} social={'google'}/>
@@ -139,6 +143,7 @@ export class Presentation extends Component {
 Presentation.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool,
+  result: PropTypes.object,
 };
 
 Presentation.defaultProps = {
@@ -147,6 +152,7 @@ Presentation.defaultProps = {
 
 const mapStateToProps = state => ({
   loading: state.registration.loading,
+  result: state.registration.result,
 });
 
 
