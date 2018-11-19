@@ -5,17 +5,24 @@ import { connect } from 'react-redux';
 import { getAuthUserProfile } from '../../redux/actions/auth/login';
 import apiRequest from '../../services/apiRequest';
 import PageLoader from '../PageLoader';
+import PageNotFound from '../error/PageNotFound';
 
 export class SocialLogin extends Component {
   componentDidMount() {
     const urlParams = new URLSearchParams(this.props.location.search);
-    const accessToken = urlParams.get('token');
+    const accessToken = urlParams.get('access_token');
     apiRequest.setToken(accessToken);
     localStorage.setItem('jwtToken', accessToken);
     this.props.getAuthUserProfile();
   }
 
   render() {
+    if (this.props.error.message) {
+      return (<PageNotFound
+        title='Ops! Something went wrong.'
+        text={'Unable to authenticate this account at the moment.'}/>);
+    }
+
     if (!this.props.user) return (<PageLoader text={'Authenticating user'}/>);
     return (<Redirect to={'/'}/>);
   }
@@ -23,6 +30,7 @@ export class SocialLogin extends Component {
 
 SocialLogin.propTypes = {
   user: PropTypes.object,
+  error: PropTypes.object,
   match: PropTypes.any,
   login: PropTypes.object,
   location: PropTypes.any,
@@ -34,7 +42,7 @@ SocialLogin.defaultProps = {};
 const mapStateToProps = state => ({
   user: state.login.user,
   isAuthenticated: state.login.isAuthenticated,
-  login: state
+  error: state.login.error,
 });
 
 export default connect(mapStateToProps, { getAuthUserProfile })(SocialLogin);
