@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Notification, { basePropTypes, defaultNotificationData } from './index';
 import { dismissToast } from '../../redux/actions/notification';
 
-export function Toast(props) {
-  const { data, show, mode } = props;
-  return (
-    <Notification dismiss={props.dismissToast} data={data} show={show} mode={mode}/>);
+export class Toast extends Component {
+  render() {
+    const { data, show, mode } = this.props;
+    return (
+    <Notification dismiss={this.props.dismissToast} data={data} show={show} mode={mode}/>);
+  }
 }
 
 Toast.propTypes = {

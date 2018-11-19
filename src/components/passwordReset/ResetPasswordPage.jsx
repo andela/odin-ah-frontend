@@ -25,7 +25,7 @@ export function ResetPasswordPage(props) {
           id="sendEmailForm"
           onSubmit={(e) => {
             e.preventDefault();
-            resetRequestHandler(email);
+            props.resetRequestHandler(email);
           }}
         >
           <div className="field">
@@ -35,7 +35,7 @@ export function ResetPasswordPage(props) {
                 type="email"
                 placeholder="Enter email"
                 value={email}
-                onChange={e => saveInputHandler('email', e.target.value)}
+                onChange={e => props.saveInputHandler('email', e.target.value)}
               />
               <span className="icon is-medium is-left ">
                 <i className="fas fa-envelope" />

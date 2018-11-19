@@ -26,6 +26,11 @@ export const authenticating = loading => ({
   loading
 });
 
+function dispatchAuthenticationError(dispatch, error) {
+  const { message } = getErrorMessage(error);
+  dispatch(loginUserFailure({ message }));
+}
+
 export const getAuthUserProfile = () => (dispatch) => {
   apiRequest
     .authenticateUser()
@@ -34,8 +39,7 @@ export const getAuthUserProfile = () => (dispatch) => {
       dispatch(loginUser(profile));
     })
     .catch((error) => {
-      const { message } = error;
-      dispatchError(message, 'toast', dispatch);
+      dispatchAuthenticationError(dispatch, error);
     });
 };
 
@@ -65,8 +69,7 @@ export const userLoginRequest = userData => (dispatch) => {
             type
           } = getErrorMessage(error));
       }
-
       dispatchError(message, type, dispatch);
-      dispatch(loginUserFailure(error.response.data));
+      dispatchAuthenticationError(dispatch, error);
     });
 };

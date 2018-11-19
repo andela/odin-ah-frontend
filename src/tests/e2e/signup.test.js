@@ -110,7 +110,6 @@ describe('End-to-End for Sign up Page', () => {
     },
     timeout
   );
-
   test(
     'should display error when invalid email is provided',
     async () => {

@@ -20,10 +20,6 @@ export class Notification extends Component {
     this.timeout = null;
   }
 
-  // componentWillUnmount() {
-  //   this.props.dismiss();
-  // }
-
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(newProps) {
     this.setTimeout(newProps.show);
@@ -80,7 +76,7 @@ Notification.propTypes = {
 Notification.defaultProps = {
   show: false,
   data: defaultNotificationData,
-  autoDismiss: false,
+  autoDismiss: true,
 };
 
 export default Notification;
