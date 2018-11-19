@@ -45,9 +45,9 @@ export class DashboardContainer extends PureComponent {
 
 
 DashboardContainer.propTypes = {
-  match: PropTypes.object.isRequired,
-  profileData: PropTypes.func.isRequired,
-  profiledata: PropTypes.object.isRequired,
+  match: PropTypes.object,
+  profileData: PropTypes.func,
+  profiledata: PropTypes.object,
   isAuthenticated: PropTypes.bool
 };
 

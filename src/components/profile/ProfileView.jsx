@@ -68,10 +68,10 @@ ProfileView.propTypes = {
   modified: PropTypes.bool,
   settings: PropTypes.object,
   isLoading: PropTypes.bool,
-  fileSelectedHandler: PropTypes.func.isRequired,
-  handleInputOnChange: PropTypes.func.isRequired,
-  handleProfileUpdate: PropTypes.func.isRequired,
-  handleToggleCheckBox: PropTypes.func.isRequired
+  fileSelectedHandler: PropTypes.func,
+  handleInputOnChange: PropTypes.func,
+  handleProfileUpdate: PropTypes.func,
+  handleToggleCheckBox: PropTypes.func
 };
 
 export default ProfileView;

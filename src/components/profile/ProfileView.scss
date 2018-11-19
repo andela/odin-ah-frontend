@@ -63,8 +63,20 @@ margin-right: 20px;
 @media(max-width: 718px) {
     .input-holder  Input, textarea{
  border:  #C4C4C4 solid 0.5px;
+ width: 100%;
+ padding: 0%;
+ margin: 0%;
+ margin-bottom: 10px;
     }
     .profile-content-wrapper {
-        margin-right: 0px; 
+        display:grid;
+    grid-gap: 5px;
+    grid-template-columns: 1fr;
+    }
+    .but-section{
+justify-items: center;
+    }
+    .profile-container>*{
+        width: 100%;
     }
 }

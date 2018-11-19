@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Link, Route } from 'react-router-dom';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
 import ProfileContainer from '../profile/ProfileContainer';
 import Statistics from '../statistics/StastisticsView';
@@ -11,9 +10,10 @@ const DashboardView = ({
  match, profiledata, isProfileActive, handleProfileButton, isStatisticsActive, handleStatisticsButton, isAuthenticated, handleLogout
 }) => (
     <div>
-         <Fragment >
-            <NavBarContainer userIsAuthenticated={isAuthenticated}
+        <NavBarContainer userIsAuthenticated={isAuthenticated}
             handleLogout={handleLogout} />
+         <Fragment >
+            
          <div className='container-dash'>
              <div className='header-sub'>
                  <header className='dashboard-label'> Dashboard</header>
@@ -34,9 +34,15 @@ const DashboardView = ({
 );
 
 DashboardView.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
+  match: PropTypes.object,
   isAuthenticated: PropTypes.bool,
-  handleLogout: PropTypes.func
+  handleLogout: PropTypes.func,
+  profiledata: PropTypes.object,
+  isProfileActive: PropTypes.bool,
+  handleProfileButton: PropTypes.func,
+  handleStatisticsButton: PropTypes.func,
+
+  isStatisticsActive: PropTypes.bool,
 };
 
 export default DashboardView;
