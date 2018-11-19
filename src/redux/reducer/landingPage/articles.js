@@ -22,8 +22,10 @@ const initialState = {
 const landingPageArticles = (state = initialState, action = {}) => {
   switch (action.type) {
     case FETCH_ARTICLES_SUCCESS: {
-      const articles = state.articles.concat(action.payload.data.articles);
-      const pagesFetched = state.pagesFetched + 1;
+      const noPageChange = action.payload.data.page <= state.currentPage;
+      const fetchedArticles = action.payload.data.articles;
+      const articles = noPageChange ? fetchedArticles : state.articles.concat(fetchedArticles);
+      const pagesFetched = noPageChange ? state.pagesFetched : state.pagesFetched + 1;
       const { size } = action.payload.data;
       const sliceStart = (action.payload.data.page - 1) * 20;
       const sliceEnd = action.payload.data.page * 20;
