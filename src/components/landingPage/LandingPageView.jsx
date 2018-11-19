@@ -4,7 +4,6 @@ import HeaderContainer from '../header/HeaderContainer';
 import ArticleListView from '../articleList/ArticleListView';
 import BigTagList from '../articleList/BigTagList';
 import FooterView from '../footer/FooterView';
-import PageLoader from '../PageLoader';
 import { Alert } from '../notification/alert';
 
 const LandingPageView = props => (
@@ -15,8 +14,7 @@ const LandingPageView = props => (
       <section className="landing-page__content">
         <div className="featured-articles__wrapper">
           <h2 className="featured-articles__title">Featured Articles</h2>
-          {!props.loadingArticles && <ArticleListView articles={props.articles} />}
-          {props.loadingArticles && <PageLoader text={'loading...'} />}
+          <ArticleListView articles={props.articles} />
           <div className="featured-articles__control">
             <div
               className="featured-articles__more-btn js-next-btn"

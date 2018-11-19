@@ -12,9 +12,11 @@ import LandingPageView from './LandingPageView';
 import './LandingPage.scss';
 import { fetchArticlePage, fetchArticles } from '../../redux/actions/landingPage/articles';
 import { fetchPtags } from '../../redux/actions/landingPage/tags';
+import PageLoader from '../PageLoader';
 
 const propTypes = {
   match: PropTypes.object,
+  history: PropTypes.object,
   location: PropTypes.object,
   userIsAuthenticated: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
@@ -26,7 +28,8 @@ const propTypes = {
   fetchPtags: PropTypes.func.isRequired,
   fetchArticlePage: PropTypes.func.isRequired,
   loadingArticles: PropTypes.bool,
-  handleLogout: PropTypes.func
+  handleLogout: PropTypes.func,
+  currentPage: PropTypes.number
 };
 
 const defaultProps = {
@@ -74,16 +77,19 @@ export class LandingPageContainer extends React.Component {
     const { userIsAuthenticated } = this.props;
     return (
       <React.Fragment>
-        <LandingPageView
-          handleLogin={this.handleLoginModal}
-          handleSignup={this.openRegistrationModalComponent}
-          handleLogout={this.props.handleLogout}
-          articles={this.props.articles}
-          ptags={this.props.tags}
-          handleFetchArticlePage={this.handleFetchArticlePage}
-          loadingArticles={this.props.loadingArticles}
-          userIsAuthenticated={userIsAuthenticated}
-        />
+        {this.props.loadingArticles && <PageLoader text="Loading..." />}
+        {!this.props.loadingArticles && (
+          <LandingPageView
+            handleLogin={this.handleLoginModal}
+            handleSignup={this.openRegistrationModalComponent}
+            handleLogout={this.props.handleLogout}
+            articles={this.props.articles}
+            ptags={this.props.tags}
+            handleFetchArticlePage={this.handleFetchArticlePage}
+            loadingArticles={this.props.loadingArticles}
+            userIsAuthenticated={userIsAuthenticated}
+          />
+        )}
         <LoginModal
           show={this.state.showLoginModal}
           close={this.handleLoginModal}
@@ -101,7 +107,8 @@ const mapStateToProps = state => ({
   articles: state.landingPageArticles.articlesInView,
   tags: state.landingPageTags.tags,
   userIsAuthenticated: state.login.isAuthenticated,
-  loadingArticles: state.landingPageArticles.loadingArticles
+  loadingArticles: state.landingPageArticles.loadingArticles,
+  currentPage: state.landingPageArticles.currentPage
 });
 
 export default connect(
