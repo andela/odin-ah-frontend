@@ -116,6 +116,10 @@ export class ApiRequest {
     return this.axios.put('/users', data);
   }
 
+  bookMarkArticle(slug) {
+    return this.axios.post(`/bookmark/articles/${slug}`);
+  }
+
   uploadImage(data) {
     const fetchData = {
       method: 'POST',

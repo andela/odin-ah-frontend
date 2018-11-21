@@ -51,3 +51,11 @@ it('should return an API response with articles data', async () => {
   apiStub.restore();
   expect(response).toEqual(data);
 });
+
+it('should bookmark an article', async () => {
+  const slug = 'the-death-of-radio-cassettes-bmiqourP';
+  const apiStub = sinon.stub(apiRequest.axios, 'post').resolves();
+  const response = await apiRequest.bookMarkArticle(slug);
+  apiStub.restore();
+  expect(response).toEqual(undefined);
+});

@@ -6,12 +6,11 @@ import dislike from './images/dislike-button.svg';
 import like from './images/like-button.svg';
 import comment from './images/comments.svg';
 import share from './images/share-button.svg';
-import bookmark from './images/bookmark.svg';
 import { reactionCountToString } from '../../../utils';
 
 
 export default function SideTool(props) {
-  const { reaction, onDropDownItemClicked, dropDownItems } = props;
+  const { reaction, hasBookmarked, onDropDownItemClicked, dropDownItems, handleBookmark } = props;
   const { likeCount, dislikeCount, commentCount } = reaction;
   return (
     <div className='side-tool'>
@@ -36,8 +35,9 @@ export default function SideTool(props) {
       </div>
       <div title='Bookmark' className='side-tool__item'>
         <span/>
-        <img alt='bookmark button' className='side-tool__item__icon side-tool__item__icon_bookmark'
-             src={bookmark}/>
+        <div className={`side-tool__item__icon side-tool__item__icon_bookmark ${ hasBookmarked ? 'is__bookmarked':'' } `} onClick={ handleBookmark }>
+        <i className="fas fa-bookmark"></i>
+        </div>
       </div>
       <div title='Share' className='side-tool__item'>
         <span/>
@@ -65,8 +65,10 @@ export default function SideTool(props) {
 }
 
 SideTool.propTypes = {
+  handleBookmark: PropTypes.func,
   onDropDownItemClicked: PropTypes.func,
   dropDownItems: PropTypes.array,
+  hasBookmarked: PropTypes.bool,
   reaction: PropTypes.shape({
     likeCount: PropTypes.number,
     dislikeCount: PropTypes.number,

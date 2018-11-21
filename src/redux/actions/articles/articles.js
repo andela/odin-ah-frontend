@@ -13,7 +13,10 @@ import {
   HIDE_PUBLISH_RESPONSE,
   GET_ARTICLE_SUCCESS,
   GET_ARTICLE_ERROR,
-  DELETE_ARTICLE
+  DELETE_ARTICLE,
+  BOOKMARK_ARTICLE_BEGINS,
+  BOOKMARK_ARTICLE_SUCCESS,
+  BOOKMARK_ARTICLE_FAILURE
 } from '../../constants/articles';
 import { redirect } from '../redirect';
 
@@ -33,6 +36,22 @@ export const hideCreateError = () => ({
 export const hideCreateResponse = () => ({
   type: HIDE_PUBLISH_RESPONSE
 });
+
+export const bookmarkArticleBegins = () => ({
+  type: BOOKMARK_ARTICLE_BEGINS
+});
+
+export const bookmarkArticleSuccess = data => ({
+  type: BOOKMARK_ARTICLE_SUCCESS,
+  data
+});
+
+export const bookmarkArticleFailure = error => ({
+  type: BOOKMARK_ARTICLE_FAILURE,
+  error
+});
+
+
 export const createArticleRequest = articleData => (dispatch) => {
   dispatch({
     type: SENDING_REQUEST
@@ -122,5 +141,15 @@ export const deleteArticle = slug => async (dispatch) => {
     dispatch(redirect('/'));
   } catch (error) {
     dispatch(deleteRequest(false, null, error));
+  }
+};
+
+export const bookMarkArticle = slug => async (dispatch) => {
+  try {
+    dispatch(bookmarkArticleBegins());
+    await apiRequest.bookMarkArticle(slug);
+    dispatch(bookmarkArticleSuccess(true));
+  } catch (error) {
+    dispatch(bookmarkArticleFailure(error));
   }
 };

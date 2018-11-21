@@ -147,6 +147,8 @@ describe('ReadArticle Component', () => {
       const mockDeleteArticles = jest.fn();
       const mockGetComments = jest.fn();
       const mockRedirect = jest.fn();
+      const mockOpenLoginModal = jest.fn();
+      const mockBookMarkArticle = jest.fn();
       const loggedInUser = {
         username: ''
       };
@@ -158,7 +160,9 @@ describe('ReadArticle Component', () => {
         redirect: mockRedirect,
         getArticle: mockGetArticles,
         getComments: mockGetComments,
-        deleteArticle: mockDeleteArticles
+        openLoginModal: mockOpenLoginModal,
+        deleteArticle: mockDeleteArticles,
+        bookMarkArticle: mockBookMarkArticle,
       };
       wrapper = shallow(
         <ReadArticle
@@ -189,6 +193,11 @@ describe('ReadArticle Component', () => {
       instance.onDropDownItemClicked('Delete');
       expect(props.deleteArticle)
         .toBeCalled();
+    });
+    test('ReadArticle handleBookmark', () => {
+      const instance = wrapper.instance();
+      instance.handleBookmark();
+      expect(props.openLoginModal).toHaveBeenCalledTimes(0);
     });
 
     test('should render ReadArticle component without article', () => {

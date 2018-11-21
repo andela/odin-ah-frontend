@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PageLoader from '../../PageLoader';
-import { deleteArticle, getArticle } from '../../../redux/actions/articles/articles';
+import { deleteArticle, getArticle, bookMarkArticle } from '../../../redux/actions/articles/articles';
 import ArticleContent from './articleContent';
 import Comment from './comment';
 import { getComments } from '../../../redux/actions/articles/comments';
@@ -35,6 +35,17 @@ export class ReadArticle extends Component {
         break;
     }
   };
+
+  handleBookmark = (e) => {
+    const { isAuthenticated, openLoginModal } = this.props;
+    if (!isAuthenticated) {
+      openLoginModal();
+    }
+    if (isAuthenticated) {
+      const { slug } = this.props.match.params;
+      this.props.bookMarkArticle(slug);
+    }
+  }
 
   getMenuItems = () => {
     const { loggedInUser, isAuthenticated } = this.props;
@@ -78,7 +89,9 @@ export class ReadArticle extends Component {
             <ArticleContent
               onDropDownItemClicked={this.onDropDownItemClicked}
               dropDownItems={dropDownItems}
+              handleBookmark={this.handleBookmark}
               article={article}/>
+
             <Comment comments={(comment) ? comment.comments : []}/>
           </div>
         }
@@ -89,6 +102,8 @@ export class ReadArticle extends Component {
 
 ReadArticle.propTypes = {
   isAuthenticated: PropTypes.bool,
+  handleBookmark: PropTypes.func,
+  bookMarkArticle: PropTypes.func,
   loggedInUser: PropTypes.object,
   errorCode: PropTypes.number,
   redirectTo: PropTypes.object,
@@ -127,6 +142,7 @@ export default connect(mapStateToProps, {
   getArticle,
   getComments,
   deleteArticle,
+  bookMarkArticle,
   redirect,
   openModal,
   registerUser,

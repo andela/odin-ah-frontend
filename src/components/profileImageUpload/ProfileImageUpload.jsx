@@ -13,7 +13,7 @@ export const ProfileImageUpload = ({ handleEvent, imageUrl }) => (
 );
 
 ProfileImageUpload.propTypes = {
-  handleEvent: PropTypes.func,
+  handleEvent: PropTypes.object,
   imageUrl: PropTypes.string,
 };
 
