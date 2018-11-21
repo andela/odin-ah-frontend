@@ -14,8 +14,15 @@ import NavBarContainer from '../../header/NavBarContainer';
 import { openLoginModal, openModal, openRegistrationModal } from '../../../redux/actions/modal';
 import { registerUser } from '../../../redux/actions/auth/register';
 import { logout, userLoginRequest } from '../../../redux/actions/auth/login';
+import addReaction from '../../../redux/actions/articles/likes';
 
 export class ReadArticle extends Component {
+  state = {
+    error: {
+      message: ''
+    }
+  }
+
   componentDidMount() {
     const { slug } = this.props.match.params;
     this.props.getArticle(slug);
@@ -44,6 +51,17 @@ export class ReadArticle extends Component {
     if (isAuthenticated) {
       const { slug } = this.props.match.params;
       this.props.bookMarkArticle(slug);
+    }
+  }
+
+  handleInteraction = (prevStatus, newStatus) => {
+    const { slug } = this.props.match.params;
+    const { isAuthenticated, openLoginModal } = this.props;
+    if (!isAuthenticated) {
+      openLoginModal();
+    }
+    if (isAuthenticated) {
+      this.props.addReaction({ slug, prevStatus, newStatus });
     }
   }
 
@@ -89,9 +107,10 @@ export class ReadArticle extends Component {
             <ArticleContent
               onDropDownItemClicked={this.onDropDownItemClicked}
               dropDownItems={dropDownItems}
+              article={article}
               handleBookmark={this.handleBookmark}
-              article={article}/>
-
+              handleInteraction={this.handleInteraction}
+            />
             <Comment comments={(comment) ? comment.comments : []}/>
           </div>
         }
@@ -130,6 +149,7 @@ const mapStateToProps = state => ({
   article: cleanArticle(state.articles.article),
   comment: state.articles.comment,
   loading: state.articles.loading,
+  likes: state.likes,
   errorCode: state.articles.statusCode,
   responseMessage: state.articles.response,
   showDialog: state.articles.open,
@@ -149,5 +169,6 @@ export default connect(mapStateToProps, {
   userLoginRequest,
   handleLogout: logout,
   openLoginModal,
-  openRegistrationModal
+  openRegistrationModal,
+  addReaction
 })(ReadArticle);

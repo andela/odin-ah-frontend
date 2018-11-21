@@ -31,7 +31,8 @@ const article = {
   reaction: {
     commentCount: 0,
     dislikeCount: 0,
-    likeCount: 0
+    likeCount: 0,
+    status: 'like'
   }
 };
 describe('ReadArticle Component', () => {
@@ -41,6 +42,41 @@ describe('ReadArticle Component', () => {
     shallow(<SideTool dropDownItems={[]}
                       onDropDownItemClicked={mockOnDropDownItemClickedFunc}
                       reaction={reaction}/>);
+  });
+  test('should handle Like Interaction on SideTool', () => {
+    const event = {
+      target: { getAttribute: () => 'like' }
+    };
+    const handleInteractionProp = jest.fn();
+    const { reaction } = article;
+    // eslint-disable-next-line max-len
+    const sideToolWrapper = shallow(<SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />);
+    sideToolWrapper.instance().handleInteraction(event);
+    expect(handleInteractionProp).toHaveBeenCalled();
+  });
+  test('should handle Like Interaction on SideTool', () => {
+    const event = {
+      target: { getAttribute: () => 'like' }
+    };
+    const handleInteractionProp = jest.fn();
+    const { reaction } = article;
+    reaction.status = 'dislike';
+    // eslint-disable-next-line max-len
+    const sideToolWrapper = shallow(<SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />);
+    sideToolWrapper.instance().handleInteraction(event);
+    expect(handleInteractionProp).toHaveBeenCalled();
+  });
+  test('should handle Disike Interaction on SideTool', () => {
+    const event = {
+      target: { getAttribute: () => 'dislike' }
+    };
+    const handleInteractionProp = jest.fn();
+    const { reaction } = article;
+    reaction.status = 'like';
+    // eslint-disable-next-line max-len
+    const sideToolWrapper = shallow(<SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />);
+    sideToolWrapper.instance().handleInteraction(event);
+    expect(handleInteractionProp).toHaveBeenCalled();
   });
   test('should render ArticleContent component without crashing', () => {
     const mockOnDropDownItemClickedFunc = jest.fn();
@@ -139,6 +175,7 @@ describe('ReadArticle Component', () => {
         .toBeCalled();
     });
   });
+
   describe('ReadArticle component', () => {
     let props;
     let wrapper;
@@ -149,6 +186,7 @@ describe('ReadArticle Component', () => {
       const mockRedirect = jest.fn();
       const mockOpenLoginModal = jest.fn();
       const mockBookMarkArticle = jest.fn();
+      const mockAddReaction = jest.fn();
       const loggedInUser = {
         username: ''
       };
@@ -163,6 +201,7 @@ describe('ReadArticle Component', () => {
         openLoginModal: mockOpenLoginModal,
         deleteArticle: mockDeleteArticles,
         bookMarkArticle: mockBookMarkArticle,
+        addReaction: mockAddReaction
       };
       wrapper = shallow(
         <ReadArticle
@@ -197,6 +236,12 @@ describe('ReadArticle Component', () => {
     test('ReadArticle handleBookmark', () => {
       const instance = wrapper.instance();
       instance.handleBookmark();
+      expect(props.openLoginModal).toHaveBeenCalledTimes(0);
+    });
+
+    test('ReadArticle addReaction', () => {
+      const instance = wrapper.instance();
+      instance.handleInteraction();
       expect(props.openLoginModal).toHaveBeenCalledTimes(0);
     });
 

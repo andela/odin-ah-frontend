@@ -13,10 +13,12 @@ import {
   UPDATE_ARTICLE_SUCCESS,
   BOOKMARK_ARTICLE_BEGINS,
   BOOKMARK_ARTICLE_SUCCESS,
-  BOOKMARK_ARTICLE_FAILURE
+  BOOKMARK_ARTICLE_FAILURE,
+  ADD_REACTION
 } from '../constants/articles';
 import { GET_COMMENTS } from '../actions/articles/comments';
 import commentsReducer from './article/comments';
+import likeReducer from './article/likes';
 
 const defaultState = {
   open: false,
@@ -87,6 +89,10 @@ const articleReducer = (state = defaultState, action) => {
     case GET_COMMENTS:
       return {
         ...state, comment: commentsReducer(state.comment, action)
+      };
+    case ADD_REACTION:
+      return {
+        ...state, article: likeReducer(state.article, action)
       };
     default:
       return state;
