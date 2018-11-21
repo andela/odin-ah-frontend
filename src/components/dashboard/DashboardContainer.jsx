@@ -21,7 +21,7 @@ export class DashboardContainer extends PureComponent {
   handleProfileButton = () => {
     this.setState({
       isProfileActive: true,
-      isStatisticsActive: false,
+      isStatisticsActive: false, 
     });
   };
 

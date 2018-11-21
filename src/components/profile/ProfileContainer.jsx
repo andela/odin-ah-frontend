@@ -90,7 +90,7 @@ UNSAFE_componentWillReceiveProps = (nextProps) => {
 
 ProfileContainer.propTypes = {
   profiledata: PropTypes.object.isRequired,
-  uploadProfileData: PropTypes.func.isRequired,
+  uploadProfileData: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 

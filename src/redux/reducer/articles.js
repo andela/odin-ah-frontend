@@ -10,7 +10,10 @@ import {
   GET_ARTICLE_SUCCESS,
   GET_ARTICLE_ERROR,
   UPDATE_ARTICLE_ERROR,
-  UPDATE_ARTICLE_SUCCESS
+  UPDATE_ARTICLE_SUCCESS,
+  BOOKMARK_ARTICLE_BEGINS,
+  BOOKMARK_ARTICLE_SUCCESS,
+  BOOKMARK_ARTICLE_FAILURE
 } from '../constants/articles';
 import { GET_COMMENTS } from '../actions/articles/comments';
 import commentsReducer from './article/comments';
@@ -63,6 +66,19 @@ const articleReducer = (state = defaultState, action) => {
     case GET_ARTICLE_SUCCESS:
       return {
         ...state, loading: false, open: false, article: response.article
+      };
+    case BOOKMARK_ARTICLE_BEGINS:
+      return {
+        ...state, action, loading: true,
+      };
+    case BOOKMARK_ARTICLE_SUCCESS:
+      /* eslint-disable  */
+      return {
+        ...state, ...{ ...state.article.hasBookmarked = action.data }
+      };
+    case BOOKMARK_ARTICLE_FAILURE:
+      return {
+        ...state, loading: false, errors: response, statusCode
       };
     case GET_ARTICLE_ERROR:
       return {
