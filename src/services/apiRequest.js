@@ -128,6 +128,18 @@ export class ApiRequest {
     return fetch(process.env.REACT_APP_CLOUDINARY_URL, fetchData);
   }
 
+  followUser(userId) {
+    return this.axios.post(`/profiles/${userId}/follow`);
+  }
+
+  unfollowUser(userId) {
+    return this.axios.delete(`/profiles/${userId}/follow`);
+  }
+
+  fetchFollowList(size = 100) {
+    return this.axios.get(`/profiles/following?size=${size}`);
+  }
+
   registerInterceptors(store) {
     this.axios.interceptors.response.use(
       response => response,

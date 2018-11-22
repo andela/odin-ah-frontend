@@ -9,12 +9,13 @@ import ProfileView from '../../../components/article/readArticle/profileView';
 import TagPill from '../../../components/article/readArticle/tagPill';
 import TagPillContainer from '../../../components/article/readArticle/tagPillContainer';
 import DropDownMenu from '../../../components/article/readArticle/dropDownMenu';
+import FollowButtonContainer from '../../../components/users/FollowButtonContainer';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const match = {
   params: {
-    slug: 'test-slug',
+    slug: 'test-slug'
   }
 };
 const article = {
@@ -38,35 +39,58 @@ describe('ReadArticle Component', () => {
   test('should render SideTool component without crashing', () => {
     const mockOnDropDownItemClickedFunc = jest.fn();
     const { reaction } = article;
-    shallow(<SideTool dropDownItems={[]}
-                      onDropDownItemClicked={mockOnDropDownItemClickedFunc}
-                      reaction={reaction}/>);
+    shallow(
+      <SideTool
+        dropDownItems={[]}
+        onDropDownItemClicked={mockOnDropDownItemClickedFunc}
+        reaction={reaction}
+      />
+    );
   });
   test('should render ArticleContent component without crashing', () => {
     const mockOnDropDownItemClickedFunc = jest.fn();
 
-    shallow(<ArticleContent
-      dropDownItems={[]}
-      onDropDownItemClicked={mockOnDropDownItemClickedFunc}
-      article={article}/>);
+    shallow(
+      <ArticleContent
+        dropDownItems={[]}
+        onDropDownItemClicked={mockOnDropDownItemClickedFunc}
+        article={article}
+      />
+    );
   });
   test('should render ProfileView component without crashing', () => {
     const props = {
       user: article.author,
       date: '',
-      readTime: 0,
+      readTime: 0
     };
     shallow(<ProfileView {...props} />);
   });
+  test('should render FollowButtonContainer without crashing', () => {
+    const props = {
+      user: article.author,
+      date: '',
+      readTime: 0
+    };
+    const profileWrapper = shallow(<ProfileView {...props} />);
+    const followBtnWrapper = shallow(
+      profileWrapper.find(FollowButtonContainer).prop('children')({
+        text: 'Follow',
+        loading: false,
+        onClickHandler: jest.fn()
+      })
+    );
+    expect(followBtnWrapper.exists()).toBe(true);
+  });
   test('should render TagPill component without crashing', () => {
     const props = {
-      name: '',
+      name: ''
     };
     shallow(<TagPill {...props} />);
   });
   test('should render TagPillContainer component without crashing', () => {
     const props = {
-      tags: [''],
+      tags: ['']
     };
     shallow(<TagPillContainer {...props} />);
   });
@@ -77,7 +101,7 @@ describe('ReadArticle Component', () => {
     beforeEach(() => {
       props = {
         onDropDownItemClicked: jest.fn(),
-        dropDownItems: ['test'],
+        dropDownItems: ['test']
       };
       wrapper = mount(<DropDownMenu {...props} />);
     });
@@ -86,21 +110,16 @@ describe('ReadArticle Component', () => {
     });
     test('should be able to toggle drop down', () => {
       const invalidHandlerSpy = jest.spyOn(wrapper.instance(), 'onToggleClick');
-      wrapper.instance()
-        .forceUpdate();
-      wrapper.find('[data-action="toggle"]')
-        .simulate('click', {
-          target: {}
-        });
-      expect(invalidHandlerSpy)
-        .toBeCalled();
-      wrapper.find('[data-action="toggle"]')
-        .simulate('click', {
-          target: {}
-        });
+      wrapper.instance().forceUpdate();
+      wrapper.find('[data-action="toggle"]').simulate('click', {
+        target: {}
+      });
+      expect(invalidHandlerSpy).toBeCalled();
+      wrapper.find('[data-action="toggle"]').simulate('click', {
+        target: {}
+      });
 
-      expect(invalidHandlerSpy.mock.calls.length)
-        .toBe(2);
+      expect(invalidHandlerSpy.mock.calls.length).toBe(2);
     });
     test('should render DropDownMenu component without crashing', () => {
       const instance = wrapper.instance();
@@ -112,13 +131,11 @@ describe('ReadArticle Component', () => {
       };
       matches.mockReturnValueOnce(true);
       instance.handler(event);
-      expect(matches)
-        .toBeCalled();
+      expect(matches).toBeCalled();
 
       matches.mockReturnValueOnce(false);
       instance.handler(event);
-      expect(matches.mock.calls.length)
-        .toBe(2);
+      expect(matches.mock.calls.length).toBe(2);
     });
 
     test('should render DropDownMenu component without crashing', () => {
@@ -131,12 +148,9 @@ describe('ReadArticle Component', () => {
       };
       getAttribute.mockReturnValueOnce('test');
       instance.onDropDownItemClicked(event);
-      expect(getAttribute)
-        .toBeCalled();
-      expect(getAttribute.mock.calls.length)
-        .toBe(1);
-      expect(props.onDropDownItemClicked)
-        .toBeCalled();
+      expect(getAttribute).toBeCalled();
+      expect(getAttribute.mock.calls.length).toBe(1);
+      expect(props.onDropDownItemClicked).toBeCalled();
     });
   });
   describe('ReadArticle component', () => {
@@ -164,35 +178,22 @@ describe('ReadArticle Component', () => {
         deleteArticle: mockDeleteArticles,
         bookMarkArticle: mockBookMarkArticle,
       };
-      wrapper = shallow(
-        <ReadArticle
-          registerUser={jest.fn()}
-          openModal={jest.fn()}
-          {...props}/>
-      );
+      wrapper = shallow(<ReadArticle registerUser={jest.fn()} openModal={jest.fn()} {...props} />);
     });
     test('should render ReadArticle component without crashing', async () => {
-      expect(props.getArticle)
-        .toBeCalled();
-      expect(props.getComments)
-        .toBeCalled();
+      expect(props.getArticle).toBeCalled();
+      expect(props.getComments).toBeCalled();
     });
 
     test('ReadArticle onDropDownClicked', () => {
       const instance = wrapper.instance();
       instance.onDropDownItemClicked('Default');
-      expect(props.redirect)
-        .not
-        .toBeCalled();
-      expect(props.deleteArticle)
-        .not
-        .toBeCalled();
+      expect(props.redirect).not.toBeCalled();
+      expect(props.deleteArticle).not.toBeCalled();
       instance.onDropDownItemClicked('Edit');
-      expect(props.redirect)
-        .toBeCalled();
+      expect(props.redirect).toBeCalled();
       instance.onDropDownItemClicked('Delete');
-      expect(props.deleteArticle)
-        .toBeCalled();
+      expect(props.deleteArticle).toBeCalled();
     });
     test('ReadArticle handleBookmark', () => {
       const instance = wrapper.instance();
@@ -208,7 +209,8 @@ describe('ReadArticle Component', () => {
           registerUser={jest.fn()}
           openModal={jest.fn()}
           getArticle={mockCreateMethod}
-          getComments={mockCreateMethod}/>
+          getComments={mockCreateMethod}
+        />
       );
     });
     test('should render 404 Page', () => {
@@ -220,7 +222,8 @@ describe('ReadArticle Component', () => {
           errorCode={404}
           match={match}
           getArticle={mockCreateMethod}
-          getComments={mockCreateMethod}/>
+          getComments={mockCreateMethod}
+        />
       );
     });
     test('should redirect user', () => {
@@ -233,7 +236,8 @@ describe('ReadArticle Component', () => {
           match={match}
           redirectTo={redirectTo}
           getArticle={mockCreateMethod}
-          getComments={mockCreateMethod}/>
+          getComments={mockCreateMethod}
+        />
       );
     });
     test('should render with store attached', () => {
@@ -251,19 +255,23 @@ describe('ReadArticle Component', () => {
       };
       let store = mockStore(initialState);
       shallow(
-        <ReadArticleComponent {...{
-          ...props,
-          store
-        }}/>
+        <ReadArticleComponent
+          {...{
+            ...props,
+            store
+          }}
+        />
       );
       initialState.articles.article = null;
       initialState.login.user = article.author;
       store = mockStore(initialState);
       shallow(
-        <ReadArticleComponent {...{
-          ...props,
-          store
-        }}/>
+        <ReadArticleComponent
+          {...{
+            ...props,
+            store
+          }}
+        />
       );
     });
   });
