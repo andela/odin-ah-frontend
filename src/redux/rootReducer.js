@@ -10,6 +10,7 @@ import redirect from './reducer/redirect';
 import passwordResetData from './reducer/passwordReset';
 import landingPageArticles from './reducer/landingPage/articles';
 import landingPageTags from './reducer/landingPage/tags';
+import followList from './reducer/users/followList';
 
 const rootReducer = combineReducers({
   registration,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   landingPageArticles,
   landingPageTags,
   profile,
-  redirect
+  redirect,
+  followList
 });
 
 export default rootReducer;
