@@ -90,8 +90,13 @@ export class ApiRequest {
     return this.axios.get('/tags/popular');
   }
 
+  postComment(slug, comment) {
+    return this.axios.post(`/articles/${slug}/comments`, comment);
+  }
+
   getComments(slug, id) {
     let url = `/articles/${slug}/comments`;
+    // id is used for getting comments (replies) on a given comment id
     if (id) url = `${url}/${id}`;
     return this.axios.get(url);
   }

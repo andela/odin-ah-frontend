@@ -33,7 +33,7 @@ export default class Input extends Component {
         {showLabel && <label className="label">{label}</label>}
         <div className={`control has-icons-right ${(iconType) ? 'has-icons-left' : ''}`}>
           <input
-            className={`input is-medium ${(fieldError) ? 'is-danger' : ''}`}
+            className={`input auth-input is-medium ${(fieldError) ? 'is-danger' : ''}`}
             type={type}
             placeholder={placeholder || `Enter ${label}`}
             value={value}

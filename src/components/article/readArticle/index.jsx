@@ -5,8 +5,6 @@ import { Redirect } from 'react-router-dom';
 import PageLoader from '../../PageLoader';
 import { deleteArticle, getArticle, bookMarkArticle } from '../../../redux/actions/articles/articles';
 import ArticleContent from './articleContent';
-import Comment from './comment';
-import { getComments } from '../../../redux/actions/articles/comments';
 import { cleanArticle } from '../../../utils';
 import { redirect } from '../../../redux/actions/redirect';
 import PageNotFound from '../../error/PageNotFound';
@@ -15,6 +13,7 @@ import { openLoginModal, openModal, openRegistrationModal } from '../../../redux
 import { registerUser } from '../../../redux/actions/auth/register';
 import { logout, userLoginRequest } from '../../../redux/actions/auth/login';
 import addReaction from '../../../redux/actions/articles/likes';
+import CommentContainer from '../../comment/CommentContainer';
 
 export class ReadArticle extends Component {
   state = {
@@ -26,7 +25,6 @@ export class ReadArticle extends Component {
   componentDidMount() {
     const { slug } = this.props.match.params;
     this.props.getArticle(slug);
-    this.props.getComments(slug);
   }
 
   onDropDownItemClicked = (item) => {
@@ -81,7 +79,7 @@ export class ReadArticle extends Component {
 
   render() {
     const {
-      article, comment, redirectTo, errorCode,
+      article, redirectTo, errorCode, match
     } = this.props;
     if (redirectTo) {
       return (<Redirect {...redirectTo} />);
@@ -89,6 +87,9 @@ export class ReadArticle extends Component {
 
     let dropDownItems;
     if (article) dropDownItems = this.getMenuItems();
+
+    const { slug } = match.params;
+
     return (
       <React.Fragment>
         <NavBarContainer
@@ -111,7 +112,7 @@ export class ReadArticle extends Component {
               handleBookmark={this.handleBookmark}
               handleInteraction={this.handleInteraction}
             />
-            <Comment comments={(comment) ? comment.comments : []}/>
+            <CommentContainer user={article.author} slug={slug}/>
           </div>
         }
       </React.Fragment>
@@ -130,7 +131,6 @@ ReadArticle.propTypes = {
   article: PropTypes.object,
   comment: PropTypes.object,
   getArticle: PropTypes.func,
-  getComments: PropTypes.func,
   deleteArticle: PropTypes.func,
   redirect: PropTypes.func,
   openModal: PropTypes.func.isRequired,
@@ -147,7 +147,6 @@ ReadArticle.defaultProps = {
 
 const mapStateToProps = state => ({
   article: cleanArticle(state.articles.article),
-  comment: state.articles.comment,
   loading: state.articles.loading,
   likes: state.likes,
   errorCode: state.articles.statusCode,
@@ -160,7 +159,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getArticle,
-  getComments,
   deleteArticle,
   bookMarkArticle,
   redirect,

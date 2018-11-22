@@ -13,7 +13,6 @@ import {
   GET_ARTICLE_SUCCESS,
   GET_ARTICLE_ERROR,
 } from '../../redux/constants/articles';
-import { GET_COMMENTS } from '../../redux/actions/articles/comments';
 
 describe('articleReducer', () => {
   it('should return the initial state when action type is not handled', () => {
@@ -202,15 +201,5 @@ describe('articleReducer', () => {
         loading: false,
         errors
       });
-  });
-  it('should handle GET_COMMENTS action correctly', () => {
-    const payload = { text: 'text' };
-    const action = {
-      type: GET_COMMENTS,
-      ...payload
-    };
-    const state = articleReducer({ comment: {} }, action);
-    expect(state.comment)
-      .toEqual(payload);
   });
 });

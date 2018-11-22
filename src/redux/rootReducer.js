@@ -11,6 +11,7 @@ import passwordResetData from './reducer/passwordReset';
 import landingPageArticles from './reducer/landingPage/articles';
 import landingPageTags from './reducer/landingPage/tags';
 import followList from './reducer/users/followList';
+import comment from './reducer/comment';
 
 const rootReducer = combineReducers({
   registration,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   landingPageTags,
   profile,
   redirect,
-  followList
+  followList,
+  comment
 });
 
 export default rootReducer;

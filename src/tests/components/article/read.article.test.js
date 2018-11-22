@@ -196,7 +196,6 @@ describe('ReadArticle Component', () => {
     beforeEach(() => {
       const mockGetArticles = jest.fn();
       const mockDeleteArticles = jest.fn();
-      const mockGetComments = jest.fn();
       const mockRedirect = jest.fn();
       const mockOpenLoginModal = jest.fn();
       const mockBookMarkArticle = jest.fn();
@@ -211,7 +210,6 @@ describe('ReadArticle Component', () => {
         isAuthenticated: true,
         redirect: mockRedirect,
         getArticle: mockGetArticles,
-        getComments: mockGetComments,
         openLoginModal: mockOpenLoginModal,
         deleteArticle: mockDeleteArticles,
         bookMarkArticle: mockBookMarkArticle,
@@ -220,8 +218,8 @@ describe('ReadArticle Component', () => {
       wrapper = shallow(<ReadArticle registerUser={jest.fn()} openModal={jest.fn()} {...props} />);
     });
     test('should render ReadArticle component without crashing', async () => {
-      expect(props.getArticle).toBeCalled();
-      expect(props.getComments).toBeCalled();
+      expect(props.getArticle)
+        .toBeCalled();
     });
 
     test('ReadArticle onDropDownClicked', () => {

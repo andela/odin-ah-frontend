@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import apiRequest from '../../services/apiRequest';
 import * as actions from '../../redux/actions/articles/articles';
 import * as types from '../../redux/constants/articles';
-import { deleteError } from './comment.test';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -182,13 +181,6 @@ describe('Article actions', () => {
     test('should execute getComment action, simulate successful request', async () => {
       const apiReqStub = sinon.stub(apiRequest.axios, 'delete')
         .resolves();
-      await executeAction(2);
-      apiReqStub.restore();
-    });
-
-    test('should execute register action, simulate registration failed request', async () => {
-      const apiReqStub = sinon.stub(apiRequest.axios, 'delete')
-        .rejects(deleteError);
       await executeAction(2);
       apiReqStub.restore();
     });
