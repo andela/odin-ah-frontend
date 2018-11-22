@@ -120,6 +120,10 @@ export class ApiRequest {
     return this.axios.post(`/bookmark/articles/${slug}`);
   }
 
+  addReaction({ slug, status }) {
+    return this.axios.post(`/articles/likes/${slug}/${status}`);
+  }
+
   uploadImage(data) {
     const fetchData = {
       method: 'POST',

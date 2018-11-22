@@ -6,7 +6,9 @@ import Notification from '../../notification';
 import SideTool from './sideTool';
 
 export default function ArticleContent(props) {
-  const { onDropDownItemClicked, dropDownItems, article, handleBookmark } = props;
+  const {
+    onDropDownItemClicked, dropDownItems, article, handleBookmark, handleInteraction
+  } = props;
   const {
     title, body, author, tags, parsedDate, readingTime, reaction, hasBookmarked
   } = article;
@@ -27,7 +29,14 @@ export default function ArticleContent(props) {
                 <div dangerouslySetInnerHTML={Notification.createMarkup(body)}
                      className={'body-input'}>
                 </div>
-                <SideTool {...{ onDropDownItemClicked, dropDownItems, reaction, hasBookmarked, handleBookmark }}/>
+                <SideTool {...{
+                  onDropDownItemClicked,
+                  dropDownItems,
+                  reaction,
+                  hasBookmarked,
+                  handleBookmark,
+                  handleInteraction,
+                }}/>
                 <hr/>
               </div>
             </div>
