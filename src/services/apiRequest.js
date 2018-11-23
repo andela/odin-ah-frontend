@@ -137,6 +137,14 @@ export class ApiRequest {
     return this.axios.delete(`/bookmark/articles/${slug}`);
   }
 
+  getNotification() {
+    return this.axios.get('/profiles/notification');
+  }
+
+  updateNotification(notificationId) {
+    return this.axios.put(`/profiles/notification/${notificationId}`);
+  }
+
   uploadImage(data) {
     const fetchData = {
       method: 'POST',

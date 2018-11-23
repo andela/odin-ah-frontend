@@ -13,6 +13,7 @@ import landingPageArticles from './reducer/landingPage/articles';
 import landingPageTags from './reducer/landingPage/tags';
 import followList from './reducer/users/followList';
 import comment from './reducer/comment';
+import notificationReducer from './reducer/inAppNotifications';
 
 const rootReducer = combineReducers({
   registration,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   profile,
   redirect,
   followList,
-  comment
+  comment,
+  notificationReducer
 });
 
 export default rootReducer;

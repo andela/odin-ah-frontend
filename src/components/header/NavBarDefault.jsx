@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import DropDown from '../inAppNotification/notification/dropDown';
+// import AppNotificatonContainer from '../inAppNotification/AppNotificatonContainer';
 
 const NavBarDefault = ({
-  handleLogin, handleSignup, userIsAuthenticated, handleLogout,
+  handleLogin, handleSignup, userIsAuthenticated, handleLogout
 }) => (
   <nav className="nav-bar">
     <div className="nav-bar__container">
-      <div className="nav-bar__logo"/>
+      <div className="nav-bar__logo" />
       <div className="nav-bar__menu--right">
         {!userIsAuthenticated && (
           <React.Fragment>
@@ -24,6 +26,7 @@ const NavBarDefault = ({
         )}
         {userIsAuthenticated && (
           <React.Fragment>
+            <DropDown />
             <Link
               className="btn btn--link text--primary sign-in-btn sign-in-btn-js"
               to="/dashboard"
