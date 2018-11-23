@@ -13,6 +13,7 @@ import UpdateArticle from '../article/updateArticle/updateArticle';
 import ResetPasswordPage from '../passwordReset/ResetPasswordPage';
 import ResetPasswordForm from '../passwordReset/ResetPasswordForm';
 import LandingPageContainer from '../landingPage/LandingPageContainer';
+import BookmarkContainer from '../bookmark/BookmarkContainer';
 import AuthRoute from './AuthRoute';
 import GuestRoute from './GuestRoute';
 import ReadArticle from '../article/readArticle';
@@ -23,6 +24,7 @@ const Routes = ({ location }) => (
       <Route exact={true} path="/" component={LandingPageContainer} />
       <AuthRoute location={location} path="/article/new" component={CreateArticle} />
       <AuthRoute location={location} path="/article/edit/:slug" component={UpdateArticle} />
+      <AuthRoute location={location} path="/article/bookmark" component={BookmarkContainer} />
       <Route path="/article/:slug" component={ReadArticle} />
       <GuestRoute
         location={location}

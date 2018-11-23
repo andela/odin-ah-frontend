@@ -5,6 +5,7 @@ import notification from './reducer/notification';
 import profile from './reducer/profile';
 import modal from './reducer/modal';
 import articles from './reducer/articles';
+import bookmark from './reducer/article/bookmark';
 import login from './reducer/login';
 import redirect from './reducer/redirect';
 import passwordResetData from './reducer/passwordReset';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   registration,
   notification,
   modal,
+  bookmark,
   verify,
   login,
   articles,

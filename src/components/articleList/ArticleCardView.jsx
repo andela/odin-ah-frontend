@@ -8,6 +8,7 @@ import ArticleImage from './ArticleImage';
 
 const ArticleCardView = (props) => {
   const {
+    id,
     createdAt,
     readingTime,
     title,
@@ -31,7 +32,7 @@ const ArticleCardView = (props) => {
             </Link>
           </p>
           <p className="article-card__desc">{description}</p>
-          <p className="article-card__author">{author.name}</p>
+        {!id && (<p className="article-card__author">{author.name}</p>)}
           <div className="article-card__footer">
             <div className="article-card__footer--left">
               <span className="footer__item">{`${day} ${month}`}</span>
@@ -40,16 +41,24 @@ const ArticleCardView = (props) => {
               </span>
             </div>
             <div className="article-card__footer--right">
-              <span className="footer__item">
-                <i className="fa fa-thumbs-up" />
-                &nbsp;
-                {reaction.likeCount}
-              </span>
-              <span className="footer__item">
-                <i className="fa fa-thumbs-down" />
-                &nbsp;
-                {reaction.dislikeCount}
-              </span>
+            {id && (<span className='bookmark_delete'> <i className="fas fa-trash" data-slug={slug} onClick={props.handleDeleteBookmark}></i></span>)}
+                {
+                  !id &&
+                  (
+                    <React.Fragment>
+                  <span className="footer__item">
+                  <i className="fa fa-thumbs-up" />
+                  &nbsp;
+                  {reaction.likeCount}
+                  </span>
+                  <span className="footer__item">
+                  <i className="fa fa-thumbs-down" />
+                  &nbsp;
+                  {reaction.dislikeCount}
+                  </span>
+                  </React.Fragment>
+                  )
+                }
             </div>
           </div>
         </div>
@@ -58,7 +67,9 @@ const ArticleCardView = (props) => {
   );
 };
 
+
 ArticleCardView.propTypes = {
+  handleDeleteBookmark: PropTypes.func,
   article: PropTypes.object.isRequired
 };
 

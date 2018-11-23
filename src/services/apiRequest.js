@@ -129,6 +129,14 @@ export class ApiRequest {
     return this.axios.post(`/articles/likes/${slug}/${status}`);
   }
 
+  getBookmarkArticle(pageToLoad = 1, size = 20) {
+    return this.axios.get(`/bookmark/articles?page=${pageToLoad}&size=${size}`);
+  }
+
+  removeBookmarkArticle(slug) {
+    return this.axios.delete(`/bookmark/articles/${slug}`);
+  }
+
   uploadImage(data) {
     const fetchData = {
       method: 'POST',
