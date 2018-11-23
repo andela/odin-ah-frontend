@@ -28,6 +28,9 @@ describe('CommentBox', () => {
         onChange={() => {}}
         comments={ comments }
         userImage='link://to/image'
+        onFocus={() => {}}
+        onBlur={() => {}}
+        readyToType={true}
       />
     );
     expect(wrapper.find(SingleComment)).toHaveLength(2);

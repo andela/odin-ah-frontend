@@ -5,7 +5,6 @@ import dislike from './images/dislike-button.svg';
 import disliked from './images/disliked-button.svg';
 import like from './images/like-button.svg';
 import liked from './images/liked-button.svg';
-import comment from './images/comments.svg';
 import share from './images/share-button.svg';
 import { reactionCountToString } from '../../../utils';
 
@@ -28,7 +27,7 @@ export default class SideTool extends Component {
       reaction, hasBookmarked, onDropDownItemClicked, dropDownItems, handleBookmark
     } = this.props;
     const {
-      likeCount, dislikeCount, commentCount, hasReacted, status
+      likeCount, dislikeCount, hasReacted, status
     } = reaction;
     const likeImage = hasReacted && status === 'like' ? liked : like;
     const dislikeImage = hasReacted && status === 'dislike' ? disliked : dislike;
@@ -46,12 +45,6 @@ export default class SideTool extends Component {
         </span>
         <img alt='dislike button' data-action='dislike' className='side-tool__item__icon side-tool__item__icon_dislike'
              src={dislikeImage} onClick={this.handleInteraction}/>
-      </div>
-      <div title='Comment' className='side-tool__item'>
-        <span className='side-tool__item__label'>
-          {reactionCountToString(commentCount)}
-        </span>
-        <img alt='comment button' className='side-tool__item__icon' src={comment}/>
       </div>
       <div title='Bookmark' className='side-tool__item'>
         <span/>

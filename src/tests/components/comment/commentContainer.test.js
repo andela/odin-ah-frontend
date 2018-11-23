@@ -36,6 +36,8 @@ describe('CommentContainer', () => {
         getComments={getComments}
         resetRefresh={resetRefresh}
         showToast={showToast}
+        isAuthenticated={true}
+        openLoginModal={jest.fn()}
       />
     );
     expect(wrapper.find(CommentBox)).toHaveLength(1);
@@ -54,6 +56,8 @@ describe('CommentContainer', () => {
           getComments={getComments}
           resetRefresh={resetRefresh}
           showToast={showToast}
+          isAuthenticated={true}
+          openLoginModal={jest.fn()}
         />
     );
     wrapper.setState({
@@ -78,11 +82,36 @@ describe('CommentContainer', () => {
           getComments={getComments}
           resetRefresh={resetRefresh}
           showToast={showToast}
+          isAuthenticated={true}
+          openLoginModal={jest.fn()}
         />
     );
     await wrapper.instance().postCommentHandler();
     expect(postCommentHandlerSpy).toHaveBeenCalled();
     expect(showToast).toHaveBeenCalled();
+    postCommentHandlerSpy.mockRestore();
+  });
+  it('should openLoginModal when user is not authenticated', async () => {
+    const postCommentHandlerSpy = jest.spyOn(CommentContainer.prototype, 'postCommentHandler');
+    const openLoginModal = jest.fn();
+    const wrapper = shallow(
+        <CommentContainer
+          slug={slug}
+          user={user}
+          sendComment={sendComment}
+          sendingComment={sendingComment}
+          comments={comments}
+          errors={errors}
+          getComments={getComments}
+          resetRefresh={resetRefresh}
+          showToast={showToast}
+          isAuthenticated={false}
+          openLoginModal={openLoginModal}
+        />
+    );
+    await wrapper.instance().postCommentHandler();
+    expect(postCommentHandlerSpy).toHaveBeenCalled();
+    expect(openLoginModal).toHaveBeenCalled();
     postCommentHandlerSpy.mockRestore();
   });
   it('should handle refresh when comment is posted', () => {
@@ -97,6 +126,8 @@ describe('CommentContainer', () => {
           getComments={getComments}
           resetRefresh={resetRefresh}
           showToast={showToast}
+          isAuthenticated={true}
+          openLoginModal={jest.fn()}
         />
     );
     wrapper.setProps({
@@ -119,6 +150,8 @@ describe('CommentContainer', () => {
           getComments={getComments}
           resetRefresh={resetRefresh}
           showToast={showToast}
+          isAuthenticated={true}
+          openLoginModal={jest.fn()}
         />
     );
     const event = {

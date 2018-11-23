@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { updateFollowList, fetchFollowList } from '../../redux/actions/users/followList';
+import { openLoginModal } from '../../redux/actions/modal';
 
 const propTypes = {
   userId: PropTypes.number.isRequired,
@@ -10,7 +11,9 @@ const propTypes = {
   updateFollowList: PropTypes.func,
   loading: PropTypes.array,
   children: PropTypes.func,
-  fetchFollowList: PropTypes.func
+  fetchFollowList: PropTypes.func,
+  isAuthenticated: PropTypes.bool,
+  openLoginModal: PropTypes.func.isRequired,
 };
 
 const defaultProps = {};
@@ -30,6 +33,11 @@ export class FollowButtonContainer extends React.Component {
   }
 
   onClickHandler = () => {
+    const { isAuthenticated, openLoginModal: popUpLoginModal } = this.props;
+    if (!isAuthenticated) {
+      popUpLoginModal();
+      return;
+    }
     this.props.updateFollowList(this.props.userId, this.state.following);
   };
 
@@ -55,12 +63,14 @@ FollowButtonContainer.defaultProps = defaultProps;
 
 const mapStateToProps = state => ({
   followList: state.followList.followList,
-  loading: state.followList.ongoingFetchOperations
+  loading: state.followList.ongoingFetchOperations,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {
   updateFollowList,
-  fetchFollowList
+  fetchFollowList,
+  openLoginModal
 };
 
 export default connect(

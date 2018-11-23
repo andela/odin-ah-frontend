@@ -45,6 +45,7 @@ describe('ReadArticle Component', () => {
         dropDownItems={[]}
         onDropDownItemClicked={mockOnDropDownItemClickedFunc}
         reaction={reaction}
+        handleInteraction={jest.fn()}
       />
     );
   });

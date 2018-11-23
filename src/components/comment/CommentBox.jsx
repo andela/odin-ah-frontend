@@ -11,7 +11,11 @@ const CommentBox = ({
   onChange,
   sendingComment,
   comments,
-  userImage
+  userImage,
+  onFocus,
+  onBlur,
+  readyToType,
+  isAuthenticated
 }) => (
   <section className="section show-butter">
     <div className="container">
@@ -22,11 +26,11 @@ const CommentBox = ({
           <div className="comment-container">
             <div className="comment-box">
               <img className="comment-box__avatar" alt="avatar" src={userImage} />
-              <TextareaAutosize onChange={onChange} name="commentInput" value={commentInputValue} className="comment-box__input" style={{ resize: 'none', width: '100%', border: 'none' }} placeholder="Add a comment..."/>
+              <TextareaAutosize onFocus={onFocus} onBlur={onBlur} onChange={onChange} name="commentInput" value={commentInputValue} className="comment-box__input" style={{ resize: 'none', width: '100%', border: 'none' }} placeholder="Add a comment..."/>
             </div>
-            <div className="comment-action">
+            {isAuthenticated && readyToType ? <div className="comment-action">
               <button type="submit" className={classnames({ button: sendingComment, 'is-loading': sendingComment })} onClick={onCommentClick}>Comment</button>
-            </div>
+            </div> : null}
           </div>
           <div className="comment-count">
             {comments.length ? comments.length : undefined } Comments
@@ -60,7 +64,11 @@ CommentBox.propTypes = {
   onCommentClick: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   sendingComment: PropTypes.bool,
-  comments: PropTypes.array.isRequired
+  comments: PropTypes.array.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  readyToType: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default CommentBox;

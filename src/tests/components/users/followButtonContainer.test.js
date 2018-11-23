@@ -17,13 +17,17 @@ const propSet1 = {
   updateFollowList: jest.fn(),
   fetchFollowList: jest.fn(),
   loading: [1],
-  children: jest.fn()
+  children: jest.fn(),
+  openLoginModal: jest.fn()
 };
 
 const storeState = {
   followList: {
     followList: [],
     ongoingfetchOperations: [1]
+  },
+  login: {
+    isAuthenticated: true
   }
 };
 
@@ -34,7 +38,9 @@ const propSet2Loading = {
   updateFollowList: jest.fn(),
   fetchFollowList: jest.fn(),
   loading: [2],
-  children: jest.fn()
+  children: jest.fn(),
+  isAuthenticated: true,
+  openLoginModal: jest.fn()
 };
 
 const propSet2NotLoading = {

@@ -41,10 +41,10 @@ export class ReadArticle extends Component {
     }
   };
 
-  handleBookmark = (e) => {
-    const { isAuthenticated, openLoginModal } = this.props;
+  handleBookmark = () => {
+    const { isAuthenticated, openLoginModal: popUpLoginModal } = this.props;
     if (!isAuthenticated) {
-      openLoginModal();
+      popUpLoginModal();
     }
     if (isAuthenticated) {
       const { slug } = this.props.match.params;
@@ -54,9 +54,9 @@ export class ReadArticle extends Component {
 
   handleInteraction = (prevStatus, newStatus) => {
     const { slug } = this.props.match.params;
-    const { isAuthenticated, openLoginModal } = this.props;
+    const { isAuthenticated, openLoginModal: popUpLoginModal } = this.props;
     if (!isAuthenticated) {
-      openLoginModal();
+      popUpLoginModal();
     }
     if (isAuthenticated) {
       this.props.addReaction({ slug, prevStatus, newStatus });

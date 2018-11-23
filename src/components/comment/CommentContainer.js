@@ -6,14 +6,18 @@ import {
   sendComment, getComments, resetRefresh
 } from '../../redux/actions/comment/comment';
 import { showToast } from '../../redux/actions/notification';
+import { openLoginModal } from '../../redux/actions/modal';
 
 export class CommentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentInput: ''
+      commentInput: '',
+      readyToType: false
     };
     this.onChange = this.onChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.postCommentHandler = this.postCommentHandler.bind(this);
   }
 
@@ -38,10 +42,39 @@ export class CommentContainer extends Component {
     });
   }
 
+  onBlur() {
+    if (!this.state.commentInput.trim().length) {
+      this.setState({
+        readyToType: false
+      });
+    }
+  }
+
+  onFocus() {
+    const { isAuthenticated, openLoginModal: popUpLoginModal } = this.props;
+    if (!isAuthenticated) {
+      popUpLoginModal();
+      return;
+    }
+    this.setState({
+      readyToType: true
+    });
+  }
+
   async postCommentHandler() {
-    const { sendComment: postComment, slug, showToast: showToastError } = this.props;
+    const {
+      sendComment: postComment,
+      slug,
+      showToast: showToastError,
+      isAuthenticated,
+      openLoginModal: popUpLoginModal
+    } = this.props;
     const { commentInput } = this.state;
-    if (!commentInput.length) {
+    if (!isAuthenticated) {
+      popUpLoginModal();
+      return;
+    }
+    if (!commentInput.trim().length) {
       const error = {
         type: 'error',
         text: 'Comment cannot be empty'
@@ -64,16 +97,22 @@ export class CommentContainer extends Component {
   }
 
   render() {
-    const { sendingComment, comments, user } = this.props;
+    const {
+      sendingComment, comments, user, isAuthenticated
+    } = this.props;
     const userImage = user.imageUrl || 'https://image.shutterstock.com/image-vector/male-default-placeholder-avatar-profile-450w-387516193.jpg';
     return (
       <CommentBox
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        readyToType={this.state.readyToType}
         onChange={this.onChange}
         commentInputValue={this.state.commentInput}
         onCommentClick={this.postCommentHandler}
         sendingComment={sendingComment}
         comments={comments}
         userImage={userImage}
+        isAuthenticated={isAuthenticated}
       />
     );
   }
@@ -88,21 +127,25 @@ CommentContainer.propTypes = {
   errors: PropTypes.array,
   getComments: PropTypes.func.isRequired,
   resetRefresh: PropTypes.func.isRequired,
-  showToast: PropTypes.func.isRequired
+  showToast: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  openLoginModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   sendingComment: state.comment.sendingComment,
   refreshComments: state.comment.refreshComments,
   comments: state.comment.comments,
-  errors: state.comment.errors
+  errors: state.comment.errors,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {
   sendComment,
   getComments,
   resetRefresh,
-  showToast
+  showToast,
+  openLoginModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentContainer);
