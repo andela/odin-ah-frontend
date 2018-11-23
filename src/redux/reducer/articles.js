@@ -20,7 +20,7 @@ import likeReducer from './article/likes';
 
 const defaultState = {
   open: false,
-  errors: {},
+  errors: {}
 };
 const articleReducer = (state = defaultState, action) => {
   const {
@@ -39,33 +39,48 @@ const articleReducer = (state = defaultState, action) => {
       };
     case SHOW_PUBLISH_ERROR:
       return {
-        ...state, errors
+        ...state,
+        errors
       };
     case HIDE_PUBLISH_ERROR:
       return {
-        ...state, errors: {}
+        ...state,
+        errors: {}
       };
     case HIDE_PUBLISH_RESPONSE:
       return {
-        ...state, response
+        ...state,
+        response
       };
     case SENDING_REQUEST:
       return {
-        ...state, loading: true, response, errors: {}
+        ...state,
+        loading: true,
+        response,
+        errors: {}
       };
     case CREATE_ARTICLE_SUCCESS:
     case UPDATE_ARTICLE_SUCCESS:
       return {
-        ...state, loading: false, open: false, response
+        ...state,
+        loading: false,
+        open: false,
+        response
       };
     case CREATE_ARTICLE_ERROR:
     case UPDATE_ARTICLE_ERROR:
       return {
-        ...state, loading: false, open: false, errors: response
+        ...state,
+        loading: false,
+        open: false,
+        errors: response
       };
     case GET_ARTICLE_SUCCESS:
       return {
-        ...state, loading: false, open: false, article: response.article
+        ...state,
+        loading: false,
+        open: false,
+        article: response.article
       };
     case BOOKMARK_ARTICLE_BEGINS:
       return {
@@ -82,7 +97,11 @@ const articleReducer = (state = defaultState, action) => {
       };
     case GET_ARTICLE_ERROR:
       return {
-        ...state, loading: false, open: false, errors: response, statusCode
+        ...state,
+        loading: false,
+        open: false,
+        errors: response,
+        statusCode
       };
     case ADD_REACTION:
       return {

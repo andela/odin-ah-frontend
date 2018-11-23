@@ -70,6 +70,27 @@
   color: white;
 }
 
+.notification-count{
+  position: absolute;
+  cursor: pointer;
+  font-size: 10px;
+  background: red;
+  width: 16px;
+  height: 16px;
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  top: 0;
+  right:1px;
+}
+.notification-wrapper{
+  position: relative
+}
+.a{
+  width: 300px;
+}
 @media (max-width: 600px) {
   .nav-bar__logo {
     background: url("../../logo-icon-only.png") no-repeat;
