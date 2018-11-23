@@ -31,7 +31,7 @@ const ProfileView = ({
      <input type='text' name='lastName' onChange={ handleInputOnChange } value={ lastName } placeholder='Enter your last name'/>{' '}
      <input type='text' name='username' onChange={ handleInputOnChange } value={ username} placeholder='Enter your username'/>{' '}
      <input type='email' name='email' onChange={ handleInputOnChange } value={ email } placeholder='Enter your email'/>{' '}
-     <textarea name="bio" onChange={ handleInputOnChange } value={ bio } placeholder='Enter your bio'></textarea>
+     <textarea className="short-bio" name="bio" onChange={ handleInputOnChange } value={ bio } placeholder='Enter your bio'></textarea>
      </div>
      <div className='image-wrapper'>
      <ProfileImageUpload handleEvent={ fileSelectedHandler } imageUrl={ imageUrl }/>

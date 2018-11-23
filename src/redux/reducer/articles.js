@@ -16,8 +16,6 @@ import {
   BOOKMARK_ARTICLE_FAILURE,
   ADD_REACTION
 } from '../constants/articles';
-import { GET_COMMENTS } from '../actions/articles/comments';
-import commentsReducer from './article/comments';
 import likeReducer from './article/likes';
 
 const defaultState = {
@@ -85,10 +83,6 @@ const articleReducer = (state = defaultState, action) => {
     case GET_ARTICLE_ERROR:
       return {
         ...state, loading: false, open: false, errors: response, statusCode
-      };
-    case GET_COMMENTS:
-      return {
-        ...state, comment: commentsReducer(state.comment, action)
       };
     case ADD_REACTION:
       return {
