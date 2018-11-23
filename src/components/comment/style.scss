@@ -15,8 +15,9 @@
   }
   &-box {
     display: flex;
-    // height: 80px;
     padding-top: 15px;
+    padding-bottom: 15px;
+    // padding-top: 15px;
     &__avatar {
       align-self: center;
       margin-left: 20px;
