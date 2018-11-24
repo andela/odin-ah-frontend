@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import validate from 'validate.js';
 import {
-  getArticle,
-  updateArticleRequest,
-  openPublishModal,
   closePublishModal,
-  showCreateError,
+  getArticle,
   hideCreateError,
-  hideCreateResponse
+  hideCreateResponse,
+  openPublishModal,
+  showCreateError,
+  updateArticleRequest
 } from '../../../redux/actions/articles/articles';
 import { updateArticleConstraint } from '../../../validators/constraints/article';
 import uploadArticleImage from '../../../services/cloudinary';
@@ -19,8 +19,6 @@ import TitleInput from '../Editor/TitleInput';
 import BodyInput from '../Editor/BodyInput';
 import PublishContainer from '../Editor/PublishContainer';
 import PageNotFound from '../../error/PageNotFound';
-import NavBarContainer from '../../header/NavBarContainer';
-import { logout } from '../../../redux/actions/auth/login';
 
 const initialTitleValue = 'Title';
 const initialBodyValue = '<p>Start typing ...</p>';
@@ -296,7 +294,7 @@ export class UpdateArticle extends Component {
     } = this.state;
     const {
       responseMessage, errors, showDialog,
-      closePublishModal: closeModal, statusCode, isAuthenticated
+      closePublishModal: closeModal, statusCode,
     } = this.props;
     const emptyTitle = this.checkStrEquality(title, initialTitleValue);
     const emptyBody = this.checkStrEquality(body, initialBodyValue);
@@ -310,8 +308,6 @@ export class UpdateArticle extends Component {
     } else {
       displayContent = (
         <div>
-          <NavBarContainer userIsAuthenticated={isAuthenticated}
-          handleLogout={this.props.handleLogout}/>
           <section className={classnames('section', 'update-section', { 'show-butter': errorMessage || responseMessage })}>
             <div className='butter__container'>
               <div className={classnames('butter__container--type', { success: responseMessage }, { error: errorMessage }) }>
@@ -383,7 +379,6 @@ UpdateArticle.propTypes = {
   errors: PropTypes.object.isRequired,
   responseMessage: PropTypes.string,
   statusCode: PropTypes.number,
-  isAuthenticated: PropTypes.bool,
   handleLogout: PropTypes.func
 };
 
@@ -394,7 +389,6 @@ const mapStateToProps = state => ({
   responseMessage: state.articles.response,
   showDialog: state.articles.open,
   statusCode: state.articles.statusCode,
-  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {
@@ -405,7 +399,6 @@ const mapDispatchToProps = {
   showError: showCreateError,
   hideError: hideCreateError,
   hideResponse: hideCreateResponse,
-  handleLogout: logout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateArticle);

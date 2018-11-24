@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import validate from 'validate.js';
 import {
-  createArticleRequest,
-  openPublishModal,
   closePublishModal,
-  showCreateError,
+  createArticleRequest,
   hideCreateError,
-  hideCreateResponse
+  hideCreateResponse,
+  openPublishModal,
+  showCreateError
 } from '../../../redux/actions/articles/articles';
 import { createArticleConstraint } from '../../../validators/constraints/article';
 import uploadArticleImage from '../../../services/cloudinary';
@@ -17,11 +17,11 @@ import '../style.scss';
 import TitleInput from '../Editor/TitleInput';
 import BodyInput from '../Editor/BodyInput';
 import PublishContainer from '../Editor/PublishContainer';
-import NavBarContainer from '../../header/NavBarContainer';
 import { logout } from '../../../redux/actions/auth/login';
 
 const initialTitleValue = 'Title';
 const initialBodyValue = '<p>Start typing ...</p>';
+
 export class CreateArticle extends Component {
   constructor(props) {
     super(props);
@@ -75,7 +75,8 @@ export class CreateArticle extends Component {
    */
   bodyChangeHandler(event) {
     const rawBody = event.target.getContent({ format: 'text' });
-    const description = rawBody.trim().slice(0, 100);
+    const description = rawBody.trim()
+      .slice(0, 100);
     const rawTextValue = {
       ...this.state.rawTextValue,
       body: rawBody
@@ -102,7 +103,7 @@ export class CreateArticle extends Component {
 
   checkStrEquality = (content, placeholderValue) => (
     content.trim() === placeholderValue
-  )
+  );
 
   /**
    *
@@ -221,12 +222,22 @@ export class CreateArticle extends Component {
     } = this.state;
     const { title } = this.state.rawTextValue;
     const articleData = {
-      title, body, description, tags, imageUrl, isPrivate, downloadable
+      title,
+      body,
+      description,
+      tags,
+      imageUrl,
+      isPrivate,
+      downloadable
     };
     // tags array contains tag objects = { label, value, __isNew__ }
     // get the value in each tag object
     const tagValues = tags.map(tag => tag.value);
-    const article = { ...articleData, tags: tagValues, publish: true };
+    const article = {
+      ...articleData,
+      tags: tagValues,
+      publish: true
+    };
     const statusCode = await publishArticle(article);
     if (statusCode === 201) {
       setTimeout(() => {
@@ -250,22 +261,27 @@ export class CreateArticle extends Component {
       title, body, description, tags, isPrivate, downloadable
     } = this.state;
     const {
-      responseMessage, errors, showDialog, closePublishModal: closeModal, isAuthenticated
+      responseMessage, errors, showDialog, closePublishModal: closeModal,
     } = this.props;
     const emptyTitle = this.checkStrEquality(title, initialTitleValue);
     const emptyBody = this.checkStrEquality(body, initialBodyValue);
     const errorMessage = this.getSingleErrorMessage(errors);
     const articleData = {
-      title, body, description, tags, isPrivate, downloadable
+      title,
+      body,
+      description,
+      tags,
+      isPrivate,
+      downloadable
     };
     return (
       <div>
-        <NavBarContainer userIsAuthenticated={isAuthenticated}
-          handleLogout={this.props.handleLogout} />
-        <section className={classnames('section', 'create-section', { 'show-butter': errorMessage || responseMessage })}>
+        <section
+          className={classnames('section', 'create-section', { 'show-butter': errorMessage || responseMessage })}>
           <div className='butter__container'>
-            <div className={classnames('butter__container--type', { success: responseMessage }, { error: errorMessage }) }>
-              <div className='butter__container--message'>{ errorMessage || responseMessage }</div>
+            <div
+              className={classnames('butter__container--type', { success: responseMessage }, { error: errorMessage })}>
+              <div className='butter__container--message'>{errorMessage || responseMessage}</div>
             </div>
           </div>
           <PublishContainer
@@ -292,7 +308,7 @@ export class CreateArticle extends Component {
                         onPaste={this.titlePasteHandler}
                         onFocusIn={this.titleFocusInHandler}
                         onFocusOut={this.titleFocusOutHandler}
-                        />
+                      />
                     </div>
                   </div>
                   <div className='input-group'>
@@ -327,7 +343,6 @@ CreateArticle.propTypes = {
   hideError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   responseMessage: PropTypes.string,
-  isAuthenticated: PropTypes.bool,
   handleLogout: PropTypes.func,
 };
 
@@ -337,7 +352,6 @@ const mapStateToProps = state => ({
   errors: state.articles.errors,
   responseMessage: state.articles.response,
   showDialog: state.articles.open,
-  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {

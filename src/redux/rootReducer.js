@@ -13,6 +13,7 @@ import landingPageArticles from './reducer/landingPage/articles';
 import landingPageTags from './reducer/landingPage/tags';
 import followList from './reducer/users/followList';
 import comment from './reducer/comment';
+import search from './reducer/search';
 import notificationReducer from './reducer/inAppNotifications';
 
 const rootReducer = combineReducers({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   redirect,
   followList,
   comment,
+  search,
   notificationReducer
 });
 

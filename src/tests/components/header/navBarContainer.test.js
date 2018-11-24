@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import NavBarContainer from '../../../components/header/NavBarContainer';
+import { NavBarContainer } from '../../../components/header/NavBarContainer';
 
 const propSet1 = {
   userIsAuthenticated: false
@@ -9,5 +9,6 @@ const propSet1 = {
 
 it('renders without crashing', () => {
   const wrapper = shallow(<NavBarContainer {...propSet1} />);
-  expect(wrapper.exists()).toBe(true);
+  expect(wrapper.exists())
+    .toBe(true);
 });

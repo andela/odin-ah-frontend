@@ -1,13 +1,15 @@
-import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { Route } from 'react-router-dom';
 import Routes from './components/routes/Routes';
 import './App.scss';
+import NavBarContainer from './components/header/NavBarContainer';
 
 function App() {
   return (
-      <BrowserRouter>
+      <Fragment>
+         <NavBarContainer/>
         <Route component={ Routes } />
-      </BrowserRouter>
+      </Fragment>
   );
 }
 

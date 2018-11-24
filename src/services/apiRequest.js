@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import { logout } from '../redux/actions/auth/login';
+import { objectToQueryParams } from '../utils';
 
 const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 
@@ -163,6 +164,29 @@ export class ApiRequest {
 
   fetchFollowList(size = 100) {
     return this.axios.get(`/profiles/following?size=${size}`);
+  }
+
+  /**
+   *
+   * @param {
+   *  {
+   *    q: string,
+   *    limit: string,
+   *    page: string,
+   *    author: string,
+   *    tag: string
+   *  }
+   * } query
+   * @return {Promise<any>}
+   */
+  search(query) {
+    const url = `search?${objectToQueryParams(query)}`;
+    return this.axios.get(url);
+  }
+
+  filterTags(query) {
+    const url = `tags?${objectToQueryParams(query)}`;
+    return this.axios.get(url);
   }
 
   registerInterceptors(store) {
