@@ -112,7 +112,7 @@ export class ReadArticle extends Component {
               handleBookmark={this.handleBookmark}
               handleInteraction={this.handleInteraction}
             />
-            <CommentContainer user={article.author} slug={slug}/>
+            <CommentContainer slug={slug}/>
           </div>
         }
       </React.Fragment>

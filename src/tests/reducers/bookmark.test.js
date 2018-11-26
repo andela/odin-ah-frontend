@@ -34,7 +34,7 @@ it('update state with fetched bookmarks', () => {
 
   };
   const newState = reducer(initialState, successAction);
- expect(newState.loadingArticles).toBe(false);
+  expect(newState.loadingArticles).toBe(false);
 });
 
 it('fetch articles from store', () => {
@@ -59,4 +59,3 @@ it('should not update state', () => {
   const newState = reducer(initialState, action);
   expect(newState).toEqual(initialState);
 });
-
