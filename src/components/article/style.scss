@@ -334,6 +334,10 @@
     }
     &__label {
       &_dislike {
+        font-style: inherit;
+          font-weight: inherit;
+          align-self: flex-end;
+          font-size: 12px;
       }
     }
   }
@@ -368,7 +372,7 @@
         &_dislike {
         }
         &_bookmark {
-      
+
         }
         &_show-more {
           background: url("./readArticle/images/show-option.svg") no-repeat
@@ -383,6 +387,16 @@
       &__label {
         // margin-bottom: 0.5rem;
         &_dislike {
+          font-style: inherit;
+          font-weight: inherit;
+          align-self: flex-end;
+          font-size: 12px;
+        }
+        &_like {
+          font-style: inherit;
+          font-weight: inherit;
+          align-self: flex-end;
+          font-size: 12px;
         }
       }
     }
