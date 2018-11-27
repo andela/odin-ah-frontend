@@ -7,6 +7,7 @@ import PageLoader from '../PageLoader';
 
 
 export class BookmarkContainer extends Component {
+
   componentDidMount() {
     this.props.fetchBookmarkArticle();
   }
