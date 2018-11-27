@@ -4,6 +4,7 @@ import ProfileView from './profileView';
 import TagPillContainer from './tagPillContainer';
 import Notification from '../../notification';
 import SideTool from './sideTool';
+import ScrollBar from './ScrollBar';
 
 export default function ArticleContent(props) {
   const {
@@ -13,6 +14,8 @@ export default function ArticleContent(props) {
     title, body, author, tags, parsedDate, readingTime, reaction, hasBookmarked
   } = article;
   return (
+    <>
+    <ScrollBar />
     <section className={'section show-butter'}>
       <div className='container form'>
         <div className='columns'>
@@ -44,6 +47,7 @@ export default function ArticleContent(props) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 
