@@ -110,6 +110,10 @@ export class ApiRequest {
     return this.axios.get(`/articles/${slug}`);
   }
 
+  getArticlesByTag(tagName, pageToLoad = 1, size = 20) {
+    return this.axios.get(`/articles?tag=${tagName}&page=${pageToLoad}&size=${size}`);
+  }
+
   updateArticle(slug, payload) {
     return this.axios.put(`/articles/${slug}`, payload);
   }

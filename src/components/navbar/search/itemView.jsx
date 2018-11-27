@@ -28,7 +28,7 @@ export default class ItemView extends Component {
       <div className='search-item-wrapper'>
         <div onClick={this.onViewClicked}>
           {hasArticle && <Link to={`/article/${slug}`}/>}
-          {hasTag && <Link to={`/tags/${tag}`}/>}
+          {hasTag && <Link to={`/tag/${tag}`}/>}
         </div>
         {hasArticle && <div className='image' style={styles}/>}
         {hasTag && <div className='tag-image'><i className="fas fa-hashtag"/></div>}

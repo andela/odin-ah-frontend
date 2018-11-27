@@ -1,0 +1,19 @@
+.container {
+  .article-tag {
+    margin-top: 40px;
+    &__box {
+      max-width: 700px;
+      margin: auto;
+    }
+    &__title {
+      color: #00a8e8;
+      font-size: 2.3em;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+      margin-bottom: 40px;
+    }
+    &__name {
+      font-weight: bold;
+    }
+  }
+}

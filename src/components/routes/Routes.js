@@ -18,12 +18,14 @@ import AuthRoute from './AuthRoute';
 import GuestRoute from './GuestRoute';
 import ReadArticle from '../article/readArticle';
 import SearchContainer from '../search/SearchContainer';
+import ArticlesByTagContainer from '../articlesByTag';
 
 const Routes = ({ location }) => (
   <div>
     <Switch>
       <Route exact={true} path="/" component={LandingPageContainer}/>
       <Route exact={true} path="/search" component={SearchContainer}/>
+      <Route path="/tag/:name" component={ArticlesByTagContainer} />
       <AuthRoute location={location} path="/article/new" component={CreateArticle}/>
       <AuthRoute location={location} path="/article/edit/:slug" component={UpdateArticle}/>
       <AuthRoute location={location} path="/article/bookmark" component={BookmarkContainer}/>

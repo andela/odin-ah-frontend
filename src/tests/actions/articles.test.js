@@ -51,6 +51,39 @@ const errorResponse = {
   }
 };
 
+const networkError = {
+  status: 511,
+  message: 'Network Error',
+  response: {
+    status: 'error',
+  }
+};
+
+const getArticleByTagsSuccess = {
+  status: 200,
+  response: {
+    status: 'success',
+    message: 'Article has been retrieved successfully!',
+    data: {
+      articles: [
+        {
+          slug: 'my-recent-learning-journey-bggLag6B',
+          title: 'My Recent Learning Journey',
+          body: 'Body here'
+        }
+      ],
+    }
+  }
+};
+
+const getArticlesByTagError = {
+  status: 500,
+  response: {
+    status: 'error',
+    message: 'Internal server error',
+  }
+};
+
 describe('Article actions', () => {
   const axiosInstance = apiRequest.getInstance();
   beforeEach(() => {
@@ -183,6 +216,56 @@ describe('Article actions', () => {
         .resolves();
       await executeAction(2);
       apiReqStub.restore();
+    });
+  });
+
+  describe('getArticlesByTag', () => {
+    it('should dispatch the actions LOADING_ARTICLES_BY_TAG and GET_ARTICLES_BY_TAG', () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith(getArticleByTagsSuccess);
+      });
+      return store.dispatch(actions.getArticlesByTag('Career')).then(() => {
+        const action = store.getActions();
+        expect(action.length).toBe(2);
+        expect(action[0]).toEqual({ type: types.LOADING_ARTICLES_BY_TAG });
+        expect(action[1]).toEqual({
+          type: types.GET_ARTICLES_BY_TAG,
+          response: getArticleByTagsSuccess.response.data
+        });
+      });
+    });
+
+    it('should dispatch the actions LOADING_ARTICLES_BY_TAG and ARTICLES_BY_TAG_ERROR', () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith(getArticlesByTagError);
+      });
+      return store.dispatch(actions.getArticlesByTag('Android')).then(() => {
+        const action = store.getActions();
+        expect(action.length).toBe(2);
+        expect(action[0]).toEqual({ type: types.LOADING_ARTICLES_BY_TAG });
+        expect(action[1]).toEqual({
+          type: types.ARTICLES_BY_TAG_ERROR,
+          errors: { ...getArticlesByTagError.response }
+        });
+      });
+    });
+
+    it('should dispatch the actions LOADING_ARTICLES_BY_TAG and ARTICLES_BY_TAG_ERROR', () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.reject(networkError);
+      });
+      return store.dispatch(actions.getArticlesByTag('Carrer')).then(() => {
+        const action = store.getActions();
+        expect(action.length).toBe(2);
+        expect(action[0]).toEqual({ type: types.LOADING_ARTICLES_BY_TAG });
+        expect(action[1]).toEqual({
+          type: types.ARTICLES_BY_TAG_ERROR,
+          errors: { message: 'Could not connect to server. Please check your connection' }
+        });
+      });
     });
   });
 });

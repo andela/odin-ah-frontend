@@ -10,11 +10,16 @@
   cursor: pointer;
   color: #00171f;
   transition: background-color 0.5s ease-in-out;
+  a {
+    color: #00171f;
+  }
 }
 
 .popular-tags__item:hover {
   background: #00a8e8;
-  color: white;
+  a {
+    color: white;
+  }
 }
 
 .tag__text {
