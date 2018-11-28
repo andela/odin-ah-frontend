@@ -3,8 +3,7 @@
   background-size: 200px;
   background-position: center;
   width: 200px;
-  height: 80px
-;
+  height: 80px;
 }
 
 .nav-bar {
@@ -94,10 +93,10 @@
 @media (max-width: 600px) {
   .nav-bar__logo {
     background: url("../../logo-icon-only.png") no-repeat;
-    background-size: auto;
+    background-size: 50px;
     background-position: center;
-    width: 100px;
-    height: 80px;
+    width: 70px;
+    height: auto;
   }
 
   .btn {

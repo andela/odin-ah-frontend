@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PageLoader from '../../PageLoader';
-import { deleteArticle, getArticle, bookMarkArticle } from '../../../redux/actions/articles/articles';
+import {
+  bookMarkArticle,
+  deleteArticle,
+  getArticle
+} from '../../../redux/actions/articles/articles';
 import ArticleContent from './articleContent';
 import { cleanArticle } from '../../../utils';
 import { redirect } from '../../../redux/actions/redirect';
 import PageNotFound from '../../error/PageNotFound';
-import NavBarContainer from '../../header/NavBarContainer';
-import { openLoginModal, openModal, openRegistrationModal } from '../../../redux/actions/modal';
-import { registerUser } from '../../../redux/actions/auth/register';
-import { logout, userLoginRequest } from '../../../redux/actions/auth/login';
 import addReaction from '../../../redux/actions/articles/likes';
 import CommentContainer from '../../comment/CommentContainer';
 
@@ -20,12 +20,29 @@ export class ReadArticle extends Component {
     error: {
       message: ''
     }
-  }
+  };
 
   componentDidMount() {
     const { slug } = this.props.match.params;
     this.props.getArticle(slug);
   }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(newProps) {
+    const { slug } = newProps.match.params;
+    if (this.shouldFetchArticle(newProps)) {
+      this.props.getArticle(slug);
+    }
+  }
+
+  shouldFetchArticle = (newProps) => {
+    const { slug: newSlug } = newProps.match.params;
+    let slug = '';
+    if (this.props.match.params) {
+      ({ slug } = this.props.match.params);
+    }
+    return slug !== newSlug;
+  };
 
   onDropDownItemClicked = (item) => {
     const { slug } = this.props.match.params;
@@ -50,7 +67,7 @@ export class ReadArticle extends Component {
       const { slug } = this.props.match.params;
       this.props.bookMarkArticle(slug);
     }
-  }
+  };
 
   handleInteraction = (prevStatus, newStatus) => {
     const { slug } = this.props.match.params;
@@ -59,9 +76,13 @@ export class ReadArticle extends Component {
       popUpLoginModal();
     }
     if (isAuthenticated) {
-      this.props.addReaction({ slug, prevStatus, newStatus });
+      this.props.addReaction({
+        slug,
+        prevStatus,
+        newStatus
+      });
     }
-  }
+  };
 
   getMenuItems = () => {
     const { loggedInUser, isAuthenticated } = this.props;
@@ -92,18 +113,13 @@ export class ReadArticle extends Component {
 
     return (
       <React.Fragment>
-        <NavBarContainer
-          handleLogin={this.props.openLoginModal}
-          handleSignup={this.props.openRegistrationModal}
-          handleLogout={this.props.handleLogout}
-          userIsAuthenticated={this.props.isAuthenticated}
-        />
         {(errorCode === 404) && (<PageNotFound
           title={'Article not found'}
           text='This article may have been deleted or updated by the author.'/>)}
-        {(!article && errorCode !== 404) && <PageLoader text={'Loading article'}/>}
+        {((!article && errorCode !== 404) || this.props.loading)
+        && <PageLoader text={'Loading article'}/>}
         {
-          (article && errorCode !== 404)
+          (!this.props.loading && article && errorCode !== 404)
           && <div className={'read-view'}>
             <ArticleContent
               onDropDownItemClicked={this.onDropDownItemClicked}
@@ -122,6 +138,7 @@ export class ReadArticle extends Component {
 
 ReadArticle.propTypes = {
   isAuthenticated: PropTypes.bool,
+  loading: PropTypes.bool,
   handleBookmark: PropTypes.func,
   bookMarkArticle: PropTypes.func,
   loggedInUser: PropTypes.object,
@@ -133,12 +150,6 @@ ReadArticle.propTypes = {
   getArticle: PropTypes.func,
   deleteArticle: PropTypes.func,
   redirect: PropTypes.func,
-  openModal: PropTypes.func.isRequired,
-  registerUser: PropTypes.func.isRequired,
-  userLoginRequest: PropTypes.func,
-  handleLogout: PropTypes.func,
-  openRegistrationModal: PropTypes.func,
-  openLoginModal: PropTypes.func,
 };
 
 ReadArticle.defaultProps = {
@@ -162,11 +173,5 @@ export default connect(mapStateToProps, {
   deleteArticle,
   bookMarkArticle,
   redirect,
-  openModal,
-  registerUser,
-  userLoginRequest,
-  handleLogout: logout,
-  openLoginModal,
-  openRegistrationModal,
   addReaction
 })(ReadArticle);

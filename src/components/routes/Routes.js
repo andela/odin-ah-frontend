@@ -17,23 +17,25 @@ import BookmarkContainer from '../bookmark/BookmarkContainer';
 import AuthRoute from './AuthRoute';
 import GuestRoute from './GuestRoute';
 import ReadArticle from '../article/readArticle';
+import SearchContainer from '../search/SearchContainer';
 
 const Routes = ({ location }) => (
   <div>
     <Switch>
-      <Route exact={true} path="/" component={LandingPageContainer} />
-      <AuthRoute location={location} path="/article/new" component={CreateArticle} />
-      <AuthRoute location={location} path="/article/edit/:slug" component={UpdateArticle} />
-      <AuthRoute location={location} path="/article/bookmark" component={BookmarkContainer} />
-      <Route path="/article/:slug" component={ReadArticle} />
+      <Route exact={true} path="/" component={LandingPageContainer}/>
+      <Route exact={true} path="/search" component={SearchContainer}/>
+      <AuthRoute location={location} path="/article/new" component={CreateArticle}/>
+      <AuthRoute location={location} path="/article/edit/:slug" component={UpdateArticle}/>
+      <AuthRoute location={location} path="/article/bookmark" component={BookmarkContainer}/>
+      <Route path="/article/:slug" component={ReadArticle}/>
       <GuestRoute
         location={location}
         path="/auth/confirmation/:token"
         exact
         component={VerifyEmail}
       />
-      <GuestRoute location={location} path="/auth/social" exact component={SocialLogin} />
-      <GuestRoute location={location} path="/reset-password" exact component={ResetPasswordPage} />
+      <GuestRoute location={location} path="/auth/social" exact component={SocialLogin}/>
+      <GuestRoute location={location} path="/reset-password" exact component={ResetPasswordPage}/>
       <GuestRoute
         location={location}
         path="/reset-password/complete/:token"
@@ -46,10 +48,10 @@ const Routes = ({ location }) => (
         exact
         component={ReVerifyEmail}
       />
-      <AuthRoute location={location} path="/dashboard" component={DashboardContainer} />
+      <AuthRoute location={location} path="/dashboard" component={DashboardContainer}/>
     </Switch>
-    <Modal />
-    <Toast />
+    <Modal/>
+    <Toast/>
   </div>
 );
 

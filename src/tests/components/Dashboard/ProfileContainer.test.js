@@ -1,10 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import ConnectedProfileContainer, {
-  ProfileContainer
-} from '../../../components/profile/ProfileContainer';
+import ConnectedProfileContainer, { ProfileContainer } from '../../../components/profile/ProfileContainer';
 import { mockStoreData } from '../../__mocks__/mockData';
 
 const middlewares = [thunk];
@@ -17,6 +15,7 @@ const propSet = {
 };
 
 const props = {
+  uploadProfileData: jest.fn(() => Promise.resolve()),
   profiledata: mockStoreData.profiledata,
   profileData: jest.fn(() => Promise.resolve()),
 };
@@ -33,6 +32,7 @@ const dummyEventDataSettings = {
   }
 };
 const props2 = {
+  uploadProfileData: jest.fn(() => Promise.resolve()),
   location: { pathname: '/dashbord' },
   match: { path: '/dashboard', url: '/dashboard' }
 };

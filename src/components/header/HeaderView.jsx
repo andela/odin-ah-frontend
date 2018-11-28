@@ -1,13 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
-import NavBarContainer from './NavBarContainer';
 import './Header.scss';
 
 const HeaderView = props => (
   <header className="header">
-    <NavBarContainer {...props} />
     <div className="header__hero">
+      <div className='bg'/>
       <div className="hero__content-wrapper">
         <h1 className="hero__title">Learn. Write. Share</h1>
         <div className="hero__subtitle">
@@ -16,11 +15,11 @@ const HeaderView = props => (
         </div>
         <div className="hero__cta">
           {!props.userIsAuthenticated ? (!props.loadingArticles
-          && <div className="btn publish-cta" onClick={props.handleSignup}>
+            && <div className="btn publish-cta" onClick={props.handleSignup}>
               Get Started
             </div>
           ) : (!props.loadingArticles
-             && <Link className="btn publish-cta" to="/article/new">
+            && <Link className="btn publish-cta" to="/article/new">
               Start Writing
             </Link>
           )}
@@ -29,5 +28,11 @@ const HeaderView = props => (
     </div>
   </header>
 );
+
+HeaderView.propTypes = {
+  userIsAuthenticated: PropTypes.bool,
+  loadingArticles: PropTypes.bool,
+  handleSignup: PropTypes.func,
+};
 
 export default HeaderView;

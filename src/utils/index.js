@@ -34,3 +34,15 @@ export const cleanArticle = (article) => {
   }
   return null;
 };
+
+export const objectToQueryParams = (data) => {
+  const esc = encodeURIComponent;
+  let query = '';
+  if (data) {
+    const params = Object.keys(data)
+      .map(k => `${esc(k)}=${esc(data[k])}`)
+      .join('&');
+    query = `${params}`;
+  }
+  return query;
+};

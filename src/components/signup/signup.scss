@@ -60,9 +60,7 @@ hr {
   border-color: #0085f9;
 }
 
-input.auth-input {
-  display: block;
-  padding: .5rem 1rem;
+#signupForm input[type], #loginForm input[type]  {
   border: 1px solid #c4d8f8;
   border-radius: 3px;
   margin-bottom: 1rem;

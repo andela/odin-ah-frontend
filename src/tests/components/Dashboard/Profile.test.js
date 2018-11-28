@@ -14,6 +14,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 const props = {
+  uploadProfileData: jest.fn(() => Promise.resolve()),
   profiledata: mockStoreData.profiledata,
   onClick: jest.fn(() => Promise.resolve()),
   settings: mockStoreData.settings

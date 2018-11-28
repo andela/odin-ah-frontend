@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Alert from '../../components/notification/alert';
 import { resetRequestHandler, saveInputHandler } from '../../redux/actions/resetPassword';
-import NavBarContainer from '../header/NavBarContainer';
 
 export function ResetPasswordPage(props) {
   const { email, resetLoading, errors } = props.passwordResetData;
@@ -15,7 +14,6 @@ export function ResetPasswordPage(props) {
   }
   return (
     <div>
-      <NavBarContainer />
       <div className="reset-field">
         <Alert />
         <div id="reset-info">

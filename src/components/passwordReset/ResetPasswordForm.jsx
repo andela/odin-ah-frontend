@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Alert from '../notification/alert';
 import { completeResetRequest, saveInputHandler } from '../../redux/actions/resetPassword';
-import NavBarContainer from '../header/NavBarContainer';
 
 export class ResetPasswordForm extends Component {
   render() {
@@ -26,7 +25,6 @@ export class ResetPasswordForm extends Component {
     }
     return (
       <div>
-        <NavBarContainer/>
         <div className="reset-field">
           <Alert/>
           <h1>Reset Password Form</h1>
