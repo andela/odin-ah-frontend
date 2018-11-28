@@ -100,7 +100,8 @@ export class CommentContainer extends Component {
     const {
       sendingComment, comments, user, isAuthenticated
     } = this.props;
-    const userImage = user.imageUrl || 'https://image.shutterstock.com/image-vector/male-default-placeholder-avatar-profile-450w-387516193.jpg';
+    const defaultImage = 'https://image.shutterstock.com/image-vector/male-default-placeholder-avatar-profile-450w-387516193.jpg';
+    const userImage = user && user.imageUrl ? user.imageUrl : defaultImage;
     return (
       <CommentBox
         onFocus={this.onFocus}
@@ -137,7 +138,8 @@ const mapStateToProps = state => ({
   refreshComments: state.comment.refreshComments,
   comments: state.comment.comments,
   errors: state.comment.errors,
-  isAuthenticated: state.login.isAuthenticated
+  isAuthenticated: state.login.isAuthenticated,
+  user: state.login.user
 });
 
 const mapDispatchToProps = {
