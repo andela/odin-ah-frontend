@@ -10,14 +10,47 @@ import { reactionCountToString } from '../../../utils';
 
 
 export default class SideTool extends Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: false,
+      likeCount: 0,
+      dislikeCount: 0
+    };
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(props) {
+    const { likeCount, dislikeCount } = props.reaction;
+    this.setState({
+      likeCount,
+      dislikeCount,
+      loading: false
+    });
+  }
+
   handleInteraction = (e) => {
     const action = e.target.getAttribute('data-action');
     const { status: prevStatus } = this.props.reaction;
+    if (this.state.loading) return;
     if (prevStatus === action) {
-      return this.props.handleInteraction(prevStatus, 'neutral');
-    } if (action === 'like') {
+      this.setState(prevState => ({
+        loading: true,
+        likeCount: action === 'like' ? prevState.likeCount - 1 : prevState.likeCount,
+        dislikeCount: action === 'dislike' ? prevState.dislikeCount - 1 : prevState.dislikeCount
+      }));
+      this.props.handleInteraction(prevStatus, 'neutral');
+    } else if (action === 'like') {
+      this.setState(prevState => ({
+        loading: true,
+        likeCount: prevState.likeCount + 1
+      }));
       this.props.handleInteraction(prevStatus, action);
     } else if (action === 'dislike') {
+      this.setState(prevState => ({
+        loading: true,
+        dislikeCount: prevState.dislikeCount + 1
+      }));
       this.props.handleInteraction(prevStatus, action);
     }
   };
@@ -27,14 +60,17 @@ export default class SideTool extends Component {
       reaction, hasBookmarked, onDropDownItemClicked, dropDownItems, handleBookmark
     } = this.props;
     const {
-      likeCount, dislikeCount, hasReacted, status
+      hasReacted, status
     } = reaction;
+    const {
+      likeCount, dislikeCount
+    } = this.state;
     const likeImage = hasReacted && status === 'like' ? liked : like;
     const dislikeImage = hasReacted && status === 'dislike' ? disliked : dislike;
     return (
     <div className='side-tool'>
       <div title='Like' className='side-tool__item'>
-        <span className='side-tool__item__label'>
+        <span className='side-tool__item__label side-tool__item__label_like'>
           {reactionCountToString(likeCount)}
         </span>
         <img alt='like button' data-action='like' className='side-tool__item__icon' src={likeImage} onClick={this.handleInteraction}/>

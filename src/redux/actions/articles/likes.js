@@ -4,9 +4,10 @@ import {
 } from '../../constants/articles';
 
 const addReaction = ({ slug, newStatus, prevStatus }) => (dispatch) => {
-  dispatch({ type: ADD_REACTION, slug, status: newStatus });
   apiRequest.addReaction({ slug, status: newStatus })
-    .then()
+    .then(() => {
+      dispatch({ type: ADD_REACTION, slug, status: newStatus });
+    })
     .catch(() => {
       dispatch({ type: ADD_REACTION, slug, status: prevStatus });
     });
