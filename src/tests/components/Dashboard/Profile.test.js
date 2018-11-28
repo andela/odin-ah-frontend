@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
 import ProfileView from '../../../components/profile/ProfileView';
@@ -57,7 +57,7 @@ const props2 = {
   match: { path: '/dashboard', url: '/dashboard' }
 };
 
-const setUp = () => (mount(<DashboardContainer store={store} { ...props2 } to="/dashboard" />));
+const setUp = () => (shallow(<DashboardContainer store={store} { ...props2 } to="/dashboard" />));
 
 describe('Dashboard Container', () => {
   it('renders without DashboardContainer  crashing', () => {

@@ -12,6 +12,7 @@ import { fetchArticlePage, fetchArticles } from '../../redux/actions/landingPage
 import { fetchPtags } from '../../redux/actions/landingPage/tags';
 import PageLoader from '../PageLoader';
 
+
 const propTypes = {
   match: PropTypes.object,
   history: PropTypes.object,
@@ -29,7 +30,7 @@ const propTypes = {
   handleLogout: PropTypes.func,
   currentPage: PropTypes.number,
   openRegistrationModal: PropTypes.func,
-  openLoginModal: PropTypes.func,
+  openLoginModal: PropTypes.func
 };
 
 const defaultProps = {
@@ -43,6 +44,7 @@ export class LandingPageContainer extends React.Component {
     const urlParams = new URLSearchParams(this.props.location.search);
     const login = urlParams.get('login');
     const register = urlParams.get('register');
+
     if (login !== null) {
       this.props.openLoginModal();
     }
@@ -83,6 +85,7 @@ LandingPageContainer.defaultProps = defaultProps;
 const mapStateToProps = state => ({
   articles: state.landingPageArticles.articlesInView,
   tags: state.landingPageTags.tags,
+  userId: state.login.user,
   userIsAuthenticated: state.login.isAuthenticated,
   loadingArticles: state.landingPageArticles.loadingArticles,
   currentPage: state.landingPageArticles.currentPage
@@ -99,6 +102,6 @@ export default connect(
     handleLogout: logout,
     fetchArticles,
     fetchPtags,
-    fetchArticlePage
+    fetchArticlePage,
   }
 )(LandingPageContainer);

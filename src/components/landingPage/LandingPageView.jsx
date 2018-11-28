@@ -5,7 +5,6 @@ import ArticleListView from '../articleList/ArticleListView';
 import BigTagList from '../articleList/BigTagList';
 import FooterView from '../footer/FooterView';
 import Alert from '../notification/alert';
-
 const LandingPageView = props => (
   <div className="landing-page">
     <HeaderContainer {...props} />
