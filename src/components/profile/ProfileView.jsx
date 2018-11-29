@@ -20,7 +20,7 @@ const ProfileView = ({
     } = settings.settings;
     return (
   <div className='profile-container'>
-      <span className='profile-title'>Profile</span>
+      <span className='profile-title'>Profile Details</span>
      
       <div className='profile-content-wrapper'>
       <Alert/>

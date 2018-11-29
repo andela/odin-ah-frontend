@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import SearchDropDown from '../navbar/search/SearchDropDown';
 import DropDown from '../inAppNotification/notification/dropDown';
-// import AppNotificatonContainer from '../inAppNotification/AppNotificatonContainer';
 
 const NavBarDefault = ({
-  handleLogin, handleSignup, userIsAuthenticated, handleLogout,
+  handleLogin, isDashboardActive, handleSignup, userIsAuthenticated, handleLogout,
 }) => (
   <nav className="nav-bar">
     <div className="nav-bar__container">
@@ -32,13 +31,13 @@ const NavBarDefault = ({
         )}
         {userIsAuthenticated && (
           <React.Fragment>
-            <DropDown />
-            <Link
-              className="btn btn--link text--primary sign-in-btn sign-in-btn-js"
-              to="/dashboard"
-            >
-              Dashboard
-            </Link>
+             <DropDown />
+          { !isDashboardActive && (<Link
+                className="btn btn--link text--primary sign-in-btn sign-in-btn-js"
+                to="/dashboard"
+              >
+                Dashboard
+              </Link>)}
             <div className="btn btn--primary sign-up-btn-js" onClick={handleLogout}>
               Log Out
             </div>
@@ -54,7 +53,9 @@ NavBarDefault.propTypes = {
   handleSignup: PropTypes.func,
   handleLogout: PropTypes.func,
   handleDashboardPage: PropTypes.func,
-  userIsAuthenticated: PropTypes.bool
+  userIsAuthenticated: PropTypes.bool,
+  isDashboardActive: PropTypes.bool,
+  isBookmarkActive: PropTypes.bool
 };
 
 export default NavBarDefault;

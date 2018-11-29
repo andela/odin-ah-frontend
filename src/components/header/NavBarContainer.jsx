@@ -13,6 +13,7 @@ const propTypes = {
   userLoginRequest: PropTypes.func,
   openRegistrationModal: PropTypes.func,
   openLoginModal: PropTypes.func,
+  isDashboardActive: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -22,6 +23,7 @@ const defaultProps = {
 export class NavBarContainer extends React.Component {
   render() {
     return <NavBarDefault
+    isDashboardActive={this.props.isDashboardActive}
       handleLogin={this.props.openLoginModal}
       handleSignup={this.props.openRegistrationModal}
       handleLogout={this.props.handleLogout}
@@ -38,7 +40,8 @@ const mapStateToProps = state => ({
   tags: state.landingPageTags.tags,
   userIsAuthenticated: state.login.isAuthenticated,
   loadingArticles: state.landingPageArticles.loadingArticles,
-  currentPage: state.landingPageArticles.currentPage
+  currentPage: state.landingPageArticles.currentPage,
+  isDashboardActive: state.profile.isDashboardActive
 });
 export default connect(mapStateToProps, {
   openRegistrationModal,
