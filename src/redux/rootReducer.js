@@ -10,6 +10,7 @@ import login from './reducer/login';
 import redirect from './reducer/redirect';
 import passwordResetData from './reducer/passwordReset';
 import landingPageArticles from './reducer/landingPage/articles';
+import statistics from './reducer/statistics';
 import landingPageTags from './reducer/landingPage/tags';
 import followList from './reducer/users/followList';
 import comment from './reducer/comment';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   verify,
   login,
   articles,
+  statistics,
   passwordResetData,
   landingPageArticles,
   landingPageTags,
