@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PageLoader from '../../PageLoader';
+import {openLoginModal} from '../../../redux/actions/modal'
 import {
   bookMarkArticle,
   deleteArticle,
@@ -173,5 +174,6 @@ export default connect(mapStateToProps, {
   deleteArticle,
   bookMarkArticle,
   redirect,
-  addReaction
+  addReaction,
+  openLoginModal
 })(ReadArticle);
