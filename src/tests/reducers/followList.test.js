@@ -1,21 +1,23 @@
+/* eslint-disable */
 import {
   FETCH_FOLLOW_LIST_SUCCESS,
   FETCH_FOLLOW_LIST_ERROR,
   FETCH_FOLLOW_LIST_LOADING,
-  UPDATE_FOLLOW_LIST_LOADED,
-  UPDATE_FOLLOW_LIST_ERROR,
-  UPDATE_FOLLOW_LIST_LOADING
+  FETCH_SINGLE_FOLLOW_SUCCESS,
+  FETCH_SINGLE_FOLLOW_ERROR,
+  FETCH_SINGLE_FOLLOW_LOADING,
+  SYNC_FOLLOW_LIST
 } from '../../redux/actions/users/followList';
 import followList from '../../redux/reducer/users/followList';
 
 const initialState = {
   followList: [],
-  ongoingFetchOperations: [],
-  fetchError: false,
-  fetchErrorMessage: '',
+  singleFollowStream: {},
   isLoading: false,
-  updateError: false,
-  updateErrorMessage: ''
+  currentPage: 1,
+  totalPages: 1,
+  total: 0,
+  storeIsSynced: false
 };
 
 const otherState1 = {
@@ -39,17 +41,23 @@ it('updates state with follows fetched', () => {
     type: FETCH_FOLLOW_LIST_SUCCESS,
     payload: {
       data: {
-        usersIFollow: [{ userId: 0 }]
+        usersIFollow: [{ userId: 0 }],
+        page: 1,
+        totalPages: 1,
+        total: 1
       }
     }
   };
   const newState = followList(initialState, action);
+  const { usersIFollow, page, totalPages, total } = action.payload.data;
   expect(newState).toEqual({
     ...initialState,
-    followList: action.payload.data.usersIFollow.map(user => user.userId),
-    fetchError: false,
-    fetchErrorMessage: '',
-    isLoading: false
+    followList: usersIFollow,
+    currentPage: page,
+    totalPages,
+    isLoading: false,
+    total,
+    storeIsSynced: true
   });
 });
 
@@ -61,8 +69,6 @@ it('update follow list with error if error occurs', () => {
   const newState = followList(initialState, action);
   expect(newState).toEqual({
     ...initialState,
-    fetchError: true,
-    fetchErrorMessage: action.payload,
     isLoading: false
   });
 });
@@ -74,15 +80,13 @@ it('update state with loading if list is loading', () => {
   const newState = followList(initialState, action);
   expect(newState).toEqual({
     ...initialState,
-    fetchError: false,
-    fetchErrorMessage: '',
     isLoading: true
   });
 });
 
-it('updates follow list when user follows', () => {
+it('update stream with single follow sucess', () => {
   const action = {
-    type: UPDATE_FOLLOW_LIST_LOADED,
+    type: FETCH_SINGLE_FOLLOW_SUCCESS,
     payload: {
       userId: 1,
       status: false
@@ -91,55 +95,47 @@ it('updates follow list when user follows', () => {
   const newState = followList(initialState, action);
   expect(newState).toEqual({
     ...initialState,
-    followList: [1],
-    ongoingFetchOperations: [],
-    updateError: false,
-    updateErrorMessage: ''
+    singleFollowStream: { ...action.payload }
   });
 });
 
-it('updates follow list when user unfollows', () => {
+it('update stream with single follow error', () => {
   const action = {
-    type: UPDATE_FOLLOW_LIST_LOADED,
+    type: FETCH_SINGLE_FOLLOW_ERROR,
     payload: {
       userId: 1,
-      status: true
+      status: false
     }
-  };
-  const newState = followList(otherState1, action);
-  expect(newState).toEqual({
-    ...otherState1,
-    followList: [],
-    ongoingFetchOperations: [],
-    updateError: false,
-    updateErrorMessage: ''
-  });
-});
-
-it('update state with loading if list is updating', () => {
-  const action = {
-    type: UPDATE_FOLLOW_LIST_LOADING,
-    payload: { userId: 1 }
   };
   const newState = followList(initialState, action);
   expect(newState).toEqual({
     ...initialState,
-    ongoingFetchOperations: [1],
-    updateError: false,
-    updateErrorMessage: ''
+    singleFollowStream: { ...action.payload }
   });
 });
 
-it('update state with update error if update failed', () => {
+it('update stream with single follow loading', () => {
   const action = {
-    type: UPDATE_FOLLOW_LIST_ERROR,
-    payload: { userId: 1, error: 'An error occurred' }
+    type: FETCH_SINGLE_FOLLOW_LOADING,
+    payload: {
+      userId: 1,
+      status: false
+    }
   };
-  const newState = followList(otherState2, action);
+  const newState = followList(initialState, action);
   expect(newState).toEqual({
-    ...otherState2,
-    ongoingFetchOperations: [],
-    updateError: true,
-    updateErrorMessage: 'An error occurred'
+    ...initialState,
+    singleFollowStream: { ...action.payload }
+  });
+});
+
+it('should sync follow list', () => {
+  const action = {
+    type: SYNC_FOLLOW_LIST
+  };
+  const newState = followList(initialState, action);
+  expect(newState).toEqual({
+    ...initialState,
+    storeIsSynced: false
   });
 });

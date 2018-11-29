@@ -4,30 +4,45 @@ import PropTypes from 'prop-types';
 import ProfileContainer from '../profile/ProfileContainer';
 import StastisticsConatiner from '../statistics/StastisticsConatiner';
 import './dashboard.scss';
+import FollowListView from '../users/FollowListView';
+import FollowerListView from '../users/FollowerListView';
 
 const DashboardView = ({
-  match, profiledata, isProfileActive, handleProfileButton,
-  isStatisticsActive, handleStatisticsButton,
+  match, profiledata, activeRoute, handleRouteChange
 }) => (
   <div>
     <Fragment>
-      <div className='container-dash'>
-        <div className='header-sub'>
-          <header className='dashboard-label'> Dashboard</header>
+      <div className="container-dash">
+        <div className="header-sub">
+          <header className="dashboard-label"> Dashboard</header>
         </div>
-        <section className='section-wrapper'>
-          <div className='right-pane'>
-            <Link className={`btn-profile ${isProfileActive ? ' btn-active' : ''}`}
-                  onClick={handleProfileButton} to={`${match.url}`}><span>Profile</span></Link>
-            <Link className={`btn-statistics ${isStatisticsActive ? 'btn-active' : ''}`}
-                  onClick={handleStatisticsButton}
-                  to={`${match.url}/statistics`}><span>Statistics</span></Link>
+        <section className="section-wrapper">
+          <div className="right-pane">
+            <Link
+              className={`btn-profile ${activeRoute === 'profile' ? ' btn-active' : ''}`}
+              onClick={() => handleRouteChange('profile')}
+              to={`${match.url}`}
+            >
+              <span>Profile</span>
+            </Link>
+            <Link
+              className={`btn-statistics ${activeRoute === 'statistics' ? 'btn-active' : ''}`}
+              onClick={() => handleRouteChange('statistics')}
+              to={`${match.url}/statistics`}
+            >
+              <span>Statistics</span>
+            </Link>
           </div>
-          <div className='left-pane'>
-            <Route exact path={`${match.url}`}
-                   render={props => <ProfileContainer {...props} profiledata={profiledata}/>
-                   }/>
-            <Route path={`${match.url}/statistics`} component={StastisticsConatiner}/></div>
+          <div className="left-pane">
+            <Route
+              exact
+              path={`${match.url}`}
+              render={props => <ProfileContainer {...props} profiledata={profiledata} />}
+            />
+            <Route exact path={`${match.url}/following`} component={FollowListView} />
+            <Route exact path={`${match.url}/followers`} component={FollowerListView} />
+            <Route path={`${match.url}/statistics`} component={StastisticsConatiner} />
+          </div>
         </section>
       </div>
     </Fragment>
@@ -39,11 +54,8 @@ DashboardView.propTypes = {
   isAuthenticated: PropTypes.bool,
   handleLogout: PropTypes.func,
   profiledata: PropTypes.object,
-  isProfileActive: PropTypes.bool,
-  handleProfileButton: PropTypes.func,
-  handleStatisticsButton: PropTypes.func,
-
-  isStatisticsActive: PropTypes.bool,
+  activeRoute: PropTypes.string,
+  handleRouteChange: PropTypes.func
 };
 
 export default DashboardView;

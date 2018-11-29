@@ -17,6 +17,7 @@ import comment from './reducer/comment';
 import search from './reducer/search';
 import notificationReducer from './reducer/inAppNotifications';
 import articlesByTag from './reducer/articlesByTag';
+import followerList from './reducer/users/followerList';
 
 const rootReducer = combineReducers({
   registration,
@@ -36,7 +37,8 @@ const rootReducer = combineReducers({
   comment,
   search,
   notificationReducer,
-  articlesByTag
+  articlesByTag,
+  followerList
 });
 
 export default rootReducer;

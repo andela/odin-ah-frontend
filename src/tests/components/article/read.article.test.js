@@ -56,7 +56,9 @@ describe('ReadArticle Component', () => {
     const handleInteractionProp = jest.fn();
     const { reaction } = article;
     // eslint-disable-next-line max-len
-    const sideToolWrapper = shallow(<SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />);
+    const sideToolWrapper = shallow(
+      <SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />
+    );
     sideToolWrapper.instance().handleInteraction(event);
     expect(handleInteractionProp).toHaveBeenCalled();
   });
@@ -68,7 +70,9 @@ describe('ReadArticle Component', () => {
     const { reaction } = article;
     reaction.status = 'dislike';
     // eslint-disable-next-line max-len
-    const sideToolWrapper = shallow(<SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />);
+    const sideToolWrapper = shallow(
+      <SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />
+    );
     sideToolWrapper.instance().handleInteraction(event);
     expect(handleInteractionProp).toHaveBeenCalled();
   });
@@ -80,7 +84,9 @@ describe('ReadArticle Component', () => {
     const { reaction } = article;
     reaction.status = 'like';
     // eslint-disable-next-line max-len
-    const sideToolWrapper = shallow(<SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />);
+    const sideToolWrapper = shallow(
+      <SideTool dropDownItems={[]} handleInteraction={handleInteractionProp} reaction={reaction} />
+    );
     sideToolWrapper.instance().handleInteraction(event);
     expect(handleInteractionProp).toHaveBeenCalled();
   });
@@ -219,8 +225,7 @@ describe('ReadArticle Component', () => {
       wrapper = shallow(<ReadArticle registerUser={jest.fn()} openModal={jest.fn()} {...props} />);
     });
     test('should render ReadArticle component without crashing', async () => {
-      expect(props.getArticle)
-        .toBeCalled();
+      expect(props.getArticle).toBeCalled();
     });
 
     test('ReadArticle onDropDownClicked', () => {
