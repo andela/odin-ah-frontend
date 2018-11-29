@@ -16,8 +16,12 @@ import {
   DELETE_ARTICLE,
   BOOKMARK_ARTICLE_BEGINS,
   BOOKMARK_ARTICLE_SUCCESS,
-  BOOKMARK_ARTICLE_FAILURE
+  BOOKMARK_ARTICLE_FAILURE,
+  LOADING_ARTICLES_BY_TAG,
+  GET_ARTICLES_BY_TAG,
+  ARTICLES_BY_TAG_ERROR
 } from '../../constants/articles';
+import { showAlert } from '../notification';
 import { redirect } from '../redirect';
 
 export const openPublishModal = () => ({
@@ -152,4 +156,34 @@ export const bookMarkArticle = slug => async (dispatch) => {
   } catch (error) {
     dispatch(bookmarkArticleFailure(error));
   }
+};
+
+export const getArticlesByTagError = errors => ({
+  type: ARTICLES_BY_TAG_ERROR,
+  errors,
+});
+
+export const getArticlesByTag = tagName => (dispatch) => {
+  dispatch({
+    type: LOADING_ARTICLES_BY_TAG
+  });
+  return apiRequest.getArticlesByTag(tagName)
+    .then((res) => {
+      dispatch({
+        type: GET_ARTICLES_BY_TAG,
+        response: res.data.data
+      });
+    })
+    .catch((err) => {
+      if (err.message && err.message === 'Network Error') {
+        const error = { message: 'Could not connect to server. Please check your connection' };
+        dispatch(getArticlesByTagError(error));
+        showAlert({
+          type: 'error',
+          text: error.message
+        });
+      } else {
+        dispatch(getArticlesByTagError(err.response.data));
+      }
+    });
 };
