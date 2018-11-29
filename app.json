@@ -1,0 +1,32 @@
+{
+  "name": "odin-ah-frontend",
+  "scripts": {
+  },
+  "env": {
+    "REACT_APP_BASE_API_URL": {
+      "required": true
+    },
+    "REACT_APP_CLOUDINARY_API_KEY": {
+      "required": true
+    },
+    "REACT_APP_CLOUDINARY_UPLOAD_PRESET": {
+      "required": true
+    },
+    "REACT_APP_CLOUDINARY_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
