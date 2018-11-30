@@ -372,6 +372,7 @@
     position: fixed;
     top: 250px;
     margin-left: 750px;
+    cursor: pointer;
     &__item {
       display: flex;
       align-items: center;
@@ -404,6 +405,7 @@
           font-weight: inherit;
           align-self: flex-end;
           font-size: 12px;
+          
         }
         &_like {
           font-style: inherit;

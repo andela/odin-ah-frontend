@@ -5,9 +5,9 @@ import dislike from './images/dislike-button.svg';
 import disliked from './images/disliked-button.svg';
 import like from './images/like-button.svg';
 import liked from './images/liked-button.svg';
-import share from './images/share-button.svg';
+import FacebookShareButton from '../../socialShareButtons/facebookShareButton';
+import TwitterShareButton from '../../socialShareButtons/twitterShareButton';
 import { reactionCountToString } from '../../../utils';
-
 
 export default class SideTool extends Component {
   constructor() {
@@ -57,59 +57,84 @@ export default class SideTool extends Component {
 
   render() {
     const {
-      reaction, hasBookmarked, onDropDownItemClicked, dropDownItems, handleBookmark
+      reaction,
+      hasBookmarked,
+      onDropDownItemClicked,
+      dropDownItems,
+      handleBookmark,
+      slug,
+      imageUrl
     } = this.props;
-    const {
-      hasReacted, status
-    } = reaction;
-    const {
-      likeCount, dislikeCount
-    } = this.state;
+    const { hasReacted, status } = reaction;
+    const { likeCount, dislikeCount } = this.state;
     const likeImage = hasReacted && status === 'like' ? liked : like;
     const dislikeImage = hasReacted && status === 'dislike' ? disliked : dislike;
     return (
-    <div className='side-tool'>
-      <div title='Like' className='side-tool__item'>
-        <span className='side-tool__item__label side-tool__item__label_like'>
-          {reactionCountToString(likeCount)}
-        </span>
-        <img alt='like button' data-action='like' className='side-tool__item__icon' src={likeImage} onClick={this.handleInteraction}/>
-      </div>
-      <div title='Dislike' className='side-tool__item side-tool__item_dislike'>
-        <span className='side-tool__item__label side-tool__item__label_dislike'>
-          {reactionCountToString(dislikeCount)}
-        </span>
-        <img alt='dislike button' data-action='dislike' className='side-tool__item__icon side-tool__item__icon_dislike'
-             src={dislikeImage} onClick={this.handleInteraction}/>
-      </div>
-      <div title='Bookmark' className='side-tool__item'>
-        <span/>
-        <div className={`side-tool__item__icon side-tool__item__icon_bookmark ${hasBookmarked ? 'is__bookmarked' : ''} `} onClick={ handleBookmark }>
-        <i className="fas fa-bookmark"></i>
+      <div className="side-tool">
+        <div title="Like" className="side-tool__item">
+          <span className="side-tool__item__label side-tool__item__label_like">
+            {reactionCountToString(likeCount)}
+          </span>
+          <img
+            alt="like button"
+            data-action="like"
+            className="side-tool__item__icon"
+            src={likeImage}
+            onClick={this.handleInteraction}
+          />
         </div>
-      </div>
-      <div title='Share' className='side-tool__item'>
-        <span/>
-        <img alt='share button' className='side-tool__item__icon' src={share}/>
-      </div>
-      {
-        dropDownItems.length === 1
-        && <div title='Share' className='side-tool__item'>
-          <span/>
-          <i title='Report Article' className="fa fa-flag side-tool__item__icon"
-             aria-hidden="true"/>
+        <div title="Dislike" className="side-tool__item side-tool__item_dislike">
+          <span className="side-tool__item__label side-tool__item__label_dislike">
+            {reactionCountToString(dislikeCount)}
+          </span>
+          <img
+            alt="dislike button"
+            data-action="dislike"
+            className="side-tool__item__icon side-tool__item__icon_dislike"
+            src={dislikeImage}
+            onClick={this.handleInteraction}
+          />
         </div>
-      }
-      {
-        dropDownItems.length > 1
-        && <div className={'side-tool__item'}>
-          <span/>
-          <SideToolDropDownMenu
-            onDropDownItemClicked={onDropDownItemClicked}
-            dropDownItems={dropDownItems}/>
+        <div title="Bookmark" className="side-tool__item">
+          <span />
+          <div
+            className={`side-tool__item__icon side-tool__item__icon_bookmark ${
+              hasBookmarked ? 'is__bookmarked' : ''
+            } `}
+            onClick={handleBookmark}
+          >
+            <i className="fas fa-bookmark" />
+          </div>
         </div>
-      }
-    </div>
+        <div title="Share" className="side-tool__item">
+          <span />
+          <FacebookShareButton slug={slug} imageUrl={imageUrl} />
+        </div>
+        <div title="Share" className="side-tool__item">
+          <span />
+          <TwitterShareButton slug={slug} imageUrl={imageUrl} />
+        </div>
+
+        {dropDownItems.length === 1 && (
+          <div title="Share" className="side-tool__item">
+            <span />
+            <i
+              title="Report Article"
+              className="fa fa-flag side-tool__item__icon"
+              aria-hidden="true"
+            />
+          </div>
+        )}
+        {dropDownItems.length > 1 && (
+          <div className={'side-tool__item'}>
+            <span />
+            <SideToolDropDownMenu
+              onDropDownItemClicked={onDropDownItemClicked}
+              dropDownItems={dropDownItems}
+            />
+          </div>
+        )}
+      </div>
     );
   }
 }
