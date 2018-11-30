@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ArticleListView from '../articleList/ArticleListView';
-import NavBarContainer from '../../components/header/NavBarContainer';
 import Alert from '../notification/alert';
 import './bookmark.scss';
 
 const BookmarkView = (props) => {
   return (
-    <div>
-    <NavBarContainer userIsAuthenticated={props.isAuthenticated}/>
     <div className="bookmark_wrapper">
     <Alert/>
      <section className="landing-page__content">
@@ -34,7 +31,6 @@ const BookmarkView = (props) => {
         </div>
       </section>
       </div>
-    </div>
   );
 };
 

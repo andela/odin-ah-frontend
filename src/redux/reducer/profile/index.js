@@ -3,12 +3,15 @@ import * as actionTypes from '../../constants/index';
 const initialState = {
   error: {},
   loading: false,
-  isDashboardActive: false
+  profileMenuIsActive: false
 };
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case actionTypes.PROFILE_MENU_CLICKED: return {
+      ...state, profileMenuIsActive: !state.profileMenuIsActive
+    };
     case actionTypes.FETCH_PROFILE_BEGIN: return {
-      ...state, isDashboardActive: true, loading: true, error: null
+      ...state, loading: true, error: null
     };
     case actionTypes.FETCH_PROFILE_SUCCESS: return {
       ...state, loading: false, ...action

@@ -3,7 +3,6 @@ import reducers from '../../redux/reducer/profile';
 const initialState = {
   error: {},
   loading: false,
-  isDashboardActive: false
 };
 
 describe('Profile reducer', () => {
@@ -40,7 +39,7 @@ describe('Profile reducer', () => {
       type: 'FETCH_PROFILE_BEGIN'
     };
     const newState = reducers(initialState, action);
-    expect(newState).toEqual({ ...{ error: null, isDashboardActive: true, loading: true } });
+    expect(newState).toEqual({ ...{ error: null, loading: true } });
   });
 
   it('it should handle action type of FETCH_PROFILE_FAILURE', () => {
@@ -50,7 +49,7 @@ describe('Profile reducer', () => {
     const newState = reducers(initialState, action);
     expect(newState).toEqual({
       ...{
-        error: {}, loading: false, isDashboardActive: false, type: 'FETCH_PROFILE_FAILURE'
+        error: {}, loading: false, type: 'FETCH_PROFILE_FAILURE'
       }
     });
   });
@@ -63,8 +62,7 @@ describe('Profile reducer', () => {
     expect(newState).toEqual({
       ...{
         error: {},
-        loading: true,
-        isDashboardActive: false
+        loading: true
       }
     });
   });
@@ -74,7 +72,7 @@ describe('Profile reducer', () => {
       type: 'SAVE_PROFILE_SUCCESS'
     };
     const newState = reducers(initialState, action);
-    expect(newState).toEqual({ ...{ error: {}, isDashboardActive: false, loading: false } });
+    expect(newState).toEqual({ ...{ error: {}, loading: false } });
   });
 
   it('it should handle action type of SAVE_PROFILE_FAILURE', () => {
@@ -86,7 +84,6 @@ describe('Profile reducer', () => {
       ...action,
       ...{
         error: {},
-        isDashboardActive: false,
         loading: false
       }
     });

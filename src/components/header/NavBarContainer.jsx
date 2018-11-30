@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import NavBarDefault from './NavBarDefault';
 import './NavBar.scss';
-import { openLoginModal, openRegistrationModal } from '../../redux/actions/modal';
+import { openLoginModal, openRegistrationModal, toggleProfileMenu } from '../../redux/actions/modal';
 import { registerUser } from '../../redux/actions/auth/register';
 import { logout } from '../../redux/actions/auth/login';
 
@@ -13,7 +13,8 @@ const propTypes = {
   userLoginRequest: PropTypes.func,
   openRegistrationModal: PropTypes.func,
   openLoginModal: PropTypes.func,
-  isDashboardActive: PropTypes.bool,
+  profileMenuIsActive: PropTypes.bool,
+  toggleProfileMenu: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -21,13 +22,39 @@ const defaultProps = {
 };
 
 export class NavBarContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.toggleProfileMenu = this.toggleProfileMenu.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
+    document.body.addEventListener('click', this.handleClose, false);
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.handleClose, false);
+  }
+
+  handleClose() {
+    if (this.props.profileMenuIsActive) {
+      this.props.toggleProfileMenu();
+    }
+  }
+
+  toggleProfileMenu() {
+    this.props.toggleProfileMenu();
+  }
+
   render() {
     return <NavBarDefault
-    isDashboardActive={this.props.isDashboardActive}
       handleLogin={this.props.openLoginModal}
       handleSignup={this.props.openRegistrationModal}
       handleLogout={this.props.handleLogout}
       userIsAuthenticated={this.props.userIsAuthenticated}
+      profileMenuIsActive={this.props.profileMenuIsActive}
+      toggleProfileMenu={this.toggleProfileMenu}
     />;
   }
 }
@@ -41,11 +68,12 @@ const mapStateToProps = state => ({
   userIsAuthenticated: state.login.isAuthenticated,
   loadingArticles: state.landingPageArticles.loadingArticles,
   currentPage: state.landingPageArticles.currentPage,
-  isDashboardActive: state.profile.isDashboardActive
+  profileMenuIsActive: state.profile.profileMenuIsActive
 });
 export default connect(mapStateToProps, {
   openRegistrationModal,
   openLoginModal,
   handleLogout: logout,
   registerUser,
+  toggleProfileMenu
 })(NavBarContainer);

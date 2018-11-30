@@ -2,6 +2,7 @@ import LoginModalContent from '../../components/modal/content/LoginModalContent'
 import ModalContent from '../../components/modal/content/modalComponent';
 import { userLoginRequest } from './auth/login';
 import { registerUser } from './auth/register';
+import { PROFILE_MENU_CLICKED } from '../constants';
 
 export const SHOW_MODAL = 'SHOW_MODAL';
 
@@ -62,3 +63,7 @@ export const openRegistrationModal = () => (dispatch) => {
   };
   dispatch(openModal(content));
 };
+
+export const toggleProfileMenu = () => ({
+  type: PROFILE_MENU_CLICKED,
+});
