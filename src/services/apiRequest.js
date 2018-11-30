@@ -162,6 +162,10 @@ export class ApiRequest {
     return this.axios.post(`/profiles/${userId}/follow`);
   }
 
+  fetchStatistics() {
+    return this.axios.get('/users/statistics');
+  }
+
   unfollowUser(userId) {
     return this.axios.delete(`/profiles/${userId}/follow`);
   }

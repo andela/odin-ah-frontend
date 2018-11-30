@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ProfileContainer from '../profile/ProfileContainer';
-import Statistics from '../statistics/StastisticsView';
+import StastisticsConatiner from '../statistics/StastisticsConatiner';
 import './dashboard.scss';
 
 const DashboardView = ({
@@ -27,7 +27,7 @@ const DashboardView = ({
             <Route exact path={`${match.url}`}
                    render={props => <ProfileContainer {...props} profiledata={profiledata}/>
                    }/>
-            <Route path={`${match.url}/statistics`} component={Statistics}/></div>
+            <Route path={`${match.url}/statistics`} component={StastisticsConatiner}/></div>
         </section>
       </div>
     </Fragment>
