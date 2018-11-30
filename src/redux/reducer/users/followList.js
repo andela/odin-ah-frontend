@@ -2,81 +2,68 @@ import {
   FETCH_FOLLOW_LIST_SUCCESS,
   FETCH_FOLLOW_LIST_ERROR,
   FETCH_FOLLOW_LIST_LOADING,
-  UPDATE_FOLLOW_LIST_LOADED,
-  UPDATE_FOLLOW_LIST_ERROR,
-  UPDATE_FOLLOW_LIST_LOADING
+  FETCH_SINGLE_FOLLOW_SUCCESS,
+  FETCH_SINGLE_FOLLOW_ERROR,
+  FETCH_SINGLE_FOLLOW_LOADING,
+  SYNC_FOLLOW_LIST
 } from '../../actions/users/followList';
 
 const initialState = {
   followList: [],
-  ongoingFetchOperations: [],
-  fetchError: false,
-  fetchErrorMessage: '',
+  singleFollowStream: {},
   isLoading: false,
-  updateError: false,
-  updateErrorMessage: ''
+  currentPage: 1,
+  totalPages: 1,
+  total: 0,
+  storeIsSynced: false
 };
 
 const followList = (state = initialState, action = {}) => {
   switch (action.type) {
-    case FETCH_FOLLOW_LIST_SUCCESS:
+    case FETCH_FOLLOW_LIST_SUCCESS: {
+      const {
+        usersIFollow, page, totalPages, total
+      } = action.payload.data;
       return {
         ...state,
-        followList: action.payload.data.usersIFollow.map(user => user.userId),
-        fetchError: false,
-        fetchErrorMessage: '',
-        isLoading: false
+        followList: usersIFollow,
+        currentPage: page,
+        totalPages,
+        isLoading: false,
+        total,
+        storeIsSynced: true
       };
+    }
     case FETCH_FOLLOW_LIST_ERROR:
       return {
         ...state,
-        fetchError: true,
-        fetchErrorMessage: action.payload,
         isLoading: false
       };
     case FETCH_FOLLOW_LIST_LOADING:
       return {
         ...state,
-        fetchError: false,
-        fetchErrorMessage: '',
         isLoading: true
       };
-    case UPDATE_FOLLOW_LIST_LOADED: {
-      const { userId, status } = action.payload;
-      const userIndexInFollowList = state.followList.findIndex(id => id === userId);
-      const opIndex = state.ongoingFetchOperations.findIndex(id => id === userId);
-      if (status) {
-        state.followList.splice(userIndexInFollowList, 1);
-      } else {
-        state.followList.push(userId);
-      }
-      state.ongoingFetchOperations.splice(opIndex, 1);
+    case FETCH_SINGLE_FOLLOW_SUCCESS:
       return {
         ...state,
-        ongoingFetchOperations: [],
-        updateError: false,
-        updateErrorMessage: ''
+        singleFollowStream: { ...action.payload }
       };
-    }
-    case UPDATE_FOLLOW_LIST_LOADING: {
-      const { userId } = action.payload;
-      state.ongoingFetchOperations.push(userId);
+    case FETCH_SINGLE_FOLLOW_ERROR:
       return {
         ...state,
-        updateError: false,
-        updateErrorMessage: ''
+        singleFollowStream: { ...action.payload }
       };
-    }
-    case UPDATE_FOLLOW_LIST_ERROR: {
-      const { userId, error } = action.payload;
-      const opIndex = state.ongoingFetchOperations.findIndex(id => id === userId);
-      state.ongoingFetchOperations.splice(opIndex, 1);
+    case FETCH_SINGLE_FOLLOW_LOADING:
       return {
         ...state,
-        updateError: true,
-        updateErrorMessage: error
+        singleFollowStream: { ...action.payload }
       };
-    }
+    case SYNC_FOLLOW_LIST:
+      return {
+        ...state,
+        storeIsSynced: false
+      };
     default:
       return state;
   }

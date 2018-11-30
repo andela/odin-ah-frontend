@@ -16,7 +16,7 @@ const propSet = {
 };
 const props = {
   profiledata: mockStoreData.profiledata,
-  profileData: jest.fn(() => Promise.resolve()),
+  profileData: jest.fn(() => Promise.resolve())
 };
 it('should render DashboardContainer', () => {
   const wrapper = shallow(<DashboardContainer {...props} />);
@@ -24,21 +24,9 @@ it('should render DashboardContainer', () => {
 });
 
 it('should call profile data when component mounts', () => {
-  const wrapper = shallow(<DashboardContainer {...props } />);
+  const wrapper = shallow(<DashboardContainer {...props} />);
   wrapper.instance().componentDidMount();
   expect(wrapper.prop('profileData')).toHaveBeenCalled;
-});
-
-it('should call setState when  handleStatisticsButton  event occur', () => {
-  const wrapper = shallow(<DashboardContainer {...props } />);
-  wrapper.instance().handleStatisticsButton();
-  expect(wrapper.prop('setState')).toHaveBeenCalled;
-});
-
-it('should call setState when handleProfileButton event occur', () => {
-  const wrapper = shallow(<DashboardContainer {...props } />);
-  wrapper.instance().handleProfileButton();
-  expect(wrapper.prop('setState')).toHaveBeenCalled;
 });
 
 it('should synchronise with app state in the store', () => {

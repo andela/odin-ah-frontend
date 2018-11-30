@@ -12,40 +12,31 @@ const mockStore = configureStore(middlewares);
 
 const propSet1 = {
   userId: 1,
-  styles: {},
-  followList: [2, 3],
   updateFollowList: jest.fn(),
-  fetchFollowList: jest.fn(),
-  loading: [1],
+  fetchSingleFollow: jest.fn(),
+  singleFollowStream: { authorId: 1, error: false, status: true },
   children: jest.fn(),
-  openLoginModal: jest.fn()
+  openLoginModal: jest.fn(),
+  isAuthenticated: true
 };
 
 const storeState = {
   followList: {
-    followList: [],
-    ongoingfetchOperations: [1]
+    singleFollowStream: {}
   },
   login: {
-    isAuthenticated: true
+    isAuthenticated: false
   }
 };
 
-const propSet2Loading = {
-  userId: 2,
-  styles: {},
-  followList: [1, 2, 3],
+const propSet2 = {
+  userId: 1,
   updateFollowList: jest.fn(),
-  fetchFollowList: jest.fn(),
-  loading: [2],
+  fetchSingleFollow: jest.fn(),
+  singleFollowStream: { authorId: 1, error: true, status: true },
   children: jest.fn(),
-  isAuthenticated: true,
-  openLoginModal: jest.fn()
-};
-
-const propSet2NotLoading = {
-  ...propSet2Loading,
-  loading: []
+  openLoginModal: jest.fn(),
+  isAuthenticated: false
 };
 
 it('should render without crashing', () => {
@@ -54,22 +45,24 @@ it('should render without crashing', () => {
 });
 
 it('should update follow list when user follows or unfollows another user', () => {
-  const wrapper = shallow(<FollowButtonContainer {...propSet2Loading} />);
+  const wrapper = shallow(<FollowButtonContainer {...propSet1} />);
   wrapper.instance().onClickHandler();
-  expect(propSet2Loading.updateFollowList).toHaveBeenCalledWith(2, wrapper.state('following'));
-  wrapper.setProps({ followList: [] });
-  expect(wrapper.state('loading')).toBe(true);
-  wrapper.setProps(propSet2NotLoading);
-  expect(wrapper.state('loading')).toBe(false);
+  expect(propSet1.updateFollowList).toHaveBeenCalledWith(1, true);
+  wrapper.setProps({ isAuthenticated: false });
+  wrapper.instance().onClickHandler();
+  expect(propSet1.openLoginModal).toHaveBeenCalled();
 });
 
-it('should derive state from props when props change', () => {
-  const wrapper = shallow(<FollowButtonContainer {...propSet2NotLoading} />);
-  expect(wrapper.state('text')).toBe('Unfollow');
+it('should update component when props change', () => {
+  const wrapper = shallow(<FollowButtonContainer {...propSet1} />);
+  const update1 = wrapper.instance().shouldComponentUpdate(propSet1);
+  expect(update1).toBe(true);
+  const update2 = wrapper.instance().shouldComponentUpdate(propSet2);
+  expect(update2).toBe(false);
 });
 
 it('should synchronise with app state in the store', () => {
   const store = mockStore(storeState);
-  const wrapper = shallow(<ConnectedFollowButtonContainer {...propSet2NotLoading} store={store} />);
-  expect(wrapper.prop('followList')).toHaveLength(0);
+  const wrapper = shallow(<ConnectedFollowButtonContainer {...propSet1} store={store} />);
+  expect(wrapper.prop('isAuthenticated')).toBe(false);
 });

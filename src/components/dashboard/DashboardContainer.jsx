@@ -9,8 +9,7 @@ export class DashboardContainer extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isProfileActive: true,
-      isStatisticsActive: false
+      active: 'profile'
     };
   }
 
@@ -18,42 +17,35 @@ export class DashboardContainer extends PureComponent {
     this.props.profileData();
   }
 
-  handleProfileButton = () => {
-    this.setState({
-      isProfileActive: true,
-      isStatisticsActive: false, 
-    });
-  };
-
-  handleStatisticsButton = () => {
-    this.setState({
-      isProfileActive: false,
-      isStatisticsActive: true,
-    });
+  handleRouteChange = (route) => {
+    this.setState({ active: route });
   };
 
   render() {
-    const eventHandler = {
-      handleProfileButton: this.handleProfileButton,
-      handleStatisticsButton: this.handleStatisticsButton
-    };
-    return <DashboardView match={this.props.match}
-    profiledata={ this.props.profiledata } { ...this.state } { ...eventHandler }
-    isAuthenticated={this.props.isAuthenticated} handleLogout={this.props.handleLogout}/>;
+    return (
+      <DashboardView
+        match={this.props.match}
+        activeRoute={this.state.active}
+        handleRouteChange={this.handleRouteChange}
+        profiledata={this.props.profiledata}
+        isAuthenticated={this.props.isAuthenticated}
+        handleLogout={this.props.handleLogout}
+      />
+    );
   }
 }
-
 
 DashboardContainer.propTypes = {
   match: PropTypes.object,
   profileData: PropTypes.func,
   profiledata: PropTypes.object,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  handleLogout: PropTypes.func
 };
 
 const mapStateToProps = state => ({
   profiledata: state.profile,
-  isAuthenticated: state.login.isAuthenticated,
+  isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {
@@ -61,4 +53,7 @@ const mapDispatchToProps = {
   handleLogout: logout
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashboardContainer);

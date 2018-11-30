@@ -170,8 +170,16 @@ export class ApiRequest {
     return this.axios.delete(`/profiles/${userId}/follow`);
   }
 
-  fetchFollowList(size = 100) {
-    return this.axios.get(`/profiles/following?size=${size}`);
+  fetchFollowList(page, limit) {
+    return this.axios.get(`/profiles/following?page=${page}&size=${limit}`);
+  }
+
+  fetchSingleFollow(authorId) {
+    return this.axios.get(`/profiles/following?id=${authorId}`);
+  }
+
+  fetchFollowerList(page, limit) {
+    return this.axios.get(`/profiles/follower?page=${page}&size=${limit}`);
   }
 
   /**

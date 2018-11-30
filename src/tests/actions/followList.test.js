@@ -8,17 +8,20 @@ import {
   FETCH_FOLLOW_LIST_SUCCESS,
   FETCH_FOLLOW_LIST_ERROR,
   FETCH_FOLLOW_LIST_LOADING,
-  UPDATE_FOLLOW_LIST_LOADED,
-  UPDATE_FOLLOW_LIST_ERROR,
-  UPDATE_FOLLOW_LIST_LOADING,
   fetchFollowListLoading,
   fetchFollowListFailed,
   fetchFollowListSucceeded,
   fetchFollowList,
-  updateFollowListLoaded,
-  updateFollowListLoading,
-  updateFollowListFailed,
-  updateFollowList
+  fetchSingleFollowLoading,
+  FETCH_SINGLE_FOLLOW_LOADING,
+  fetchSingleFollowSuccess,
+  FETCH_SINGLE_FOLLOW_SUCCESS,
+  fetchSingleFollowFailed,
+  FETCH_SINGLE_FOLLOW_ERROR,
+  syncFollowList,
+  SYNC_FOLLOW_LIST,
+  updateFollowList,
+  fetchSingleFollow
 } from '../../redux/actions/users/followList';
 
 const middlewares = [thunk];
@@ -114,35 +117,55 @@ it('should dispatch fetch follow list other error action', async () => {
   apiReqStub.restore();
 });
 
-it('should dispatch update follow list loaded action', () => {
+it('should dispatch fetch single follow loading action', () => {
   const initialState = {};
   const store = mockStore(initialState);
-  store.dispatch(updateFollowListLoaded(1, true));
-  const actions = store.getActions();
-  const expectedPayload = { type: UPDATE_FOLLOW_LIST_LOADED, payload: { userId: 1, status: true } };
-  expect(actions).toEqual([expectedPayload]);
-});
-
-it('should dispatch update follow list loading action', () => {
-  const initialState = {};
-  const store = mockStore(initialState);
-  store.dispatch(updateFollowListLoading(1, true));
+  store.dispatch(fetchSingleFollowLoading(1));
   const actions = store.getActions();
   const expectedPayload = {
-    type: UPDATE_FOLLOW_LIST_LOADING,
-    payload: { userId: 1, status: true }
+    type: FETCH_SINGLE_FOLLOW_LOADING,
+    payload: {
+      done: false, status: false, authorId: 1, error: false
+    }
   };
   expect(actions).toEqual([expectedPayload]);
 });
 
-it('should dispatch update follow list failed action', () => {
+it('should dispatch fetch single follow success action', () => {
   const initialState = {};
   const store = mockStore(initialState);
-  store.dispatch(updateFollowListFailed('An error occurred', 1));
+  store.dispatch(fetchSingleFollowSuccess(1, true));
   const actions = store.getActions();
   const expectedPayload = {
-    type: UPDATE_FOLLOW_LIST_ERROR,
-    payload: { error: 'An error occurred', userId: 1 }
+    type: FETCH_SINGLE_FOLLOW_SUCCESS,
+    payload: {
+      done: true, status: true, authorId: 1, error: false
+    }
+  };
+  expect(actions).toEqual([expectedPayload]);
+});
+
+it('should dispatch fetch single follow error action', () => {
+  const initialState = {};
+  const store = mockStore(initialState);
+  store.dispatch(fetchSingleFollowFailed(1, true));
+  const actions = store.getActions();
+  const expectedPayload = {
+    type: FETCH_SINGLE_FOLLOW_ERROR,
+    payload: {
+      done: true, status: true, authorId: 1, error: true
+    }
+  };
+  expect(actions).toEqual([expectedPayload]);
+});
+
+it('should dispatch sync follow list action', () => {
+  const initialState = {};
+  const store = mockStore(initialState);
+  store.dispatch(syncFollowList());
+  const actions = store.getActions();
+  const expectedPayload = {
+    type: SYNC_FOLLOW_LIST
   };
   expect(actions).toEqual([expectedPayload]);
 });
@@ -154,8 +177,10 @@ it('should dispatch update list action with unfollow user', async () => {
   await store.dispatch(updateFollowList(1, true));
   const actions = store.getActions();
   const expectedPayload = {
-    type: UPDATE_FOLLOW_LIST_LOADED,
-    payload: { userId: 1, status: true }
+    type: FETCH_SINGLE_FOLLOW_SUCCESS,
+    payload: {
+      done: true, status: false, authorId: 1, error: false
+    }
   };
   expect(actions).toContainEqual(expectedPayload);
   apiReqStub.restore();
@@ -168,8 +193,10 @@ it('should dispatch update list action with follow user', async () => {
   await store.dispatch(updateFollowList(1, false));
   const actions = store.getActions();
   const expectedPayload = {
-    type: UPDATE_FOLLOW_LIST_LOADED,
-    payload: { userId: 1, status: false }
+    type: FETCH_SINGLE_FOLLOW_SUCCESS,
+    payload: {
+      done: true, status: true, authorId: 1, error: false
+    }
   };
   expect(actions).toContainEqual(expectedPayload);
   apiReqStub.restore();
@@ -184,38 +211,66 @@ it('should dispatch update follow list error action', async () => {
   await store.dispatch(updateFollowList(1, false));
   const actions = store.getActions();
   const expectedPayload = {
-    type: UPDATE_FOLLOW_LIST_ERROR,
-    payload: { error: 'An error occurred', userId: 1 }
+    type: FETCH_SINGLE_FOLLOW_ERROR,
+    payload: {
+      done: true, status: false, authorId: 1, error: true
+    }
   };
   expect(actions).toContainEqual(expectedPayload);
   apiReqStub.restore();
 });
 
-it('should dispatch update follow list connection error action', async () => {
-  const apiReqStub = sinon
-    .stub(apiRequest.axios, 'post')
-    .rejects({ request: { data: 'An error occurred' } });
+it('should dispatch single follow action with non following', async () => {
+  const apiReqStub = sinon.stub(apiRequest.axios, 'get').resolves({
+    data: {
+      data: { usersIFollow: [] }
+    }
+  });
   const initialState = {};
   const store = mockStore(initialState);
-  await store.dispatch(updateFollowList(1, false));
+  await store.dispatch(fetchSingleFollow(1));
   const actions = store.getActions();
   const expectedPayload = {
-    type: UPDATE_FOLLOW_LIST_ERROR,
-    payload: { error: 'Could not connect to server. Please check your connection', userId: 1 }
+    type: FETCH_SINGLE_FOLLOW_SUCCESS,
+    payload: {
+      done: true, status: false, authorId: 1, error: false
+    }
   };
   expect(actions).toContainEqual(expectedPayload);
   apiReqStub.restore();
 });
 
-it('should dispatch update follow list other error action', async () => {
-  const apiReqStub = sinon.stub(apiRequest.axios, 'delete').rejects();
+it('should dispatch single follow action with following', async () => {
+  const apiReqStub = sinon.stub(apiRequest.axios, 'get').resolves({
+    data: {
+      data: { usersIFollow: ['user'] }
+    }
+  });
   const initialState = {};
   const store = mockStore(initialState);
-  await store.dispatch(updateFollowList(1, true));
+  await store.dispatch(fetchSingleFollow(1));
   const actions = store.getActions();
   const expectedPayload = {
-    type: UPDATE_FOLLOW_LIST_ERROR,
-    payload: { error: 'An error occurred. Please try again', userId: 1 }
+    type: FETCH_SINGLE_FOLLOW_SUCCESS,
+    payload: {
+      done: true, status: true, authorId: 1, error: false
+    }
+  };
+  expect(actions).toContainEqual(expectedPayload);
+  apiReqStub.restore();
+});
+
+it('should dispatch fetch single follow error on request error', async () => {
+  const apiReqStub = sinon.stub(apiRequest.axios, 'get').rejects();
+  const initialState = {};
+  const store = mockStore(initialState);
+  await store.dispatch(fetchSingleFollow(1));
+  const actions = store.getActions();
+  const expectedPayload = {
+    type: FETCH_SINGLE_FOLLOW_ERROR,
+    payload: {
+      done: true, status: false, authorId: 1, error: true
+    }
   };
   expect(actions).toContainEqual(expectedPayload);
   apiReqStub.restore();

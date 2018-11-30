@@ -1,0 +1,23 @@
+.follow__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.follow__list--empty {
+  display: flex;
+  color: grey;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  padding: 10%;
+  height: 100%;
+}
+
+.follow__list--loading {
+  display: flex;
+  height: 100%;
+  color: #007ea7;
+  justify-content: center;
+  align-items: center;
+  padding: 10%;
+}

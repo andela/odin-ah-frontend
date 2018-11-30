@@ -6,9 +6,10 @@ import ProfileView from '../../../components/profile/ProfileView';
 import { ProfileContainer } from '../../../components/profile/ProfileContainer';
 import DashboardContainer from '../../../components/dashboard/DashboardContainer';
 import { mockStoreData } from '../../__mocks__/mockData';
+import FollowerListContainer from '../../../components/users/FollowerListContainer';
+import FollowingListContainer from '../../../components/users/FollowingListContainer';
 
 jest.mock('react-router-dom');
-
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -21,7 +22,7 @@ const props = {
 };
 
 describe('User Profile component', () => {
-  const wrapper = shallow(<ProfileView { ...props } />);
+  const wrapper = shallow(<ProfileView {...props} />);
   it('renders without crashing', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBeGreaterThan(0);
@@ -52,13 +53,12 @@ describe('User Profile component', () => {
 
 const store = mockStore({ ...mockStoreData });
 
-
 const props2 = {
   location: { pathname: '/dashbord' },
   match: { path: '/dashboard', url: '/dashboard' }
 };
 
-const setUp = () => (shallow(<DashboardContainer store={store} { ...props2 } to="/dashboard" />));
+const setUp = () => shallow(<DashboardContainer store={store} {...props2} to="/dashboard" />);
 
 describe('Dashboard Container', () => {
   it('renders without DashboardContainer  crashing', () => {
@@ -67,12 +67,18 @@ describe('Dashboard Container', () => {
   });
 
   it('renders without crashing', () => {
-    const wrapper = shallow(<ProfileContainer { ...props } />);
+    const wrapper = shallow(<ProfileContainer {...props} />);
 
-    const fileSelectedHandler = jest.spyOn(
-      wrapper.instance(), 'fileSelectedHandler'
-    );
+    const fileSelectedHandler = jest.spyOn(wrapper.instance(), 'fileSelectedHandler');
     expect(wrapper).toBeDefined();
     expect(fileSelectedHandler).toHaveBeenCalledTimes(0);
   });
+});
+
+it('render user follow lists count', () => {
+  const profileWrapper = shallow(<ProfileView {...props} />);
+  const navLink1 = profileWrapper.find(FollowerListContainer).renderProp('children', { total: 1 });
+  const navLink2 = profileWrapper.find(FollowingListContainer).renderProp('children', { total: 1 });
+  expect(navLink1.exists()).toBe(true);
+  expect(navLink2.exists()).toBe(true);
 });

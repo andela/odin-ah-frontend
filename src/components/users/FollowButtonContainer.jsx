@@ -2,57 +2,55 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { updateFollowList, fetchFollowList } from '../../redux/actions/users/followList';
+import { updateFollowList, fetchSingleFollow } from '../../redux/actions/users/followList';
 import { openLoginModal } from '../../redux/actions/modal';
 
 const propTypes = {
   userId: PropTypes.number.isRequired,
-  followList: PropTypes.array.isRequired,
   updateFollowList: PropTypes.func,
-  loading: PropTypes.array,
   children: PropTypes.func,
   fetchFollowList: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   openLoginModal: PropTypes.func.isRequired,
+  fetchSingleFollow: PropTypes.func,
+  singleFollowStream: PropTypes.object
 };
 
 const defaultProps = {};
 
 export class FollowButtonContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      text: 'Follow',
-      following: false
-    };
-  }
-
   componentDidMount() {
-    this.props.fetchFollowList();
+    const { userId } = this.props;
+    this.props.fetchSingleFollow(userId);
   }
 
   onClickHandler = () => {
-    const { isAuthenticated, openLoginModal: popUpLoginModal } = this.props;
+    const {
+      isAuthenticated,
+      openLoginModal: popUpLoginModal,
+      singleFollowStream: { status }
+    } = this.props;
     if (!isAuthenticated) {
       popUpLoginModal();
       return;
     }
-    this.props.updateFollowList(this.props.userId, this.state.following);
+    this.props.updateFollowList(this.props.userId, status);
   };
 
-  static getDerivedStateFromProps(props) {
-    const following = props.followList.includes(props.userId);
-    const text = following ? 'Unfollow' : 'Follow';
-    const loading = props.loading.includes(props.userId);
-    return { loading, text, following: Boolean(following) };
+  shouldComponentUpdate(nextProps) {
+    const { authorId: eventOwner, error } = nextProps.singleFollowStream;
+    if (eventOwner === nextProps.userId && !error) {
+      return true;
+    }
+    return false;
   }
 
   render() {
+    const { status, done } = this.props.singleFollowStream;
     const childProps = {
-      text: this.state.text,
+      text: status ? 'Unfollow' : 'Follow',
       onClickHandler: this.onClickHandler,
-      loading: this.state.loading
+      loading: !done
     };
     return <React.Fragment>{this.props.children(childProps)}</React.Fragment>;
   }
@@ -62,15 +60,14 @@ FollowButtonContainer.propTypes = propTypes;
 FollowButtonContainer.defaultProps = defaultProps;
 
 const mapStateToProps = state => ({
-  followList: state.followList.followList,
-  loading: state.followList.ongoingFetchOperations,
+  singleFollowStream: state.followList.singleFollowStream,
   isAuthenticated: state.login.isAuthenticated
 });
 
 const mapDispatchToProps = {
   updateFollowList,
-  fetchFollowList,
-  openLoginModal
+  openLoginModal,
+  fetchSingleFollow
 };
 
 export default connect(
